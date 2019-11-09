@@ -1,14 +1,13 @@
 package com.example.homecontroller.ui.main
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RelativeLayout
-import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 
 
 class MainFragment : Fragment() {
@@ -24,19 +23,19 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val layout: RelativeLayout = RelativeLayout(this.context)
-        // Defining the RelativeLayout layout parameters.
-        // In this case I want to fill its parent
-        val rlp = RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.FILL_PARENT,
-            RelativeLayout.LayoutParams.FILL_PARENT
-        )
+        return buildLayout().rootView
+    }
 
-        // Creating a new TextView
+    private fun buildLayout(): RelativeLayout {
+        val layout = RelativeLayout(this.context)
+        layout.addView(buildButton())
+        return layout
+    }
+
+    private fun buildButton(): Button {
         val button = Button(this.context)
         button.text = "Button"
 
-        // Defining the layout parameters of the TextView
         val lp = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -45,10 +44,7 @@ class MainFragment : Fragment() {
 
         // Setting the parameters on the TextView
         button.layoutParams = lp
-
-        // Adding the TextView to the RelativeLayout as a child
-        layout.addView(button)
-        return layout.rootView
+        return button
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
