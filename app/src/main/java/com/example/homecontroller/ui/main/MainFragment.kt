@@ -76,7 +76,6 @@ class MainFragment : Fragment() {
         )
         lp.addRule(RelativeLayout.CENTER_IN_PARENT)
 
-        // Setting the parameters on the TextView
         button.layoutParams = lp
         return button
     }
