@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result;
+import kotlin.reflect.KFunction1
 
 
 class MainFragment : Fragment() {
@@ -30,17 +31,29 @@ class MainFragment : Fragment() {
         return buildLayout().rootView
     }
 
-    private fun buildLayout(): RelativeLayout {
-        val layout = RelativeLayout(this.context)
-        layout.addView(buildButton())
+    private fun buildLayout(): View {
+        val layout = LinearLayout(this.context)
+        layout.addView(buildIncreaseVolumeButton())
+        layout.addView(buildDecreaseVolumeButton())
         return layout
     }
 
-    private fun buildButton(): Button {
+    private fun buildIncreaseVolumeButton(): Button {
+        return buildDefaultButton("+", this::increaseVolume)
+    }
+
+    private fun buildDecreaseVolumeButton(): Button {
+        return buildDefaultButton("-", this::decreaseVolume)
+    }
+
+    private fun buildDefaultButton(
+        label: String, action: KFunction1<@ParameterName(
+            name = "v"
+        ) View, Unit>
+    ): Button {
         val button = Button(this.context)
-        button.text = "Button"
-        button.setOnClickListener { clickHandler() }
-clickHandler()
+        button.text = label
+        button.setOnClickListener(action)
         val lp = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -52,13 +65,22 @@ clickHandler()
         return button
     }
 
-    private fun clickHandler() {
-        Thread {
+    private fun increaseVolume(v: View) {
+        changeVolumeRelative("+1")
+        Toast.makeText(this.context, "You increased volume.", Toast.LENGTH_SHORT).show()
+    }
 
+    private fun decreaseVolume(v: View) {
+        changeVolumeRelative("-1")
+        Toast.makeText(this.context, "You decrease volume.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun changeVolumeRelative(change: String) {
+        Thread {
             val (request, response, result) = "http://192.168.1.111/sony/audio"
                 .httpPost()
                 .header(Pair("X-Auth-PSK", "Superteam17"))
-                .body("{\"method\":\"setAudioVolume\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"target\":\"speaker\",\"volume\":\"+1\"}]}")
+                .body("{\"method\":\"setAudioVolume\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"target\":\"speaker\",\"volume\":\"$change\"}]}")
                 .responseString()
 
             when (result) {
@@ -71,10 +93,7 @@ clickHandler()
                     println(data)
                 }
             }
-
-
         }.start()
-        Toast.makeText(this.context, "You clicked me.", Toast.LENGTH_SHORT).show()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
