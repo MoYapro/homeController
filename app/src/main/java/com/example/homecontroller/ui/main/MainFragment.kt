@@ -10,8 +10,9 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.github.kittinunf.fuel.httpPost
-import com.github.kittinunf.result.Result;
+import com.example.homecontroller.de.moyapro.homeController.TVCommand
+import com.example.homecontroller.de.moyapro.homeController.TVCommandEnum
+import com.example.homecontroller.de.moyapro.homeController.request
 import kotlin.reflect.KFunction1
 
 
@@ -35,6 +36,8 @@ class MainFragment : Fragment() {
         val layout = LinearLayout(this.context)
         layout.addView(buildIncreaseVolumeButton())
         layout.addView(buildDecreaseVolumeButton())
+        layout.addView(buildPowerOffButton())
+        layout.addView(buildPowerOnButton())
         return layout
     }
 
@@ -44,6 +47,14 @@ class MainFragment : Fragment() {
 
     private fun buildDecreaseVolumeButton(): Button {
         return buildDefaultButton("-", this::decreaseVolume)
+    }
+
+    private fun buildPowerOffButton(): Button {
+        return buildDefaultButton("AUS", this::powerOff)
+    }
+
+    private fun buildPowerOnButton(): Button {
+        return buildDefaultButton("AN", this::powerOn)
     }
 
     private fun buildDefaultButton(
@@ -75,25 +86,16 @@ class MainFragment : Fragment() {
         Toast.makeText(this.context, "You decrease volume.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun changeVolumeRelative(change: String) {
-        Thread {
-            val (request, response, result) = "http://192.168.1.111/sony/audio"
-                .httpPost()
-                .header(Pair("X-Auth-PSK", "Superteam17"))
-                .body("{\"method\":\"setAudioVolume\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"target\":\"speaker\",\"volume\":\"$change\"}]}")
-                .responseString()
+    private fun powerOff(v: View) {
+        request(TVCommand(TVCommandEnum.POWER, "false"))
+    }
 
-            when (result) {
-                is Result.Failure -> {
-                    val ex = result.getException()
-                    println(ex)
-                }
-                is Result.Success -> {
-                    val data = result.get()
-                    println(data)
-                }
-            }
-        }.start()
+    private fun powerOn(v: View) {
+        request(TVCommand(TVCommandEnum.POWER, "true"))
+    }
+
+    private fun changeVolumeRelative(change: String) {
+        request(TVCommand(TVCommandEnum.VOLUME, change))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
