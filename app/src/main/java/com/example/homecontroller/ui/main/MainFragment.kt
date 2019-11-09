@@ -9,6 +9,9 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.result.Result;
 
 
 class MainFragment : Fragment() {
@@ -36,8 +39,8 @@ class MainFragment : Fragment() {
     private fun buildButton(): Button {
         val button = Button(this.context)
         button.text = "Button"
-        button.setOnClickListener{ clickHandler() }
-
+        button.setOnClickListener { clickHandler() }
+clickHandler()
         val lp = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -50,6 +53,27 @@ class MainFragment : Fragment() {
     }
 
     private fun clickHandler() {
+        Thread {
+
+            val (request, response, result) = "http://192.168.1.111/sony/audio"
+                .httpPost()
+                .header(Pair("X-Auth-PSK", "Superteam17"))
+                .body("{\"method\":\"setAudioVolume\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"target\":\"speaker\",\"volume\":\"+1\"}]}")
+                .responseString()
+
+            when (result) {
+                is Result.Failure -> {
+                    val ex = result.getException()
+                    println(ex)
+                }
+                is Result.Success -> {
+                    val data = result.get()
+                    println(data)
+                }
+            }
+
+
+        }.start()
         Toast.makeText(this.context, "You clicked me.", Toast.LENGTH_SHORT).show()
     }
 
