@@ -44,5 +44,9 @@ enum class TVCommandEnum(val contentGenerator: (String) -> String, val url: Stri
     VOLUME(
         { value: String -> "{\"method\":\"setAudioVolume\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"target\":\"speaker\",\"volume\":\"$value\"}]}" },
         "http://192.168.1.111/sony/audio"
+    ),
+    HDMI(
+        { value: String -> "{\"method\":\"setPlayContent\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"uri\":\"extInput:hdmi?port=$value\"}]}" },
+        "http://192.168.1.111/sony/avContent"
     )
 }

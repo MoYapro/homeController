@@ -38,6 +38,7 @@ class MainFragment : Fragment() {
         layout.addView(buildDecreaseVolumeButton())
         layout.addView(buildPowerOffButton())
         layout.addView(buildPowerOnButton())
+        layout.addView(buildHdmi4Button())
         return layout
     }
 
@@ -55,6 +56,10 @@ class MainFragment : Fragment() {
 
     private fun buildPowerOnButton(): Button {
         return buildDefaultButton("AN", this::powerOn)
+    }
+
+    private fun buildHdmi4Button(): Button {
+        return buildDefaultButton("HDMI4", this::switchToHdmi4)
     }
 
     private fun buildDefaultButton(
@@ -94,8 +99,16 @@ class MainFragment : Fragment() {
         request(TVCommand(TVCommandEnum.POWER, "true"))
     }
 
+    private fun switchToHdmi4(v: View) {
+        switchToHdmi(4)
+    }
+
     private fun changeVolumeRelative(change: String) {
         request(TVCommand(TVCommandEnum.VOLUME, change))
+    }
+
+    private fun switchToHdmi(port: Int) {
+        request(TVCommand(TVCommandEnum.HDMI, port.toString()))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
