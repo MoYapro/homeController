@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 
@@ -35,6 +36,7 @@ class MainFragment : Fragment() {
     private fun buildButton(): Button {
         val button = Button(this.context)
         button.text = "Button"
+        button.setOnClickListener{ clickHandler() }
 
         val lp = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -45,6 +47,10 @@ class MainFragment : Fragment() {
         // Setting the parameters on the TextView
         button.layoutParams = lp
         return button
+    }
+
+    private fun clickHandler() {
+        Toast.makeText(this.context, "You clicked me.", Toast.LENGTH_SHORT).show()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
