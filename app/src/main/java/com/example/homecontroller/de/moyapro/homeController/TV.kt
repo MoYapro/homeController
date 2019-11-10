@@ -35,18 +35,3 @@ class TVCommand(private val tvCommandEnum: TVCommandEnum, private val commandPar
     }
 
 }
-
-enum class TVCommandEnum(val contentGenerator: (String) -> String, val url: String) {
-    POWER(
-        { value: String -> "{\"method\":\"setPowerStatus\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"status\":${value}}]}" },
-        "http://192.168.1.111/sony/system"
-    ),
-    VOLUME(
-        { value: String -> "{\"method\":\"setAudioVolume\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"target\":\"speaker\",\"volume\":\"$value\"}]}" },
-        "http://192.168.1.111/sony/audio"
-    ),
-    HDMI(
-        { value: String -> "{\"method\":\"setPlayContent\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"uri\":\"extInput:hdmi?port=$value\"}]}" },
-        "http://192.168.1.111/sony/avContent"
-    )
-}
