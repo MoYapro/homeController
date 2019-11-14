@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.homecontroller.de.moyapro.homeController.IRCC_CODE
 import com.example.homecontroller.de.moyapro.homeController.TVCommand
 import com.example.homecontroller.de.moyapro.homeController.TVCommandEnum
 import com.example.homecontroller.de.moyapro.homeController.request
@@ -34,6 +35,11 @@ class MainFragment : Fragment() {
 
     private fun buildLayout(): View {
         val layout = LinearLayout(this.context)
+        layout.addView(buildUpButton())
+        layout.addView(buildDownButton())
+        layout.addView(buildLeftButton())
+        layout.addView(buildRightButton())
+        layout.addView(buildCenterButton())
         layout.addView(buildIncreaseVolumeButton())
         layout.addView(buildDecreaseVolumeButton())
         layout.addView(buildPowerOffButton())
@@ -60,6 +66,26 @@ class MainFragment : Fragment() {
 
     private fun buildHdmi4Button(): Button {
         return buildDefaultButton("HDMI4", this::switchToHdmi4)
+    }
+
+    private fun buildCenterButton(): Button {
+        return buildDefaultButton("◍", this::center)
+    }
+
+    private fun buildDownButton(): Button {
+        return buildDefaultButton("⇩", this::down)
+    }
+
+    private fun buildLeftButton(): Button {
+        return buildDefaultButton("⇦", this::left)
+    }
+
+    private fun buildUpButton(): Button {
+        return buildDefaultButton("⇧", this::up)
+    }
+
+    private fun buildRightButton(): Button {
+        return buildDefaultButton("⇨", this::right)
     }
 
     private fun buildDefaultButton(
@@ -108,6 +134,27 @@ class MainFragment : Fragment() {
 
     private fun switchToHdmi(port: Int) {
         request(TVCommand(TVCommandEnum.HDMI, port.toString()))
+    }
+
+
+    private fun up(v: View) {
+        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.UP.code))
+    }
+
+    private fun left(v: View) {
+        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.LEFT.code))
+    }
+
+    private fun right(v: View) {
+        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.RIGHT.code))
+    }
+
+    private fun down(v: View) {
+        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.DOWN.code))
+    }
+
+    private fun center(v: View) {
+        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.CENTER.code))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
