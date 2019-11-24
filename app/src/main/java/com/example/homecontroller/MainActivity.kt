@@ -1,5 +1,6 @@
 package com.example.homecontroller
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import com.example.homecontroller.de.moyapro.homeController.TVCommand
 import com.example.homecontroller.de.moyapro.homeController.TVCommandEnum
 import com.example.homecontroller.de.moyapro.homeController.request
 import com.example.homecontroller.ui.main.MainFragment
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +37,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun powerOn(v: View) {
-        request(TVCommand(TVCommandEnum.POWER, "true"))
+        val successAction = { _: String -> startActivity(Intent(this, MainActivity::class.java)) }
+        request(TVCommand(TVCommandEnum.POWER, "true"), successAction)
     }
 
     fun switchToHdmi4(v: View) {

@@ -3,7 +3,10 @@ package com.example.homecontroller.de.moyapro.homeController
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
 
-fun request(command: TVCommand) {
+fun request(
+    command: TVCommand,
+    successAction: (String) -> Unit = {}
+) {
     command.url
         .httpPost()
         .header(Pair("X-Auth-PSK", "Superteam17"))
@@ -16,7 +19,7 @@ fun request(command: TVCommand) {
                 }
                 is Result.Success -> {
                     val data = result.get()
-                    println(data)
+                    successAction.invoke(String(data))
                 }
             }
         }
