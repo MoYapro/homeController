@@ -1,14 +1,14 @@
-package com.example.homecontroller.ui.controller
+package de.moyapro.homecontroller.ui.controller
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.homecontroller.R
-import com.example.homecontroller.de.moyapro.homeController.IRCC_CODE
-import com.example.homecontroller.de.moyapro.homeController.TVCommand
-import com.example.homecontroller.de.moyapro.homeController.TVCommandEnum
-import com.example.homecontroller.de.moyapro.homeController.request
+import de.moyapro.homecontroller.IRCC_CODE
+import de.moyapro.homecontroller.R
+import de.moyapro.homecontroller.de.moyapro.homeController.TVCommand
+import de.moyapro.homecontroller.de.moyapro.homeController.TVCommandEnum
+import de.moyapro.homecontroller.de.moyapro.homeController.request
 
 
 class ControllerActivity : AppCompatActivity() {

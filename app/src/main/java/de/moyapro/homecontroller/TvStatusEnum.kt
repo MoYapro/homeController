@@ -1,4 +1,4 @@
-package com.example.homecontroller.de.moyapro.homeController
+package de.moyapro.homecontroller.de.moyapro.homeController
 
 enum class TvStatusEnum(val content: String, val url: String) {
     POWER_STATUS(

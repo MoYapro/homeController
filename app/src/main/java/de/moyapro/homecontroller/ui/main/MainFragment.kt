@@ -1,4 +1,4 @@
-package com.example.homecontroller.ui.controller
+package de.moyapro.homecontroller.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.example.homecontroller.R
-import com.example.homecontroller.ui.main.MainViewModel
+import de.moyapro.homecontroller.R
 
-class ControllerFragment : Fragment() {
+
+class MainFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ControllerFragment()
+        fun newInstance() = MainFragment()
     }
 
     private lateinit var viewModel: MainViewModel
@@ -21,7 +21,7 @@ class ControllerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.controller_fragment, container, false)
+        return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

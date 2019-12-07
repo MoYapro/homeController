@@ -1,4 +1,4 @@
-package com.example.homecontroller.ui.main
+package de.moyapro.homecontroller.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +10,10 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.example.homecontroller.de.moyapro.homeController.IRCC_CODE
-import com.example.homecontroller.de.moyapro.homeController.TVCommand
-import com.example.homecontroller.de.moyapro.homeController.TVCommandEnum
-import com.example.homecontroller.de.moyapro.homeController.request
+import de.moyapro.homecontroller.IRCC_CODE
+import de.moyapro.homecontroller.de.moyapro.homeController.TVCommand
+import de.moyapro.homecontroller.de.moyapro.homeController.TVCommandEnum
+import de.moyapro.homecontroller.de.moyapro.homeController.request
 import kotlin.reflect.KFunction1
 
 

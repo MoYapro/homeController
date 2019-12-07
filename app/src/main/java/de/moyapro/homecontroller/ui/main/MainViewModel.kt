@@ -1,4 +1,4 @@
-package com.example.homecontroller.ui.main
+package de.moyapro.homecontroller.ui.main
 
 import androidx.lifecycle.ViewModel
 
