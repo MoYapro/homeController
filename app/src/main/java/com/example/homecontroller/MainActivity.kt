@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.homecontroller.de.moyapro.homeController.IRCC_CODE
 import com.example.homecontroller.de.moyapro.homeController.TVCommand
 import com.example.homecontroller.de.moyapro.homeController.TVCommandEnum
 import com.example.homecontroller.de.moyapro.homeController.request
+import com.example.homecontroller.ui.controller.ControllerActivity
 import com.example.homecontroller.ui.main.MainFragment
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,54 +22,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    fun increaseVolume(v: View) {
-        changeVolumeRelative("+1")
-    }
-
-    fun decreaseVolume(v: View) {
-        changeVolumeRelative("-1")
-    }
-
-    fun powerOff(v: View) {
-        request(TVCommand(TVCommandEnum.POWER, "false"))
-    }
-
     fun powerOn(v: View) {
-        val successAction = { _: String -> startActivity(Intent(this, MainActivity::class.java)) }
+        val successAction =
+            { _: String -> startActivity(Intent(this, ControllerActivity::class.java)) }
         request(TVCommand(TVCommandEnum.POWER, "true"), successAction)
     }
-
-    fun switchToHdmi4(v: View) {
-        switchToHdmi(4)
-    }
-
-    private fun changeVolumeRelative(change: String) {
-        request(TVCommand(TVCommandEnum.VOLUME, change))
-    }
-
-    private fun switchToHdmi(port: Int) {
-        request(TVCommand(TVCommandEnum.HDMI, port.toString()))
-    }
-
-    fun up(v: View) {
-        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.UP.code))
-    }
-
-    fun left(v: View) {
-        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.LEFT.code))
-    }
-
-    fun right(v: View) {
-        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.RIGHT.code))
-    }
-
-    fun down(v: View) {
-        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.DOWN.code))
-    }
-
-    fun center(v: View) {
-        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.CENTER.code))
-    }
-
 }
