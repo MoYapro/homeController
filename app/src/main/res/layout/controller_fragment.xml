@@ -66,4 +66,18 @@
         android:layout_height="wrap_content"
         android:onClick="decreaseVolume"
         android:text="-" />
+
+    <Button
+        android:id="@+id/button_return"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="back"
+        android:text="RETURN" />
+
+    <Button
+        android:id="@+id/button_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="home"
+        android:text="HOME" />
 </LinearLayout>

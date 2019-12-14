@@ -75,4 +75,12 @@ class ControllerActivity : AppCompatActivity() {
         request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.CENTER.code))
     }
 
+    fun home(v: View) {
+        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.HOME.code))
+    }
+
+    fun back(v: View) {
+        request(TVCommand(TVCommandEnum.IRCC, IRCC_CODE.RETURN.code))
+    }
+
 }
