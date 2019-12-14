@@ -5,5 +5,7 @@ enum class IRCC_CODE(val code: String) {
     DOWN("AAAAAgAAAJcAAABQAw=="),
     LEFT("AAAAAgAAAJcAAABNAw=="),
     RIGHT("AAAAAgAAAJcAAABOAw=="),
-    CENTER("AAAAAgAAAJcAAABKAw==")
+    CENTER("AAAAAgAAAJcAAABKAw=="),
+    HOME("AAAAAQAAAAEAAABgAw=="),
+    RETURN("AAAAAgAAAJcAAAAjAw==")
 }
