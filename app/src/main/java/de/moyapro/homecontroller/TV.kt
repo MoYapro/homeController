@@ -36,7 +36,7 @@ fun buildXmlHeader(): Map<String, Any> {
 fun buildJsonHeader(): Map<String, Any> {
     return mapOf(
         Pair("X-Auth-PSK", "Superteam17"),
-        Pair("Content-Type", "application/json")
+        Pair("Content-Type", "application/json; charset=UTF-8")
     )
 }
 
