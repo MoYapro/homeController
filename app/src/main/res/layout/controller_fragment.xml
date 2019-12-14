@@ -17,4 +17,53 @@
         android:layout_height="wrap_content"
         android:onClick="switchToHdmi4"
         android:text="Computer" />
+
+    <Button
+        android:id="@+id/button_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="up"
+        android:text="UP" />
+
+    <Button
+        android:id="@+id/button_down"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="down"
+        android:text="DOWN" />
+
+    <Button
+        android:id="@+id/button_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="left"
+        android:text="LEFT" />
+
+    <Button
+        android:id="@+id/button_right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="right"
+        android:text="RIGHT" />
+
+    <Button
+        android:id="@+id/button_center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="center"
+        android:text="." />
+
+    <Button
+        android:id="@+id/button_volume_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="increaseVolume"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/button_volume_down"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="decreaseVolume"
+        android:text="-" />
 </LinearLayout>

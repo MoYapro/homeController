@@ -51,8 +51,8 @@ class ControllerActivity : AppCompatActivity() {
         request(TVCommand(TVCommandEnum.VOLUME, change))
     }
 
-    private fun switchToHdmi(port: Int) {
-        request(TVCommand(TVCommandEnum.HDMI, port.toString()))
+    private fun switchToHdmi(tvPort: Int) {
+        request(TVCommand(TVCommandEnum.HDMI, tvPort.toString()))
     }
 
     fun up(v: View) {
