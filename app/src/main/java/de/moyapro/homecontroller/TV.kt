@@ -9,7 +9,7 @@ fun request(
 ) {
     command.url
         .httpPost()
-        .header(Pair("X-Auth-PSK", "Superteam17"))
+        .header(command.headers)
         .body(command.value)
         .response { request, response, result ->
             when (result) {
@@ -25,12 +25,32 @@ fun request(
         }
 }
 
-class TVCommand private constructor(val value: String, val url: String) {
+fun buildXmlHeader(): Map<String, Any> {
+    return mapOf(
+        Pair("X-Auth-PSK", "Superteam17"),
+        Pair("SOAPACTION", "\"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC\""),
+        Pair("Content-Type", "text/xml; charset=UTF-8")
+    )
+}
+
+fun buildJsonHeader(): Map<String, Any> {
+    return mapOf(
+        Pair("X-Auth-PSK", "Superteam17"),
+        Pair("Content-Type", "application/json")
+    )
+}
+
+class TVCommand private constructor(
+    val value: String,
+    val url: String,
+    val headers: Map<String, Any>
+) {
     constructor(
         tvCommandEnum: TVCommandEnum,
         commandParameter: String
-    ) : this(tvCommandEnum.contentGenerator.invoke(commandParameter), tvCommandEnum.url)
-
-    constructor(statusEnum: TvStatusEnum) : this(statusEnum.content, statusEnum.url)
-
+    ) : this(
+        tvCommandEnum.contentGenerator.invoke(commandParameter)
+        , tvCommandEnum.url
+        , if (TVCommandEnum.IRCC == tvCommandEnum) buildXmlHeader() else buildJsonHeader()
+    )
 }
