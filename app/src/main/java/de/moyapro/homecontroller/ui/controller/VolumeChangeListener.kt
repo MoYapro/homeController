@@ -2,20 +2,16 @@ package de.moyapro.homecontroller.ui.controller
 
 import android.util.Log
 import android.widget.SeekBar
-import android.widget.TextView
-import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.TVCommand
 import de.moyapro.homecontroller.TVCommandEnum
 import de.moyapro.homecontroller.request
+import de.moyapro.homecontroller.ui.databinding.ControllerViewModel
 
 
-class VolumeChangeListener : SeekBar.OnSeekBarChangeListener {
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        Log.i(this.javaClass.simpleName, "hover volume $progress")
-        seekBar?.findViewById<TextView>(R.id.volumeDisplay)?.apply {
-            text = "Lautstaerke $progress"
-        }
-        // update model to display currently hovering value: model.text = "Lautstaerke $progress"
+class VolumeChangeListener(val viewModel: ControllerViewModel) : SeekBar.OnSeekBarChangeListener {
+    override fun onProgressChanged(seekBar: SeekBar?, volumeValue: Int, fromUser: Boolean) {
+        Log.i(this.javaClass.simpleName, "hover volume $volumeValue")
+        viewModel.updateVolume(volumeValue.toString())
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {}

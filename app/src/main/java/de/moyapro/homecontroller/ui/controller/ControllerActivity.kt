@@ -11,6 +11,7 @@ import de.moyapro.homecontroller.*
 class ControllerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i(this.javaClass.simpleName, "on create")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (findViewById<View>(R.id.container) != null && savedInstanceState == null) {

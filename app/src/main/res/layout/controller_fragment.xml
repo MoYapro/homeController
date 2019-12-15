@@ -1,143 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black"
-    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_off"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:onClick="powerOff"
-        android:text="Off" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:id="@+id/button_hdmi4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:onClick="switchToHdmi4"
-        android:text="Computer" />
+    <data>
 
-    <Button
-        android:id="@+id/button_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:onClick="home"
-        android:text="HOME" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <Button
-        android:id="@+id/button_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:onClick="up"
-        android:text="UP" />
+        <variable
+            name="viewmodel"
+            type="de.moyapro.homecontroller.ui.databinding.ControllerViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/volumeDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewmodel.volume}"
+            android:textColor="@color/white" />
+
 
         <Button
-            android:id="@+id/button_left"
-            android:layout_width="200dp"
+            android:id="@+id/button_off"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:onClick="left"
-            android:text="LEFT" />
+            android:onClick="powerOff"
+            android:text="Off" />
 
         <Button
-            android:id="@+id/button_right"
-            android:layout_width="200dp"
+            android:id="@+id/button_hdmi4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:onClick="right"
-            android:text="RIGHT" />
+            android:onClick="switchToHdmi4"
+            android:text="Computer" />
+
+        <Button
+            android:id="@+id/button_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:onClick="home"
+            android:text="HOME" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/button_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:onClick="up"
+            android:text="UP" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_left"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="left"
+                android:text="LEFT" />
+
+            <Button
+                android:id="@+id/button_right"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="right"
+                android:text="RIGHT" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_down"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:onClick="down"
+            android:text="DOWN" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_return"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="back"
+                android:text="RETURN" />
+
+            <Button
+                android:id="@+id/button_center"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="center"
+                android:text="." />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_volume_up"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="increaseVolume"
+                android:text="+" />
+
+            <Button
+                android:id="@+id/button_volume_down"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="decreaseVolume"
+                android:text="-" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar2"
+            style="@android:style/Widget.Material.SeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:max="35"
+            android:progress="1" />
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_down"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:onClick="down"
-        android:text="DOWN" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button_return"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="back"
-            android:text="RETURN" />
-
-        <Button
-            android:id="@+id/button_center"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="center"
-            android:text="." />
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button_volume_up"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="increaseVolume"
-            android:text="+" />
-
-        <Button
-            android:id="@+id/button_volume_down"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="decreaseVolume"
-            android:text="-" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/volumeDisplay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="TextView" />
-
-    <SeekBar
-        android:id="@+id/seekBar2"
-        style="@android:style/Widget.Material.SeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:max="35"
-        android:progress="1" />
-
-</LinearLayout>
+</layout>
