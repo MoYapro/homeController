@@ -8,13 +8,15 @@ import de.moyapro.homecontroller.request
 import de.moyapro.homecontroller.ui.databinding.ControllerViewModel
 
 
-class VolumeChangeListener(val viewModel: ControllerViewModel) : SeekBar.OnSeekBarChangeListener {
+class VolumeChangeListener(var viewModel: ControllerViewModel) : SeekBar.OnSeekBarChangeListener {
     override fun onProgressChanged(seekBar: SeekBar?, volumeValue: Int, fromUser: Boolean) {
-        Log.i(this.javaClass.simpleName, "hover volume $volumeValue")
+        Log.d(this.javaClass.simpleName, "hover volume $volumeValue")
         viewModel.updateVolume(volumeValue.toString())
     }
 
-    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+        Log.d(this.javaClass.simpleName, "start changing volume")
+    }
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
         if (null == seekBar) {
