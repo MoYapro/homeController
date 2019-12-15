@@ -124,20 +124,19 @@
             android:text="-" />
     </LinearLayout>
 
-    <SeekBar
-        android:id="@+id/seekBar"
+    <TextView
+        android:id="@+id/volumeDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:max="100" />
+        android:text="TextView" />
 
     <SeekBar
         android:id="@+id/seekBar2"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        style="@android:style/Widget.Material.SeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:max="100"
-        android:progress="3" />
+        android:max="35"
+        android:progress="1" />
 
 </LinearLayout>

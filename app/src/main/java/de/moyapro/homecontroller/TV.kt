@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller.de.moyapro.homeController
+package de.moyapro.homecontroller
 
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result

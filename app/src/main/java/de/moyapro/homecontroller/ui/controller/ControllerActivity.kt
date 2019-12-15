@@ -2,13 +2,10 @@ package de.moyapro.homecontroller.ui.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import de.moyapro.homecontroller.IRCC_CODE
-import de.moyapro.homecontroller.R
-import de.moyapro.homecontroller.de.moyapro.homeController.TVCommand
-import de.moyapro.homecontroller.de.moyapro.homeController.TVCommandEnum
-import de.moyapro.homecontroller.de.moyapro.homeController.request
+import de.moyapro.homecontroller.*
 
 
 class ControllerActivity : AppCompatActivity() {
@@ -21,6 +18,7 @@ class ControllerActivity : AppCompatActivity() {
                 .add(R.id.container, ControllerFragment.newInstance())
                 .commit()
         }
+        Log.i(this.javaClass.simpleName, "create controller")
     }
 
 

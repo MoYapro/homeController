@@ -4,9 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import de.moyapro.homecontroller.de.moyapro.homeController.TVCommand
-import de.moyapro.homecontroller.de.moyapro.homeController.TVCommandEnum
-import de.moyapro.homecontroller.de.moyapro.homeController.request
 import de.moyapro.homecontroller.ui.controller.ControllerActivity
 import de.moyapro.homecontroller.ui.main.MainFragment
 
