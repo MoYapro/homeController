@@ -1,5 +1,6 @@
 package de.moyapro.homecontroller.ui.databinding
 
+import android.widget.SeekBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,5 +12,11 @@ class ControllerViewModel : ViewModel() {
     fun updateVolume(newVolume: String) {
         _volume.value = newVolume
     }
+
+
+    fun onVolumeSelect(seekBar: SeekBar, newVolume: Int, fromUser: Boolean) {
+        updateVolume(newVolume.toString())
+    }
+
 
 }
