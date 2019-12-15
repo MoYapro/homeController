@@ -3,7 +3,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="viewModel"
             type="de.moyapro.homecontroller.ui.databinding.ControllerViewModel" />
@@ -12,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <Button
@@ -89,6 +88,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:background="@color/colorPrimary"
             android:orientation="horizontal">
 
             <Button
@@ -114,16 +114,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button_volume_up"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:onClick="increaseVolume"
-                android:text="+" />
 
             <Button
                 android:id="@+id/button_volume_down"
@@ -132,6 +125,14 @@
                 android:background="@color/colorPrimary"
                 android:onClick="decreaseVolume"
                 android:text="-" />
+
+            <Button
+                android:id="@+id/button_volume_up"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="increaseVolume"
+                android:text="+" />
         </LinearLayout>
 
         <TextView
@@ -147,8 +148,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:max="35"
+            android:max="50"
             android:onProgressChanged="@{viewModel::onVolumeSelect}"
+            android:onStopTrackingTouch="@{viewModel::onStopTrackingTouch}"
             android:progress="1" />
 
     </LinearLayout>
