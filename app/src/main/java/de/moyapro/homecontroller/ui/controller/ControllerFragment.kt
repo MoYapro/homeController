@@ -51,7 +51,6 @@ class ControllerFragment : Fragment() {
     }
 
     private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
-
         while (this.isAdded) {
             request(
                 TVCommand(
