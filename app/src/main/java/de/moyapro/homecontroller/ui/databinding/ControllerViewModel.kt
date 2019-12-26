@@ -10,7 +10,7 @@ import de.moyapro.homecontroller.TVCommandEnum
 import de.moyapro.homecontroller.request
 
 class ControllerViewModel : ViewModel() {
-    private val _volume = MutableLiveData("5")
+    private val _volume = MutableLiveData("0")
     val volume: LiveData<String> = _volume
 
     fun updateVolume(newVolume: String) {

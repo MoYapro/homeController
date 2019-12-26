@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import de.moyapro.homecontroller.R
+import de.moyapro.homecontroller.*
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.ui.databinding.ControllerViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class ControllerFragment : Fragment() {
@@ -37,7 +40,15 @@ class ControllerFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ControllerViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
-        viewModel.updateVolume("15")
+        GlobalScope.launch {startBackgroundTvInfoUpdate(viewModel)}
     }
 
+    private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
+        val successAction =
+            { statusValue: String -> val dev_null = Log.i("statusupdate", statusValue) }
+        while (this.isAdded) {
+            request(TVCommand(TvStatusEnum.VOLUME_STATUS), successAction)
+            delay(1500)
+        }
+    }
 }

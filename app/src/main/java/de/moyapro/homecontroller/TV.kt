@@ -53,4 +53,13 @@ class TVCommand private constructor(
         , tvCommandEnum.url
         , if (TVCommandEnum.IRCC == tvCommandEnum) buildXmlHeader() else buildJsonHeader()
     )
+
+    constructor(
+        tvStatusEnum: TvStatusEnum
+    ) : this(
+        tvStatusEnum.content
+        , tvStatusEnum.url
+        , buildJsonHeader()
+    )
+
 }
