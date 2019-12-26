@@ -36,12 +36,11 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun powerOff(v: View) {
-        val successAction = { _: String -> finish() }
         request(
             TVCommand(
                 TVCommandEnum.POWER,
                 "false"
-            ), successAction
+            )
         )
     }
 

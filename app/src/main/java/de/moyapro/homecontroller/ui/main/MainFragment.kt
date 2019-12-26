@@ -1,5 +1,6 @@
 package de.moyapro.homecontroller.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import de.moyapro.homecontroller.communication.tv.TvStatusEnum
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.MainFragmentBinding
+import de.moyapro.homecontroller.ui.controller.ControllerActivity
 import de.moyapro.homecontroller.ui.main.databinding.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -21,7 +23,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.parse
-
 
 class MainFragment : Fragment() {
 
@@ -64,8 +65,12 @@ class MainFragment : Fragment() {
         tvResponseString: String,
         viewModel: MainViewModel
     ) {
-        Log.d(this.javaClass.simpleName, "Set volume to new value: $tvResponseString")
+        Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
         val hasPower = Json.parse<PowerStatusResponse>(tvResponseString).hasPower()
         viewModel.updateVolume(hasPower)
+        if(hasPower) {
+            this.requireActivity().finish()
+            startActivity(Intent(this.activity, ControllerActivity::class.java))
+        }
     }
 }

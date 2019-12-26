@@ -36,6 +36,16 @@ class ParseTest {
 
     @UseExperimental(ImplicitReflectionSerializer::class)
     @Test
+    fun parseResponseWithVolumeInformationWhenTvIsOff() {
+        val expectedVolume = 0
+        val ex =
+            Json.parse<VolumeInformationResponse>("""{"error":[40005,"Display Is Turned off"],"id":20}""")
+        val actualVolume: Int = ex.getVolume()
+        assertEquals("Should have got the correct volume", expectedVolume, actualVolume)
+    }
+
+    @UseExperimental(ImplicitReflectionSerializer::class)
+    @Test
     fun parseResponseWithPowerStatus() {
         val expectedPowerStatus = true
         val ex =

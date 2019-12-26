@@ -1,5 +1,6 @@
 package de.moyapro.homecontroller.ui.controller
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,11 +12,12 @@ import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.*
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TvStatusEnum
+import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
-import de.moyapro.homecontroller.communication.tv.model.VolumeInformation
 import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
+import de.moyapro.homecontroller.ui.main.databinding.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -58,6 +60,13 @@ class ControllerFragment : Fragment() {
                     TvStatusEnum.VOLUME_STATUS
                 )
             ) { tvResponseString: String -> this.updateStatusModel(tvResponseString, viewModel) }
+
+            request(
+                TVCommand(
+                    TvStatusEnum.POWER_STATUS
+                )
+            ) { tvResponseString: String -> this.handleTvPowerState(tvResponseString) }
+
             delay(1500)
         }
     }
@@ -67,8 +76,20 @@ class ControllerFragment : Fragment() {
         tvResponseString: String,
         viewModel: ControllerViewModel
     ) {
+        Log.d(this.javaClass.simpleName, "Set volume to new value: $tvResponseString")
         val volume = Json.parse<VolumeInformationResponse>(tvResponseString).getVolume()
-        Log.d(this.javaClass.simpleName, "Set volume to new value: $volume")
         viewModel.updateVolume(volume.toString())
+    }
+
+    @UseExperimental(ImplicitReflectionSerializer::class)
+    fun handleTvPowerState(
+        tvResponseString: String
+    ) {
+        Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
+        val hasPower = Json.parse<PowerStatusResponse>(tvResponseString).hasPower()
+        if (!hasPower) {
+            this.requireActivity().finish()
+            startActivity(Intent(this.activity, MainActivity::class.java))
+        }
     }
 }
