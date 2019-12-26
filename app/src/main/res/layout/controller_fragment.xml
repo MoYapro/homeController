@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="de.moyapro.homecontroller.ui.databinding.ControllerViewModel" />
+            type="de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel" />
     </data>
 
     <LinearLayout
