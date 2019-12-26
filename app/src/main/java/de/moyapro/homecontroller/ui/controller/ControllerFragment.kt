@@ -13,7 +13,7 @@ import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TvStatusEnum
 import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
-import de.moyapro.homecontroller.tvapi.model.TvResponse
+import de.moyapro.homecontroller.communication.tv.model.TvResponse
 import de.moyapro.homecontroller.ui.databinding.ControllerViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

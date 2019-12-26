@@ -1,7 +1,7 @@
 package de.moyapro.homecontroller
 
-import de.moyapro.homecontroller.tvapi.model.TvResponse
-import de.moyapro.homecontroller.tvapi.model.VolumeInformation
+import de.moyapro.homecontroller.communication.tv.model.TvResponse
+import de.moyapro.homecontroller.communication.tv.model.VolumeInformation
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json

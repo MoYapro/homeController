@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller.tvapi.model
+package de.moyapro.homecontroller.communication.tv.model
 
 import kotlinx.serialization.Serializable
 
