@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TvStatusEnum
+import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.MainFragmentBinding
 import de.moyapro.homecontroller.ui.main.databinding.MainViewModel
@@ -18,6 +19,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.parse
 
 
 class MainFragment : Fragment() {
@@ -62,7 +65,7 @@ class MainFragment : Fragment() {
         viewModel: MainViewModel
     ) {
         Log.d(this.javaClass.simpleName, "Set volume to new value: $tvResponseString")
-//        val volume = Json.parse<TvResponse>(tvResponseString).getVolume()
-        viewModel.updateVolume(Math.random() < .5)
+        val hasPower = Json.parse<PowerStatusResponse>(tvResponseString).hasPower()
+        viewModel.updateVolume(hasPower)
     }
 }
