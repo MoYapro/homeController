@@ -5,9 +5,9 @@ import android.widget.SeekBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import de.moyapro.homecontroller.TVCommand
-import de.moyapro.homecontroller.TVCommandEnum
-import de.moyapro.homecontroller.request
+import de.moyapro.homecontroller.communication.tv.TVCommand
+import de.moyapro.homecontroller.communication.tv.TVCommandEnum
+import de.moyapro.homecontroller.communication.tv.request
 
 class ControllerViewModel : ViewModel() {
     private val _volume = MutableLiveData("0")
@@ -26,7 +26,12 @@ class ControllerViewModel : ViewModel() {
     fun onStopTrackingTouch(volumeBar: SeekBar) {
 
         Log.i(this.javaClass.simpleName, "change volume to ${volumeBar.progress}")
-        request(TVCommand(TVCommandEnum.VOLUME, volumeBar.progress.toString()))
+        request(
+            TVCommand(
+                TVCommandEnum.VOLUME,
+                volumeBar.progress.toString()
+            )
+        )
     }
 
 

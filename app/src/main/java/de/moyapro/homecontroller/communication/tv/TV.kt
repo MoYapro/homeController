@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller
+package de.moyapro.homecontroller.communication.tv
 
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result

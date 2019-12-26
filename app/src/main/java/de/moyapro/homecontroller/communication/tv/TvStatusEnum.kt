@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller
+package de.moyapro.homecontroller.communication.tv
 
 enum class TvStatusEnum(val content: String, val url: String) {
     POWER_STATUS(

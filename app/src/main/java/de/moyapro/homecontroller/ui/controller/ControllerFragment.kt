@@ -9,6 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.*
+import de.moyapro.homecontroller.communication.tv.TVCommand
+import de.moyapro.homecontroller.communication.tv.TvStatusEnum
+import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.tvapi.model.TvResponse
 import de.moyapro.homecontroller.ui.databinding.ControllerViewModel
@@ -50,7 +53,11 @@ class ControllerFragment : Fragment() {
     private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
 
         while (this.isAdded) {
-            request(TVCommand(TvStatusEnum.VOLUME_STATUS)) { tvResponseString: String -> this.updateStatusModel(tvResponseString, viewModel)}
+            request(
+                TVCommand(
+                    TvStatusEnum.VOLUME_STATUS
+                )
+            ) { tvResponseString: String -> this.updateStatusModel(tvResponseString, viewModel) }
             delay(1500)
         }
     }

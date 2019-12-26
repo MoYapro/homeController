@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller
+package de.moyapro.homecontroller.communication.tv
 
 enum class TVCommandEnum(val contentGenerator: (String) -> String, val url: String) {
     POWER(

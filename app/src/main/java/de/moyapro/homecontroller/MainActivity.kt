@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import de.moyapro.homecontroller.communication.tv.TVCommand
+import de.moyapro.homecontroller.communication.tv.TVCommandEnum
+import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.ui.controller.ControllerActivity
 import de.moyapro.homecontroller.ui.main.MainFragment
 
@@ -26,7 +29,12 @@ class MainActivity : AppCompatActivity() {
     fun powerOn(v: View) {
         val successAction =
             { _: String -> startActivity(Intent(this, ControllerActivity::class.java)) }
-        request(TVCommand(TVCommandEnum.POWER, "true"), successAction)
+        request(
+            TVCommand(
+                TVCommandEnum.POWER,
+                "true"
+            ), successAction
+        )
     }
 
     fun checkTvPowerStatus(v: View) {

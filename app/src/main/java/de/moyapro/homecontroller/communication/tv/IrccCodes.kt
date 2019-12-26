@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller
+package de.moyapro.homecontroller.communication.tv
 
 enum class IRCC_CODE(val code: String) {
     UP("AAAAAgAAAJcAAABPAw=="),
