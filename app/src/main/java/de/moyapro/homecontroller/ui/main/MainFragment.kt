@@ -11,18 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TvStatusEnum
-import de.moyapro.homecontroller.communication.tv.model.TvResponse
 import de.moyapro.homecontroller.communication.tv.request
-import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.databinding.MainFragmentBinding
-import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
 import de.moyapro.homecontroller.ui.main.databinding.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 
 
 class MainFragment : Fragment() {

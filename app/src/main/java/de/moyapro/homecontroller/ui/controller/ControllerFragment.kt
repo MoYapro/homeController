@@ -13,7 +13,8 @@ import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TvStatusEnum
 import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
-import de.moyapro.homecontroller.communication.tv.model.TvResponse
+import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
+import de.moyapro.homecontroller.communication.tv.model.VolumeInformation
 import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -47,7 +48,7 @@ class ControllerFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ControllerViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
-        GlobalScope.launch {startBackgroundTvInfoUpdate(viewModel)}
+        GlobalScope.launch { startBackgroundTvInfoUpdate(viewModel) }
     }
 
     private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
@@ -66,7 +67,7 @@ class ControllerFragment : Fragment() {
         tvResponseString: String,
         viewModel: ControllerViewModel
     ) {
-        val volume = Json.parse<TvResponse>(tvResponseString).getVolume()
+        val volume = Json.parse<VolumeInformationResponse>(tvResponseString).getVolume()
         Log.d(this.javaClass.simpleName, "Set volume to new value: $volume")
         viewModel.updateVolume(volume.toString())
     }

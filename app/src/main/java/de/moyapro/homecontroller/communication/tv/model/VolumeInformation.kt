@@ -2,8 +2,6 @@ package de.moyapro.homecontroller.communication.tv.model
 
 import kotlinx.serialization.Serializable
 
-//{"result":[[{"target":"speaker","volume":3,"mute":false,"maxVolume":100,"minVolume":0}]],"id":20}
-
 @Serializable
 data class VolumeInformation(
     val target: String,

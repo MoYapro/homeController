@@ -1,13 +1,15 @@
 package de.moyapro.homecontroller
 
-import de.moyapro.homecontroller.communication.tv.model.TvResponse
+import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.communication.tv.model.VolumeInformation
+import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.parse
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.junit.Assert.*
 
 
 @Serializable
@@ -27,9 +29,19 @@ class ParseTest {
     fun parseResponseWithVolumeInformation() {
         val expectedVolume = 3
         val ex =
-            Json.parse<TvResponse>("""{"result":[[{"target":"speaker","volume":$expectedVolume,"mute":false,"maxVolume":100,"minVolume":0}]],"id":20}""")
-        val actualVolume: Int = ex.result[0][0].volume
+            Json.parse<VolumeInformationResponse>("""{"result":[[{"target":"speaker","volume":$expectedVolume,"mute":false,"maxVolume":100,"minVolume":0}]],"id":20}""")
+        val actualVolume: Int = ex.getVolume()
         assertEquals("Should have got the correct volume", expectedVolume, actualVolume)
+    }
+
+    @UseExperimental(ImplicitReflectionSerializer::class)
+    @Test
+    fun parseResponseWithPowerStatus() {
+        val expectedPowerStatus = true
+        val ex =
+            Json.parse<PowerStatusResponse>("""{"result":[{"status":"active"}],"id":20}""")
+        val actualPowerStatus: Boolean = ex.hasPower()
+        assertEquals("Should have got the correct volume", expectedPowerStatus, actualPowerStatus)
     }
 
 }
