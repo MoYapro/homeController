@@ -8,7 +8,7 @@
 
         <variable
             name="tvState"
-            type="de.moyapro.homecontroller.ui.main.model.TvState" />
+            type="de.moyapro.homecontroller.ui.main.databinding.TvState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

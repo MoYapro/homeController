@@ -14,7 +14,7 @@ import de.moyapro.homecontroller.communication.tv.TvStatusEnum
 import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.communication.tv.model.TvResponse
-import de.moyapro.homecontroller.ui.databinding.ControllerViewModel
+import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

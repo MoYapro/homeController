@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller.ui.databinding
+package de.moyapro.homecontroller.ui.controller.databinding
 
 import android.util.Log
 import android.widget.SeekBar

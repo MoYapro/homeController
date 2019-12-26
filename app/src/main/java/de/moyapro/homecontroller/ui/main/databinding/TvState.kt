@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller.ui.main.model
+package de.moyapro.homecontroller.ui.main.databinding
 
 import androidx.databinding.ObservableField
 
