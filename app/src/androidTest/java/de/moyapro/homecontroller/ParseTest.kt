@@ -19,6 +19,7 @@ class ParseTest {
     fun parseVolumeInformation() {
         val ex =
             Json.parse<VolumeInformation>("{\"target\":\"speaker\",\"volume\":3,\"mute\":false,\"maxVolume\":100,\"minVolume\":0}")
+        assertNotNull(ex)
     }
 
     @UseExperimental(ImplicitReflectionSerializer::class)

@@ -76,7 +76,7 @@
         <Button
             android:id="@+id/button_down"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:onClick="down"
             android:text="DOWN" />
@@ -86,22 +86,28 @@
             android:layout_height="20dp" />
 
 
-        <Button
-            android:id="@+id/button_center"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="96dp"
-            android:background="@color/colorPrimary"
-            android:onClick="center"
-            android:text="OK" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/button_center"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="center"
+                android:text="OK" />
 
-        <Button
-            android:id="@+id/button_return"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:background="@color/colorPrimary"
-            android:onClick="back"
-            android:text="RETURN" />
+            <Button
+                android:id="@+id/button_return"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="back"
+                android:text="RETURN" />
+        </LinearLayout>
+
 
         <Space
             android:layout_width="match_parent"

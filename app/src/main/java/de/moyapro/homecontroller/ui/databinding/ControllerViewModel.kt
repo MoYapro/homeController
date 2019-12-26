@@ -14,6 +14,7 @@ class ControllerViewModel : ViewModel() {
     val volume: LiveData<String> = _volume
 
     fun updateVolume(newVolume: String) {
+        Log.d(this.javaClass.simpleName, "Set volume to new value: $newVolume")
         _volume.value = newVolume
     }
 

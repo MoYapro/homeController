@@ -10,10 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.*
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
+import de.moyapro.homecontroller.tvapi.model.TvResponse
 import de.moyapro.homecontroller.ui.databinding.ControllerViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.parse
 
 
 class ControllerFragment : Fragment() {
@@ -44,11 +48,20 @@ class ControllerFragment : Fragment() {
     }
 
     private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
-        val successAction =
-            { statusValue: String -> val dev_null = Log.i("statusupdate", statusValue) }
+
         while (this.isAdded) {
-            request(TVCommand(TvStatusEnum.VOLUME_STATUS), successAction)
+            request(TVCommand(TvStatusEnum.VOLUME_STATUS)) { tvResponseString: String -> this.updateStatusModel(tvResponseString, viewModel)}
             delay(1500)
         }
+    }
+
+    @UseExperimental(ImplicitReflectionSerializer::class)
+    fun updateStatusModel(
+        tvResponseString: String,
+        viewModel: ControllerViewModel
+    ) {
+        val volume = Json.parse<TvResponse>(tvResponseString).getVolume()
+        Log.d(this.javaClass.simpleName, "Set volume to new value: $volume")
+        viewModel.updateVolume(volume.toString())
     }
 }
