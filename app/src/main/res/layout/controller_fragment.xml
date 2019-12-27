@@ -154,5 +154,13 @@
             android:onStopTrackingTouch="@{viewModel::onStopTrackingTouch}"
             android:progress="1" />
 
+        <Button
+            android:id="@+id/button_settings"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:onClick="settings"
+            android:text="Settings" />
+
     </LinearLayout>
 </layout>

@@ -10,6 +10,7 @@ import de.moyapro.homecontroller.communication.tv.TVCommandEnum
 import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.ui.controller.ControllerActivity
 import de.moyapro.homecontroller.ui.main.MainFragment
+import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +35,10 @@ class MainActivity : AppCompatActivity() {
                 "true"
             ), successAction
         )
+    }
+
+    fun settings(v: View) {
+        startActivity(Intent(this, MySettingsActivity::class.java))
     }
 
     fun checkTvPowerStatus(v: View) {

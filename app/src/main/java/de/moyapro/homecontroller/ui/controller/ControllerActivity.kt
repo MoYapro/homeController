@@ -10,6 +10,7 @@ import de.moyapro.homecontroller.communication.tv.IRCC_CODE
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TVCommandEnum
 import de.moyapro.homecontroller.communication.tv.request
+import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 
 
 class ControllerActivity : AppCompatActivity() {
@@ -26,6 +27,9 @@ class ControllerActivity : AppCompatActivity() {
         Log.i(this.javaClass.simpleName, "create controller")
     }
 
+    fun settings(v: View) {
+        startActivity(Intent(this, MySettingsActivity::class.java))
+    }
 
     fun increaseVolume(v: View) {
         changeVolumeRelative("+1")

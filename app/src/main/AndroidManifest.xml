@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.controller.ControllerActivity" />
+        <activity android:name=".ui.settings.MySettingsActivity" />
     </application>
 
 </manifest>
