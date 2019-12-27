@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.*
 import de.moyapro.homecontroller.communication.tv.TVCommand
@@ -16,8 +15,8 @@ import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
+import de.moyapro.homecontroller.ui.general.RunningFragment
 import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
-import de.moyapro.homecontroller.ui.main.databinding.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,7 +25,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.parse
 
 
-class ControllerFragment : Fragment() {
+class ControllerFragment : RunningFragment() {
 
     companion object {
         fun newInstance() = ControllerFragment()
@@ -55,18 +54,25 @@ class ControllerFragment : Fragment() {
 
     private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
         while (this.isAdded) {
-            request(
-                TVCommand(
-                    TvStatusEnum.VOLUME_STATUS
-                )
-            ) { tvResponseString: String -> this.updateStatusModel(tvResponseString, viewModel) }
+            if (isRunning) {
+                request(
+                    TVCommand(
+                        TvStatusEnum.VOLUME_STATUS
+                    )
+                ) { tvResponseString: String ->
+                    this.updateStatusModel(
+                        tvResponseString,
+                        viewModel
+                    )
+                }
 
-            request(
-                TVCommand(
-                    TvStatusEnum.POWER_STATUS
-                )
-            ) { tvResponseString: String -> this.handleTvPowerState(tvResponseString) }
+                request(
+                    TVCommand(
+                        TvStatusEnum.POWER_STATUS
+                    )
+                ) { tvResponseString: String -> this.handleTvPowerState(tvResponseString) }
 
+            }
             delay(1500)
         }
     }

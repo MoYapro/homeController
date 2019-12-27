@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
         registerBroadcastReceiver(this);
-
     }
 
     fun powerOn(v: View) {
