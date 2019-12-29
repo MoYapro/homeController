@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import de.moyapro.homecontroller.*
+import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.IRCC_CODE
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TVCommandEnum

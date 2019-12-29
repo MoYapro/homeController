@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import de.moyapro.homecontroller.R
-import de.moyapro.homecontroller.ui.controller.ControllerFragment
 
 class MySettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
