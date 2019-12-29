@@ -12,6 +12,6 @@ data class VolumeInformationResponse(
         if (result.isNotEmpty()) {
             return result[0][0].volume
         }
-        return 0;
+        return 0
     }
 }

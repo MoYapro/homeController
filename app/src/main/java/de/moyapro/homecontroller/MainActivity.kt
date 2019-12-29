@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.container, MainFragment.newInstance())
                 .commit()
         }
-        registerBroadcastReceiver(this);
+        registerBroadcastReceiver(this)
     }
 
     fun powerOn(v: View) {
@@ -42,8 +42,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun checkTvPowerStatus(v: View) {
-        val intent = Intent("de.moyapro.tv.status.power");
-        intent.putExtra("status", true);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        val intent = Intent("de.moyapro.tv.status.power")
+        intent.putExtra("status", true)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 }

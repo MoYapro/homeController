@@ -16,6 +16,6 @@ abstract class RunningFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        isRunning = false;
+        isRunning = false
     }
 }

@@ -50,7 +50,7 @@ class MainFragment : RunningFragment() {
 
     private suspend fun startBackgroundTvInfoUpdate(viewModel: MainViewModel) {
         while (this.isAdded) {
-            if(isRunning) {
+            if (isRunning) {
                 request(
                     TVCommand(
                         TvStatusEnum.POWER_STATUS
