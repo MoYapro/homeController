@@ -2,6 +2,7 @@ package de.moyapro.homecontroller.ui.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -98,5 +99,13 @@ class ControllerFragment : RunningFragment() {
             this.requireActivity().finish()
             startActivity(Intent(this.activity, MainActivity::class.java))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this.requireActivity());
+        Log.i(this.javaClass.simpleName, preferences.getString("prefIP", "192.168.1.111"))
+        Log.i(this.javaClass.simpleName, preferences.getString("prefPassword", "Superteam17"))
+
     }
 }
