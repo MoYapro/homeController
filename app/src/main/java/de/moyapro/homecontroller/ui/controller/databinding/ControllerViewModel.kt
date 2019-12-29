@@ -1,5 +1,6 @@
 package de.moyapro.homecontroller.ui.controller.databinding
 
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.SeekBar
 import androidx.lifecycle.LiveData
@@ -9,7 +10,7 @@ import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TVCommandEnum
 import de.moyapro.homecontroller.communication.tv.request
 
-class ControllerViewModel : ViewModel() {
+class ControllerViewModel(private val preferences: SharedPreferences) : ViewModel() {
     private val _volume = MutableLiveData("0")
     val volume: LiveData<String> = _volume
 
@@ -29,7 +30,8 @@ class ControllerViewModel : ViewModel() {
         request(
             TVCommand(
                 TVCommandEnum.VOLUME,
-                volumeBar.progress.toString()
+                volumeBar.progress.toString(),
+                preferences
             )
         )
     }

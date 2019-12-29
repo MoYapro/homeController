@@ -2,6 +2,7 @@ package de.moyapro.homecontroller.ui.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -43,7 +44,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.POWER,
-                "false"
+                "false",
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -54,7 +56,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.POWER,
-                "true"
+                "true",
+                PreferenceManager.getDefaultSharedPreferences(this)
             ), successAction
         )
     }
@@ -67,7 +70,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.VOLUME,
-                change
+                change,
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -76,7 +80,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.HDMI,
-                tvPort.toString()
+                tvPort.toString(),
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -85,7 +90,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
-                IRCC_CODE.UP.code
+                IRCC_CODE.UP.code,
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -94,7 +100,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
-                IRCC_CODE.LEFT.code
+                IRCC_CODE.LEFT.code,
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -103,7 +110,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
-                IRCC_CODE.RIGHT.code
+                IRCC_CODE.RIGHT.code,
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -112,7 +120,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
-                IRCC_CODE.DOWN.code
+                IRCC_CODE.DOWN.code,
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -121,7 +130,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
-                IRCC_CODE.CENTER.code
+                IRCC_CODE.CENTER.code,
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -130,7 +140,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
-                IRCC_CODE.HOME.code
+                IRCC_CODE.HOME.code,
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }
@@ -139,7 +150,8 @@ class ControllerActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
-                IRCC_CODE.RETURN.code
+                IRCC_CODE.RETURN.code,
+                PreferenceManager.getDefaultSharedPreferences(this)
             )
         )
     }

@@ -2,6 +2,7 @@ package de.moyapro.homecontroller.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +54,8 @@ class MainFragment : RunningFragment() {
             if (isRunning) {
                 request(
                     TVCommand(
-                        TvStatusEnum.POWER_STATUS
+                        TvStatusEnum.POWER_STATUS,
+                        PreferenceManager.getDefaultSharedPreferences(this.requireActivity())
                     )
                 ) { tvResponseString: String ->
                     this.updateStatusModel(

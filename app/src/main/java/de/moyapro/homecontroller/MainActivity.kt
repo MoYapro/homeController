@@ -2,6 +2,7 @@ package de.moyapro.homecontroller
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -32,7 +33,9 @@ class MainActivity : AppCompatActivity() {
         request(
             TVCommand(
                 TVCommandEnum.POWER,
-                "true"
+                "true",
+                PreferenceManager.getDefaultSharedPreferences(this)
+
             ), successAction
         )
     }

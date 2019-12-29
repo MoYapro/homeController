@@ -1,17 +1,17 @@
 package de.moyapro.homecontroller.communication.tv
 
-enum class TVCommandEnum(val contentGenerator: (String) -> String, val url: String) {
+enum class TVCommandEnum(val contentGenerator: (String) -> String, val urlGenerator: (String) -> String) {
     POWER(
         { value: String -> "{\"method\":\"setPowerStatus\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"status\":${value}}]}" },
-        "http://192.168.1.111/sony/system"
+        { ip: String -> "http://${ip}/sony/system" }
     ),
     VOLUME(
         { value: String -> "{\"method\":\"setAudioVolume\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"target\":\"speaker\",\"volume\":\"$value\"}]}" },
-        "http://192.168.1.111/sony/audio"
+        { ip: String -> "http://${ip}/sony/audio" }
     ),
     HDMI(
         { value: String -> "{\"method\":\"setPlayContent\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"uri\":\"extInput:hdmi?port=$value\"}]}" },
-        "http://192.168.1.111/sony/avContent"
+        { ip: String -> "http://${ip}/sony/avContent" }
     ),
     IRCC(
         { value: String ->
@@ -23,6 +23,6 @@ enum class TVCommandEnum(val contentGenerator: (String) -> String, val url: Stri
                |</s:Body>
                |</s:Envelope>""".trimMargin()
         },
-        "http://192.168.1.111/sony/IRCC"
+        { ip: String -> "http://${ip}/sony/IRCC" }
     )
 }

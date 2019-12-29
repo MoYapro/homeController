@@ -1,13 +1,13 @@
 package de.moyapro.homecontroller.communication.tv
 
-enum class TvStatusEnum(val content: String, val url: String) {
+enum class TvStatusEnum(val content: String, val urlGenerator: (String) -> String) {
     POWER_STATUS(
         "{\"id\": 20, \"method\": \"getPowerStatus\", \"version\": \"1.0\", \"params\": [] }",
-        "http://192.168.1.111/sony/system"
+        { ip: String -> "http://${ip}/sony/system" }
     ),
     VOLUME_STATUS(
         "{\"id\": 20, \"method\": \"getVolumeInformation\", \"version\": \"1.0\", \"params\": [] }",
-        "http://192.168.1.111/sony/audio"
+        { ip: String -> "http://${ip}/sony/audio" }
     )
 
 }

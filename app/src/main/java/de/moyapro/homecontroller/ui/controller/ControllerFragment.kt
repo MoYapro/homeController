@@ -59,7 +59,8 @@ class ControllerFragment : RunningFragment() {
             if (isRunning) {
                 request(
                     TVCommand(
-                        TvStatusEnum.VOLUME_STATUS
+                        TvStatusEnum.VOLUME_STATUS,
+                        PreferenceManager.getDefaultSharedPreferences(this.requireActivity())
                     )
                 ) { tvResponseString: String ->
                     this.updateStatusModel(
@@ -70,7 +71,8 @@ class ControllerFragment : RunningFragment() {
 
                 request(
                     TVCommand(
-                        TvStatusEnum.POWER_STATUS
+                        TvStatusEnum.POWER_STATUS,
+                        PreferenceManager.getDefaultSharedPreferences(this.requireActivity())
                     )
                 ) { tvResponseString: String -> this.handleTvPowerState(tvResponseString) }
 
