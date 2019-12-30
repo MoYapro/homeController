@@ -6,11 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
-    private val _volume = MutableLiveData(false)
-    val volume: LiveData<Boolean> = _volume
+    private val _hasPower = MutableLiveData(false)
+    val hasPower: LiveData<Boolean> = _hasPower
 
-    fun updateVolume(hasPower: Boolean) {
+    private val _ssid = MutableLiveData("...")
+    val ssid: LiveData<String> = _ssid
+
+    fun updatePowerState(hasPower: Boolean) {
         Log.d(this.javaClass.simpleName, "Set power state to new value: $hasPower")
-        _volume.value = hasPower
+        _hasPower.value = hasPower
     }
+
+    fun updateSsid(ssid: String) {
+        _ssid.value = ssid
+    }
+
 }

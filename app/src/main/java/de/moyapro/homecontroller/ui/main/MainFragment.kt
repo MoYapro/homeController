@@ -1,6 +1,8 @@
 package de.moyapro.homecontroller.ui.main
 
+import android.content.Context
 import android.content.Intent
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -25,6 +27,7 @@ import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.parse
 
+
 class MainFragment : RunningFragment() {
     companion object {
         fun newInstance() = MainFragment()
@@ -47,6 +50,8 @@ class MainFragment : RunningFragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
         GlobalScope.launch { startBackgroundTvInfoUpdate(viewModel) }
+        val wifiManager = context!!.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        viewModel.updateSsid(wifiManager.connectionInfo.ssid)
     }
 
     private suspend fun startBackgroundTvInfoUpdate(viewModel: MainViewModel) {
@@ -75,7 +80,7 @@ class MainFragment : RunningFragment() {
     ) {
         Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
         val hasPower = Json.parse<PowerStatusResponse>(tvResponseString).hasPower()
-        viewModel.updateVolume(hasPower)
+        viewModel.updatePowerState(hasPower)
         if (hasPower) {
             this.requireActivity().finish()
             startActivity(Intent(this.activity, ControllerActivity::class.java))
