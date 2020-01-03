@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel" />
@@ -14,104 +16,140 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_off"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="powerOff"
-            android:text="Off" />
-
-        <Button
-            android:id="@+id/button_hdmi4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="switchToHdmi4"
-            android:text="Computer" />
-
-        <Button
-            android:id="@+id/button_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="home"
-            android:text="HOME" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <Button
-            android:id="@+id/button_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="up"
-            android:text="UP" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:background="@color/colorPrimary"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_left"
-                android:layout_width="200dp"
+            <ImageButton
+                android:id="@+id/button_off"
+                android:layout_width="205dp"
                 android:layout_height="100dp"
                 android:background="@color/colorPrimary"
-                android:onClick="left"
-                android:text="LEFT" />
+                android:onClick="powerOff"
+                android:src="@drawable/ic_power_settings_new_white_48pt" />
 
-            <Button
-                android:id="@+id/button_right"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
+            <LinearLayout
+                android:layout_width="205dp"
+                android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
-                android:onClick="right"
-                android:text="RIGHT" />
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/button_hdmi4"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/colorPrimary"
+                    android:onClick="switchToHdmi4"
+                    android:textColor="@color/white"
+                    android:src="@drawable/ic_computer_white_48pt"/>
+
+                <ImageButton
+                    android:id="@+id/button_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/colorPrimary"
+                    android:onClick="home"
+                    android:src="@drawable/ic_home_white_48pt" />
+
+            </LinearLayout>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/button_down"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="down"
-            android:text="DOWN" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navigation_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button_center"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@color/colorPrimary"
                 android:onClick="center"
-                android:text="OK" />
+                android:text="@string/ok"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/button_left"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:onClick="left"
+                android:src="@drawable/ic_keyboard_arrow_left_white_48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/button_center"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/button_right"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:onClick="right"
+                android:src="@drawable/ic_keyboard_arrow_right_white_48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/button_center"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/button_up"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:onClick="up"
+                android:src="@drawable/ic_keyboard_arrow_up_white_48dp"
+                app:layout_constraintBottom_toTopOf="@+id/button_center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageButton
+                android:id="@+id/button_down"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:onClick="down"
+                android:src="@drawable/ic_keyboard_arrow_down_white_48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_center" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button_return"
-                android:layout_width="200dp"
+                android:layout_width="205dp"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:onClick="back"
-                android:text="RETURN" />
+                android:textColor="@color/white"
+                android:text="@string/back" />
+
+            <Button
+                android:id="@+id/button_center_2"
+                android:layout_width="205dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:onClick="center"
+                android:text="@string/ok" />
         </LinearLayout>
 
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -119,21 +157,21 @@
             android:background="@color/colorPrimary"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/button_volume_down"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:onClick="decreaseVolume"
-                android:text="-" />
+                android:src="@drawable/ic_volume_mute_white_48pt" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button_volume_up"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:onClick="increaseVolume"
-                android:text="+" />
+                android:src="@drawable/ic_volume_up_white_48pt" />
         </LinearLayout>
 
         <TextView
@@ -160,6 +198,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:onClick="settings"
+            android:textColor="@color/white"
             android:text="Settings" />
 
     </LinearLayout>

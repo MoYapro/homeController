@@ -3,4 +3,6 @@
     <string name="on">ON</string>
     <string name="off">OFF</string>
     <string name="check">Check</string>
+    <string name="ok">OK</string>
+    <string name="back">RETURN</string>
 </resources>
