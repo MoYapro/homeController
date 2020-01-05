@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import de.moyapro.homecontroller.R
@@ -156,4 +157,17 @@ class ControllerActivity : AppCompatActivity() {
         )
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                decreaseVolume(View(this.baseContext));
+                true
+            }
+            KeyEvent.KEYCODE_VOLUME_UP -> {
+                increaseVolume(View(this.baseContext));
+                true
+            }
+            else -> false
+        }
+    }
 }
