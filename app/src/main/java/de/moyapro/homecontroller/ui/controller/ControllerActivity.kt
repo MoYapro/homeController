@@ -59,6 +59,7 @@ class ControllerActivity : AppCompatActivity() {
                 TVCommandEnum.POWER,
                 "true",
                 PreferenceManager.getDefaultSharedPreferences(this)
+
             ), successAction
         )
     }
