@@ -1,12 +1,15 @@
 package de.moyapro.homecontroller.ui.controller
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.MainActivity
@@ -19,6 +22,7 @@ import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
 import de.moyapro.homecontroller.ui.general.RunningFragment
+import de.moyapro.homecontroller.ui.util.HoldableButtonListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -52,6 +56,24 @@ class ControllerFragment : RunningFragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
         GlobalScope.launch { startBackgroundTvInfoUpdate(viewModel) }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        this.requireActivity().findViewById<ImageButton>(R.id.button_right).setOnClickListener(HoldableButtonListener(ControllerActivity::right))
+        val yourButton = this.requireActivity().findViewById<ImageButton>(R.id.button_left)
+        yourButton
+            .setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                    when (event?.action) {
+                        MotionEvent.ACTION_DOWN -> Log.i(this.javaClass.simpleName, "action clicked")
+                    }
+
+                    return v?.onTouchEvent(event) ?: true
+                }
+            })
+        Log.i(this.javaClass.simpleName, "create click listener")
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
