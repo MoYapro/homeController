@@ -4,40 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/gray">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="de.moyapro.homecontroller.ui.main.databinding.MainViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.MainFragment">
-
-        <TextView
-            android:id="@+id/textView_ssid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="23dp"
-            android:text="@{viewModel.ssid}"
-            android:textColor="#2196F3"
-            app:layout_constraintBottom_toTopOf="@+id/textView_hasPower"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/textView_hasPower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="23dp"
-            android:text="@{viewModel.hasPower ? @string/on : @string/off}"
-            android:textColor="#2196F3"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/button"
@@ -49,7 +20,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Power on" />
 
         <Button
             android:id="@+id/button2"
