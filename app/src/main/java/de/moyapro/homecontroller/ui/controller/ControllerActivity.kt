@@ -8,11 +8,12 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import de.moyapro.homecontroller.R
-import de.moyapro.homecontroller.communication.tv.IRCC_CODE
-import de.moyapro.homecontroller.communication.tv.TVCommand
-import de.moyapro.homecontroller.communication.tv.TVCommandEnum
-import de.moyapro.homecontroller.communication.tv.request
+import de.moyapro.homecontroller.communication.tv.*
+import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.ui.settings.MySettingsActivity
+import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.parse
 
 
 class ControllerActivity : AppCompatActivity() {
@@ -28,6 +29,37 @@ class ControllerActivity : AppCompatActivity() {
         }
         Log.i(this.javaClass.simpleName, "create controller")
     }
+
+    private suspend fun startBackgroundTvInfoUpdate() {
+        request(
+            TVCommand(
+                TvStatusEnum.POWER_STATUS,
+                PreferenceManager.getDefaultSharedPreferences(this)
+            )
+        ) { tvResponseString: String ->
+            this.updateStatusModel(tvResponseString)
+        }
+    }
+
+    @UseExperimental(ImplicitReflectionSerializer::class)
+    fun updateStatusModel(
+        tvResponseString: String
+    ) {
+        Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
+        when (Json.parse<PowerStatusResponse>(tvResponseString).hasPower()) {
+            true -> showControlls()
+            false -> showPowerOffState()
+        }
+    }
+
+    private fun showPowerOffState() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun showControlls() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
     fun settings(v: View) {
         startActivity(Intent(this, MySettingsActivity::class.java))
