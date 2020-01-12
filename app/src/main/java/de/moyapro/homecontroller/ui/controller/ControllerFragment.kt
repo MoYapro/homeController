@@ -8,26 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.MainActivity
 import de.moyapro.homecontroller.R
-import de.moyapro.homecontroller.communication.tv.TVCommand
-import de.moyapro.homecontroller.communication.tv.TvStatusEnum
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
-import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
-import de.moyapro.homecontroller.ui.general.RunningFragment
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.parse
 
 
-class ControllerFragment : RunningFragment() {
+class ControllerFragment : Fragment() {
 
     companion object {
         fun newInstance() = ControllerFragment()
@@ -51,34 +47,6 @@ class ControllerFragment : RunningFragment() {
         viewModel = ViewModelProviders.of(this).get(ControllerViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
-        GlobalScope.launch { startBackgroundTvInfoUpdate(viewModel) }
-    }
-
-    private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
-        while (this.isAdded) {
-            if (isRunning) {
-                request(
-                    TVCommand(
-                        TvStatusEnum.VOLUME_STATUS,
-                        PreferenceManager.getDefaultSharedPreferences(this.requireActivity())
-                    )
-                ) { tvResponseString: String ->
-                    this.updateStatusModel(
-                        tvResponseString,
-                        viewModel
-                    )
-                }
-
-                request(
-                    TVCommand(
-                        TvStatusEnum.POWER_STATUS,
-                        PreferenceManager.getDefaultSharedPreferences(this.requireActivity())
-                    )
-                ) { tvResponseString: String -> this.handleTvPowerState(tvResponseString) }
-
-            }
-            delay(1500)
-        }
     }
 
     @UseExperimental(ImplicitReflectionSerializer::class)
