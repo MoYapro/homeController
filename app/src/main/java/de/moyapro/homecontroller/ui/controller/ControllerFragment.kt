@@ -57,18 +57,6 @@ class ControllerFragment : Fragment() {
         viewModel.updateVolume(volume.toString())
     }
 
-    @UseExperimental(ImplicitReflectionSerializer::class)
-    fun handleTvPowerState(
-        tvResponseString: String
-    ) {
-        Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
-        val hasPower = Json.parse<PowerStatusResponse>(tvResponseString).hasPower()
-        if (!hasPower) {
-            this.requireActivity().finish()
-            startActivity(Intent(this.activity, MainActivity::class.java))
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.requireActivity());
