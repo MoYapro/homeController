@@ -1,64 +1,70 @@
 package de.moyapro.homecontroller.ui.controller
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.*
-import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 
 
 @Suppress("UNUSED_PARAMETER")
 class ControllerActivity : AppCompatActivity() {
+    private lateinit var currentFragment: Fragment
+    private val powerStatusUpdateRunner = AsyncTaskRunner()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(this.javaClass.simpleName, "on create")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (findViewById<View>(R.id.container) != null && savedInstanceState == null) {
+            currentFragment = ControllerFragment()
             supportFragmentManager.beginTransaction()
-                .add(R.id.container, ControllerFragment.newInstance())
+                .add(R.id.container, currentFragment)
                 .commit()
         }
         Log.i(this.javaClass.simpleName, "create controller")
+        powerStatusUpdateRunner.execute(this::updateTvPowerStatusCommand)
     }
 
-    private suspend fun startBackgroundTvInfoUpdate() {
+    private fun updateTvPowerStatusCommand() {
         request(
             TVCommand(
                 TvStatusEnum.POWER_STATUS,
                 PreferenceManager.getDefaultSharedPreferences(this)
             )
         ) { tvResponseString: String ->
-            this.updateStatusModel(tvResponseString)
+            this.updateStatus(tvResponseString)
         }
     }
 
     @UseExperimental(ImplicitReflectionSerializer::class)
-    fun updateStatusModel(
+    fun updateStatus(
         tvResponseString: String
     ) {
         Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
-        when (Json.parse<PowerStatusResponse>(tvResponseString).hasPower()) {
+//        when (Json.parse<PowerStatusResponse>(tvResponseString).hasPower()) {
+        when (Math.random() < .5) {
             true -> showControlls()
             false -> showPowerOffState()
         }
     }
 
     private fun showPowerOffState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (currentFragment !is MainFragment)
+            replaceFragment(MainFragment())
     }
 
     private fun showControlls() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (currentFragment !is ControllerFragment)
+            replaceFragment(ControllerFragment())
     }
 
 
@@ -202,6 +208,27 @@ class ControllerActivity : AppCompatActivity() {
                 true
             }
             else -> false
+        }
+    }
+
+
+    internal class AsyncTaskRunner : AsyncTask<() -> Unit, Unit, Unit>() {
+        override fun doInBackground(vararg params: () -> Unit) {
+            while (true) {
+                Log.d("AsyncTaskRunner", "run ${System.currentTimeMillis()}")
+                params.forEach { it() }
+                Thread.sleep(250L)
+            }
+        }
+    }
+
+    private fun replaceFragment(newFragment: Fragment) {
+        if (currentFragment.javaClass != newFragment.javaClass) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, newFragment)
+                .addToBackStack(null)
+                .commit()
+            currentFragment = newFragment
         }
     }
 }
