@@ -11,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.*
+import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.parse
 
 
 @Suppress("UNUSED_PARAMETER")
@@ -50,8 +53,7 @@ class ControllerActivity : AppCompatActivity() {
         tvResponseString: String
     ) {
         Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
-//        when (Json.parse<PowerStatusResponse>(tvResponseString).hasPower()) {
-        when (Math.random() < .5) {
+        when (Json.parse<PowerStatusResponse>(tvResponseString).hasPower()) {
             true -> showControlls()
             false -> showPowerOffState()
         }
@@ -91,15 +93,12 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun powerOn(v: View) {
-        val successAction =
-            { _: String -> startActivity(Intent(this, ControllerActivity::class.java)) }
         request(
             TVCommand(
                 TVCommandEnum.POWER,
                 "true",
                 PreferenceManager.getDefaultSharedPreferences(this)
-
-            ), successAction
+            )
         )
     }
 
@@ -216,8 +215,8 @@ class ControllerActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: () -> Unit) {
             while (true) {
                 Log.d("AsyncTaskRunner", "run ${System.currentTimeMillis()}")
-                params.forEach { it() }
-                Thread.sleep(250L)
+                params.forEach { it() } // exectute actions
+                Thread.sleep(1500L)
             }
         }
     }
