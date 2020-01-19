@@ -25,7 +25,7 @@ class ControllerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (findViewById<View>(R.id.container) != null && savedInstanceState == null) {
-            currentFragment = ControllerFragment()
+            currentFragment = MainFragment()
             supportFragmentManager.beginTransaction()
                 .add(R.id.container, currentFragment)
                 .commit()
