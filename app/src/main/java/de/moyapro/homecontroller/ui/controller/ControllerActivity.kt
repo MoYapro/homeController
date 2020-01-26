@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.*
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
+import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
 import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
 import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 import kotlinx.serialization.ImplicitReflectionSerializer
@@ -38,7 +39,7 @@ class ControllerActivity : AppCompatActivity() {
         }
         Log.i(this.javaClass.simpleName, "create controller")
         viewModel = ViewModelProviders.of(this).get(ControllerViewModel::class.java)
-        powerStatusUpdateRunner.execute(this::updateTvPowerStatusCommand)
+        powerStatusUpdateRunner.execute(this::fetchPowerStatusUpdate, this::fetchVolumeStatusUpdate)
     }
 
     override fun onPause() {
@@ -61,19 +62,30 @@ class ControllerActivity : AppCompatActivity() {
         powerStatusUpdateRunner.pause()
     }
 
-    private fun updateTvPowerStatusCommand() {
+    private fun fetchPowerStatusUpdate() {
         request(
             TVCommand(
                 TvStatusEnum.POWER_STATUS,
                 PreferenceManager.getDefaultSharedPreferences(this)
             )
         ) { tvResponseString: String ->
-            this.updateStatus(tvResponseString)
+            this.handlePowerStatusUpdate(tvResponseString)
+        }
+    }
+
+    private fun fetchVolumeStatusUpdate() {
+        request(
+            TVCommand(
+                TvStatusEnum.VOLUME_STATUS,
+                PreferenceManager.getDefaultSharedPreferences(this)
+            )
+        ) { tvResponseString: String ->
+            this.updateStatusModel(tvResponseString, viewModel)
         }
     }
 
     @UseExperimental(ImplicitReflectionSerializer::class)
-    fun updateStatus(
+    fun handlePowerStatusUpdate(
         tvResponseString: String
     ) {
         Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
@@ -267,5 +279,14 @@ class ControllerActivity : AppCompatActivity() {
         }
     }
 
+    @UseExperimental(ImplicitReflectionSerializer::class)
+    fun updateStatusModel(
+        tvResponseString: String,
+        viewModel: ControllerViewModel
+    ) {
+        Log.d(this.javaClass.simpleName, "Set volume to new value: $tvResponseString")
+        val volume = Json.parse<VolumeInformationResponse>(tvResponseString).getVolume()
+        viewModel.updateVolume(volume.toString())
+    }
 
 }

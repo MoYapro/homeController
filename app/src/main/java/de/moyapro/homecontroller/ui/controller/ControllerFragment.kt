@@ -36,16 +36,6 @@ class ControllerFragment(val viewModel: ControllerViewModel) : Fragment() {
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
     }
 
-    @UseExperimental(ImplicitReflectionSerializer::class)
-    fun updateStatusModel(
-        tvResponseString: String,
-        viewModel: ControllerViewModel
-    ) {
-        Log.d(this.javaClass.simpleName, "Set volume to new value: $tvResponseString")
-        val volume = Json.parse<VolumeInformationResponse>(tvResponseString).getVolume()
-        viewModel.updateVolume(volume.toString())
-    }
-
     override fun onResume() {
         super.onResume()
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.requireActivity());
