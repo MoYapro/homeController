@@ -1,6 +1,5 @@
 package de.moyapro.homecontroller.ui.controller
 
-import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -9,10 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import de.moyapro.homecontroller.MainActivity
 import de.moyapro.homecontroller.R
-import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
 import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
 import de.moyapro.homecontroller.databinding.ControllerFragmentBinding
 import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
@@ -21,13 +17,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.parse
 
 
-class ControllerFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = ControllerFragment()
-    }
-
-    private lateinit var viewModel: ControllerViewModel
+class ControllerFragment(val viewModel: ControllerViewModel) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +32,6 @@ class ControllerFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val binding: ControllerFragmentBinding? =
             DataBindingUtil.bind(this.requireView())
-        viewModel = ViewModelProviders.of(this).get(ControllerViewModel::class.java)
         binding!!.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
     }

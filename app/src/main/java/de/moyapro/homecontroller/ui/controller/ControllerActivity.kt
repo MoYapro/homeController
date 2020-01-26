@@ -9,9 +9,11 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.*
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
+import de.moyapro.homecontroller.ui.controller.databinding.ControllerViewModel
 import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.json.Json
@@ -22,6 +24,7 @@ import kotlinx.serialization.parse
 class ControllerActivity : AppCompatActivity() {
     private lateinit var currentFragment: Fragment
     private val powerStatusUpdateRunner = AsyncTaskRunner()
+    private lateinit var viewModel: ControllerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(this.javaClass.simpleName, "on create")
@@ -34,6 +37,7 @@ class ControllerActivity : AppCompatActivity() {
                 .commit()
         }
         Log.i(this.javaClass.simpleName, "create controller")
+        viewModel = ViewModelProviders.of(this).get(ControllerViewModel::class.java)
         powerStatusUpdateRunner.execute(this::updateTvPowerStatusCommand)
     }
 
@@ -86,7 +90,7 @@ class ControllerActivity : AppCompatActivity() {
 
     private fun showControlls() {
         if (currentFragment !is ControllerFragment)
-            replaceFragment(ControllerFragment())
+            replaceFragment(ControllerFragment(viewModel))
     }
 
 
