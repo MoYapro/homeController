@@ -37,6 +37,26 @@ class ControllerActivity : AppCompatActivity() {
         powerStatusUpdateRunner.execute(this::updateTvPowerStatusCommand)
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.i(this.javaClass.simpleName, "onPause")
+        pauseBackgroundUpdate()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i(this.javaClass.simpleName, "onResume")
+        resumeBackgroundUpdates()
+    }
+
+    private fun resumeBackgroundUpdates() {
+        powerStatusUpdateRunner.resume()
+    }
+
+    private fun pauseBackgroundUpdate() {
+        powerStatusUpdateRunner.pause()
+    }
+
     private fun updateTvPowerStatusCommand() {
         request(
             TVCommand(
@@ -212,12 +232,24 @@ class ControllerActivity : AppCompatActivity() {
 
 
     internal class AsyncTaskRunner : AsyncTask<() -> Unit, Unit, Unit>() {
+        private var active: Boolean = true
+
         override fun doInBackground(vararg params: () -> Unit) {
             while (true) {
-                Log.d("AsyncTaskRunner", "run ${System.currentTimeMillis()}")
-                params.forEach { it() } // exectute actions
-                Thread.sleep(1500L)
+                if (active) {
+                    Log.d("AsyncTaskRunner", "run ${System.currentTimeMillis()}")
+                    params.forEach { it() } // exectute actions
+                    Thread.sleep(1500L)
+                }
             }
+        }
+
+        fun pause() {
+            this.active = false
+        }
+
+        fun resume() {
+            this.active = true
         }
     }
 
@@ -230,4 +262,6 @@ class ControllerActivity : AppCompatActivity() {
             currentFragment = newFragment
         }
     }
+
+
 }
