@@ -53,7 +53,7 @@ class TVCommand private constructor(
         preferences: SharedPreferences
     ) : this(
         tvCommandEnum.contentGenerator.invoke(commandParameter)
-        , tvCommandEnum.urlGenerator(preferences.getString(SettingsKeys.IP, "192.168.1.1"))
+        , tvCommandEnum.urlGenerator(preferences.getString(SettingsKeys.IP, "0.0.0.0"))
         , if (TVCommandEnum.IRCC == tvCommandEnum)
             buildXmlHeader(preferences.getString(SettingsKeys.PASSWORD, "invalid"))
         else
@@ -65,7 +65,7 @@ class TVCommand private constructor(
         preferences: SharedPreferences
     ) : this(
         tvStatusEnum.content
-        , tvStatusEnum.urlGenerator(preferences.getString(SettingsKeys.IP, "192.168.1.1"))
+        , tvStatusEnum.urlGenerator(preferences.getString(SettingsKeys.IP, "0.0.0.0"))
         , buildJsonHeader(preferences.getString(SettingsKeys.PASSWORD, "invalid"))
     )
 
