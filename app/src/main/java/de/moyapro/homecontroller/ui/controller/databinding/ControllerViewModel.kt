@@ -12,6 +12,7 @@ import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TVCommandEnum
 import de.moyapro.homecontroller.communication.tv.request
 
+@Suppress("UNUSED_PARAMETER")
 class ControllerViewModel(application: Application) : AndroidViewModel(application) {
 
     private val preferences: SharedPreferences =

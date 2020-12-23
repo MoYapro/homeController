@@ -14,6 +14,7 @@ import de.moyapro.homecontroller.ui.main.MainFragment
 import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 
 
+@Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

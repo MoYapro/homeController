@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TvStatusEnum
@@ -23,9 +23,8 @@ import de.moyapro.homecontroller.ui.main.databinding.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 
 
 class MainFragment : RunningFragment() {
@@ -46,11 +45,11 @@ class MainFragment : RunningFragment() {
         super.onActivityCreated(savedInstanceState)
         val binding: MainFragmentBinding =
             DataBindingUtil.setContentView(this.requireActivity(), R.layout.main_fragment)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
         GlobalScope.launch { startBackgroundTvInfoUpdate(viewModel) }
-        val wifiManager = context!!.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val wifiManager = requireContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
         viewModel.updateSsid(wifiManager.connectionInfo.ssid)
     }
 
@@ -73,13 +72,12 @@ class MainFragment : RunningFragment() {
         }
     }
 
-    @UseExperimental(ImplicitReflectionSerializer::class)
-    fun updateStatusModel(
+    private fun updateStatusModel(
         tvResponseString: String,
         viewModel: MainViewModel
     ) {
         Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
-        val hasPower = Json.parse<PowerStatusResponse>(tvResponseString).hasPower()
+        val hasPower = Json.decodeFromString<PowerStatusResponse>(tvResponseString).hasPower()
         viewModel.updatePowerState(hasPower)
         if (hasPower) {
             this.requireActivity().finish()

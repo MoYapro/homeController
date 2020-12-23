@@ -15,6 +15,7 @@ import de.moyapro.homecontroller.communication.tv.request
 import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 
 
+@Suppress("UNUSED_PARAMETER")
 class ControllerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
