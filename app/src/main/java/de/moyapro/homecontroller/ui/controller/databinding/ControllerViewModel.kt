@@ -22,7 +22,6 @@ class ControllerViewModel(application: Application) : AndroidViewModel(applicati
     val volume: LiveData<String> = _volume
 
     fun updateVolume(newVolume: String) {
-        Log.d(this.javaClass.simpleName, "Set volume to new value: $newVolume")
         _volume.value = newVolume
     }
 
@@ -32,8 +31,6 @@ class ControllerViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     fun onStopTrackingTouch(volumeBar: SeekBar) {
-
-        Log.i(this.javaClass.simpleName, "change volume to ${volumeBar.progress}")
         request(
             TVCommand(
                 TVCommandEnum.VOLUME,

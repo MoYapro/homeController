@@ -106,7 +106,6 @@ class ControllerFragment : RunningFragment() {
         tvResponseString: String,
         viewModel: ControllerViewModel
     ) {
-        Log.d(this.javaClass.simpleName, "Set volume to new value: $tvResponseString")
         val volume = Json.decodeFromString<VolumeInformationResponse>(tvResponseString).getVolume()
         viewModel.updateVolume(volume.toString())
     }
@@ -114,7 +113,6 @@ class ControllerFragment : RunningFragment() {
     private fun handleTvPowerState(
         tvResponseString: String
     ) {
-        Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
         val hasPower = Json.decodeFromString<PowerStatusResponse>(tvResponseString).hasPower()
         if (!hasPower) {
             this.requireActivity().finish()
@@ -125,7 +123,7 @@ class ControllerFragment : RunningFragment() {
     override fun onResume() {
         super.onResume()
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.requireActivity())
-        Log.d(this.javaClass.simpleName, preferences.getString("prefIP", "192.168.1.111"))
+        Log.d(this.javaClass.simpleName, preferences.getString("prefIP", "0.0.0.0"))
         Log.d(this.javaClass.simpleName, preferences.getString("prefPassword", "invalid"))
 
     }

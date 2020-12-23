@@ -76,7 +76,6 @@ class MainFragment : RunningFragment() {
         tvResponseString: String,
         viewModel: MainViewModel
     ) {
-        Log.d(this.javaClass.simpleName, "Set power status to new value: $tvResponseString")
         val hasPower = Json.decodeFromString<PowerStatusResponse>(tvResponseString).hasPower()
         viewModel.updatePowerState(hasPower)
         if (hasPower) {

@@ -13,7 +13,6 @@ class MainViewModel : ViewModel() {
     val ssid: LiveData<String> = _ssid
 
     fun updatePowerState(hasPower: Boolean) {
-        Log.d(this.javaClass.simpleName, "Set power state to new value: $hasPower")
         _hasPower.value = hasPower
     }
 
