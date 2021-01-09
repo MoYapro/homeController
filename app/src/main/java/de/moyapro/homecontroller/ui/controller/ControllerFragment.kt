@@ -101,12 +101,4 @@ class ControllerFragment : RunningFragment() {
             startActivity(Intent(this.activity, MainActivity::class.java))
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this.requireActivity())
-        Log.d(this.javaClass.simpleName, preferences.getString("prefIP", "0.0.0.0"))
-        Log.d(this.javaClass.simpleName, preferences.getString("prefPassword", "invalid"))
-
-    }
 }
