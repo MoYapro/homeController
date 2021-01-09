@@ -17,11 +17,9 @@ class HoldableButtonListener(
     private val handlerRunnable: Runnable = object : Runnable {
         override fun run() {
             if (touchedView.isPressed) {
-                Log.i(this.javaClass.simpleName, "run enabled")
                 handler.postDelayed(this, normalInterval.toLong())
                 touchedView.performClick()
             } else {
-                Log.i(this.javaClass.simpleName, "run disabled")
                 handler.removeCallbacks(this)
                 touchedView.isPressed = false
             }
@@ -29,7 +27,6 @@ class HoldableButtonListener(
     }
 
     override fun onTouch(view: View, event: MotionEvent): Boolean {
-        Log.i(this.javaClass.simpleName, "handle event $event")
         return when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 handler.postDelayed(handlerRunnable, initialInterval.toLong())
@@ -45,7 +42,6 @@ class HoldableButtonListener(
             }
             MotionEvent.ACTION_MOVE -> {
                 if (isOutside(view, event)) {
-                    Log.i(this.javaClass.simpleName, "moved outside")
                     stopRepeat()
                 }
                 false

@@ -3,7 +3,6 @@ package de.moyapro.homecontroller.ui.controller
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +18,6 @@ import de.moyapro.homecontroller.ui.settings.MySettingsActivity
 class ControllerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(this.javaClass.simpleName, "on create")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (findViewById<View>(R.id.container) != null && savedInstanceState == null) {
@@ -27,7 +25,6 @@ class ControllerActivity : AppCompatActivity() {
                 .add(R.id.container, ControllerFragment.newInstance())
                 .commit()
         }
-        Log.i(this.javaClass.simpleName, "create controller")
     }
 
     fun settings(v: View) {
@@ -89,7 +86,6 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun up(v: View) {
-        Log.i(this.javaClass.simpleName, "send 'up'")
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
@@ -100,7 +96,6 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun left(v: View) {
-        Log.i(this.javaClass.simpleName, "send 'left'")
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
@@ -111,7 +106,6 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun right(v: View) {
-        Log.i(this.javaClass.simpleName, "send 'right'")
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
@@ -122,7 +116,6 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun down(v: View) {
-        Log.i(this.javaClass.simpleName, "send 'down'")
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
@@ -165,11 +158,11 @@ class ControllerActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return when (keyCode) {
             KeyEvent.KEYCODE_VOLUME_DOWN -> {
-                decreaseVolume(View(this.baseContext));
+                decreaseVolume(View(this.baseContext))
                 true
             }
             KeyEvent.KEYCODE_VOLUME_UP -> {
-                increaseVolume(View(this.baseContext));
+                increaseVolume(View(this.baseContext))
                 true
             }
             else -> false
