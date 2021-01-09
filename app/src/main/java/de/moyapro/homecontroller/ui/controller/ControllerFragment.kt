@@ -80,8 +80,16 @@ class ControllerFragment : RunningFragment() {
         tvResponseString: String,
         viewModel: ControllerViewModel
     ) {
-        val volume = Json.decodeFromString<VolumeInformationResponse>(tvResponseString).getVolume()
-        viewModel.updateVolume(volume.toString())
+        if (tvResponseString.contains("error")) {
+            Log.e(
+                this.javaClass.simpleName,
+                "Request for volumeStatus not successfull: $tvResponseString"
+            )
+        } else {
+            val volume =
+                Json.decodeFromString<VolumeInformationResponse>(tvResponseString).getVolume()
+            viewModel.updateVolume(volume.toString())
+        }
     }
 
     private fun handleTvPowerState(
