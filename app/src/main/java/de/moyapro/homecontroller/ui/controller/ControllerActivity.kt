@@ -89,6 +89,7 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun up(v: View) {
+        Log.i(this.javaClass.simpleName, "send 'up'")
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
@@ -99,6 +100,7 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun left(v: View) {
+        Log.i(this.javaClass.simpleName, "send 'left'")
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
@@ -109,6 +111,7 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun right(v: View) {
+        Log.i(this.javaClass.simpleName, "send 'right'")
         request(
             TVCommand(
                 TVCommandEnum.IRCC,
@@ -119,6 +122,7 @@ class ControllerActivity : AppCompatActivity() {
     }
 
     fun down(v: View) {
+        Log.i(this.javaClass.simpleName, "send 'down'")
         request(
             TVCommand(
                 TVCommandEnum.IRCC,

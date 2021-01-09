@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -38,41 +37,20 @@ class ControllerFragment : RunningFragment() {
 
     private lateinit var viewModel: ControllerViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        Log.i(this.javaClass.simpleName, "create fragment controller")
-        return inflater.inflate(R.layout.controller_fragment, container, false)
-    }
 
-
+    @SuppressLint("ClickableViewAccessibility")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val binding: ControllerFragmentBinding =
             DataBindingUtil.setContentView(this.requireActivity(), R.layout.controller_fragment)
         viewModel = ViewModelProvider(this).get(ControllerViewModel::class.java)
+        binding.buttonUp.setOnTouchListener(HoldableButtonListener())
+        binding.buttonRight.setOnTouchListener(HoldableButtonListener())
+        binding.buttonDown.setOnTouchListener(HoldableButtonListener())
+        binding.buttonLeft.setOnTouchListener(HoldableButtonListener())
         binding.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
         GlobalScope.launch { startBackgroundTvInfoUpdate(viewModel) }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        this.requireActivity().findViewById<ImageButton>(R.id.button_right).setOnClickListener(HoldableButtonListener(ControllerActivity::right))
-        val yourButton = this.requireActivity().findViewById<ImageButton>(R.id.button_left)
-        yourButton
-            .setOnTouchListener(object : View.OnTouchListener {
-                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                    when (event?.action) {
-                        MotionEvent.ACTION_DOWN -> Log.i(this.javaClass.simpleName, "action clicked")
-                    }
-
-                    return v?.onTouchEvent(event) ?: true
-                }
-            })
-        Log.i(this.javaClass.simpleName, "create click listener")
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private suspend fun startBackgroundTvInfoUpdate(viewModel: ControllerViewModel) {
