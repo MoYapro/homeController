@@ -44,6 +44,8 @@ class ControllerFragment : RunningFragment() {
         binding.buttonRight.setOnTouchListener(HoldableButtonListener())
         binding.buttonDown.setOnTouchListener(HoldableButtonListener())
         binding.buttonLeft.setOnTouchListener(HoldableButtonListener())
+        binding.buttonVolumeUp.setOnTouchListener(HoldableButtonListener())
+        binding.buttonVolumeDown.setOnTouchListener(HoldableButtonListener())
         binding.viewModel = viewModel
         binding.lifecycleOwner = this // <-- this enables MutableLiveData to be update on your UI
         GlobalScope.launch { startBackgroundTvInfoUpdate(viewModel) }
