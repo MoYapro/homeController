@@ -9,7 +9,7 @@ import android.view.View.OnTouchListener
 
 class HoldableButtonListener(
     private val initialInterval: Int = 1000,
-    private val normalInterval: Int = 250
+    private val normalInterval: Int = 150
 ) : OnTouchListener {
     private var touchedViewArea: Rect = Rect()
     private lateinit var touchedView: View

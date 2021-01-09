@@ -12,7 +12,7 @@ fun request(
         .httpPost()
         .header(command.headers)
         .body(command.value)
-        .response { request, response, result ->
+        .response { _, _, result ->
             when (result) {
                 is Result.Failure -> {
                     val ex = result.getException()
@@ -52,21 +52,21 @@ class TVCommand private constructor(
         commandParameter: String,
         preferences: SharedPreferences
     ) : this(
-        tvCommandEnum.contentGenerator.invoke(commandParameter)
-        , tvCommandEnum.urlGenerator(preferences.getString(SettingsKeys.IP, "0.0.0.0"))
-        , if (TVCommandEnum.IRCC == tvCommandEnum)
-            buildXmlHeader(preferences.getString(SettingsKeys.PASSWORD, "invalid"))
+        tvCommandEnum.contentGenerator.invoke(commandParameter),
+        tvCommandEnum.urlGenerator(preferences.getString(SettingsKeys.IP, null) ?: "0.0.0.0"),
+        if (TVCommandEnum.IRCC == tvCommandEnum)
+            buildXmlHeader(preferences.getString(SettingsKeys.PASSWORD, null) ?: "invalid")
         else
-            buildJsonHeader(preferences.getString(SettingsKeys.PASSWORD, "invalid"))
+            buildJsonHeader(preferences.getString(SettingsKeys.PASSWORD, null) ?: "invalid")
     )
 
     constructor(
         tvStatusEnum: TvStatusEnum,
         preferences: SharedPreferences
     ) : this(
-        tvStatusEnum.content
-        , tvStatusEnum.urlGenerator(preferences.getString(SettingsKeys.IP, "0.0.0.0"))
-        , buildJsonHeader(preferences.getString(SettingsKeys.PASSWORD, "invalid"))
+        tvStatusEnum.content,
+        tvStatusEnum.urlGenerator(preferences.getString(SettingsKeys.IP, null) ?: "0.0.0.0"),
+        buildJsonHeader(preferences.getString(SettingsKeys.PASSWORD, null) ?: "invalid")
     )
 
 }
