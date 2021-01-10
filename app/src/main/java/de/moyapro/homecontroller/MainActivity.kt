@@ -2,10 +2,10 @@ package de.moyapro.homecontroller
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.preference.PreferenceManager
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TVCommandEnum
 import de.moyapro.homecontroller.communication.tv.request

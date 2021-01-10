@@ -3,10 +3,10 @@ package de.moyapro.homecontroller.ui.controller
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import de.moyapro.homecontroller.MainActivity
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.TVCommand

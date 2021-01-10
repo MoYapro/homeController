@@ -2,10 +2,10 @@ package de.moyapro.homecontroller.ui.controller
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import de.moyapro.homecontroller.R
 import de.moyapro.homecontroller.communication.tv.IRCC_CODE
 import de.moyapro.homecontroller.communication.tv.TVCommand
@@ -59,6 +59,18 @@ class ControllerActivity : AppCompatActivity() {
                 PreferenceManager.getDefaultSharedPreferences(this)
             ), successAction
         )
+    }
+
+    fun switchToHdmi1(v: View) {
+        switchToHdmi(1)
+    }
+
+    fun switchToHdmi2(v: View) {
+        switchToHdmi(2)
+    }
+
+    fun switchToHdmi3(v: View) {
+        switchToHdmi(3)
     }
 
     fun switchToHdmi4(v: View) {

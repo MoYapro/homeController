@@ -2,12 +2,11 @@ package de.moyapro.homecontroller.ui.controller.databinding
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
-import android.util.Log
 import android.widget.SeekBar
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TVCommandEnum
 import de.moyapro.homecontroller.communication.tv.request
