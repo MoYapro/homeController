@@ -11,7 +11,7 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical">
@@ -20,19 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@color/colorPrimaryDark"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <ImageButton
                 android:id="@+id/button_off"
-                android:layout_width="205dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 android:onClick="powerOff"
                 android:src="@drawable/ic_power_settings_new_white_48pt" />
 
             <LinearLayout
-                android:layout_width="205dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 android:orientation="vertical">
 
@@ -40,12 +43,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@color/colorPrimaryDark"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <ImageButton
                         android:id="@+id/button_hdmi1"
-                        android:layout_width="102dp"
+                        android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_weight="1"
                         android:background="@color/colorPrimaryDark"
                         android:onClick="switchToHdmi1"
                         android:src="@drawable/ic_computer_white_48pt_1"
@@ -53,8 +58,9 @@
 
                     <ImageButton
                         android:id="@+id/button_hdmi2"
-                        android:layout_width="103dp"
+                        android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_weight="1"
                         android:background="@color/colorPrimaryDark"
                         android:onClick="switchToHdmi2"
                         android:src="@drawable/ic_computer_white_48pt_2"
@@ -65,12 +71,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@color/colorPrimaryDark"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <ImageButton
                         android:id="@+id/button_hdmi3"
-                        android:layout_width="102dp"
+                        android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_weight="1"
                         android:background="@color/colorPrimaryDark"
                         android:onClick="switchToHdmi3"
                         android:src="@drawable/ic_computer_white_48pt_3"
@@ -78,8 +86,9 @@
 
                     <ImageButton
                         android:id="@+id/button_hdmi4"
-                        android:layout_width="103dp"
+                        android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_weight="1"
                         android:background="@color/colorPrimaryDark"
                         android:onClick="switchToHdmi4"
                         android:src="@drawable/ic_computer_white_48pt_4"
@@ -87,10 +96,6 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/navigation_layout"
@@ -161,57 +166,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/button_return"
-                android:layout_width="205dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 android:onClick="back"
                 android:text="@string/back"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="48sp"
                 android:textColor="@color/white"
+                android:textSize="48sp"
                 android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/button_home"
-                android:layout_width="205dp"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 android:onClick="home"
                 android:src="@drawable/ic_home_white_48pt" />
 
-            <Button
-                android:id="@+id/button_center_2"
-                android:layout_width="205dp"
-                android:layout_height="48dp"
-                android:background="@color/colorPrimaryDark"
-                android:onClick="center"
-                android:text="@string/ok"
-                android:textColor="@color/white" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:weightSum="2"
             android:background="@color/colorPrimaryDark"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/button_volume_down"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 android:onClick="decreaseVolume"
                 android:src="@drawable/ic_volume_mute_white_48pt" />
 
             <ImageButton
                 android:id="@+id/button_volume_up"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 android:onClick="increaseVolume"
                 android:src="@drawable/ic_volume_up_white_48pt" />
