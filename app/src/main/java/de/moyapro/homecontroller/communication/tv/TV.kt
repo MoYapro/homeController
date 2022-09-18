@@ -1,13 +1,16 @@
 package de.moyapro.homecontroller.communication.tv
 
-import android.content.SharedPreferences
+import android.util.Log
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
+import de.moyapro.homecontroller.communication.tv.model.ConnectionProperties
 
+const val TAG = "request"
 fun request(
     command: TVCommand,
-    successAction: (String) -> Unit = {}
+    successAction: (String) -> Unit = {},
 ) {
+    Log.i(TAG, "request")
     command.url
         .httpPost()
         .header(command.headers)
@@ -16,9 +19,10 @@ fun request(
             when (result) {
                 is Result.Failure -> {
                     val ex = result.getException()
-                    println(ex)
+                    Log.e(TAG, "error when sending request", ex)
                 }
                 is Result.Success -> {
+                    Log.d(TAG, "got $result")
                     val data = result.get()
                     successAction.invoke(String(data))
                 }
@@ -45,28 +49,28 @@ fun buildJsonHeader(password: String): Map<String, Any> {
 class TVCommand private constructor(
     val value: String,
     val url: String,
-    val headers: Map<String, Any>
+    val headers: Map<String, Any>,
 ) {
     constructor(
         tvCommandEnum: TVCommandEnum,
         commandParameter: String,
-        preferences: SharedPreferences
+        connectionProperties: ConnectionProperties,
     ) : this(
         tvCommandEnum.contentGenerator.invoke(commandParameter),
-        tvCommandEnum.urlGenerator(preferences.getString(SettingsKeys.IP, null) ?: "0.0.0.0"),
+        tvCommandEnum.urlGenerator(connectionProperties.ip),
         if (TVCommandEnum.IRCC == tvCommandEnum)
-            buildXmlHeader(preferences.getString(SettingsKeys.PASSWORD, null) ?: "invalid")
+            buildXmlHeader(connectionProperties.password)
         else
-            buildJsonHeader(preferences.getString(SettingsKeys.PASSWORD, null) ?: "invalid")
+            buildJsonHeader(connectionProperties.password)
     )
 
     constructor(
         tvStatusEnum: TvStatusEnum,
-        preferences: SharedPreferences
+        connectionProperties: ConnectionProperties,
     ) : this(
         tvStatusEnum.content,
-        tvStatusEnum.urlGenerator(preferences.getString(SettingsKeys.IP, null) ?: "0.0.0.0"),
-        buildJsonHeader(preferences.getString(SettingsKeys.PASSWORD, null) ?: "invalid")
+        tvStatusEnum.urlGenerator(connectionProperties.ip),
+        buildJsonHeader(connectionProperties.password)
     )
 
 }

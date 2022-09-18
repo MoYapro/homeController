@@ -1,18 +1,3 @@
 <resources>
-    <string name="app_name">HomeController</string>
-    <string name="ok">OK</string>
-    <string name="back">↩</string>
-    <string name="settings">🛠️</string>
-    <string name="off">Off</string>
-    <string name="hdmi_1">HDMI 1</string>
-    <string name="hdmi_2">HDMI 2</string>
-    <string name="hdmi_3">HDMI 3</string>
-    <string name="hdmi_4">HDMI 4</string>
-    <string name="left">Left</string>
-    <string name="right">Right</string>
-    <string name="up">Up</string>
-    <string name="down">Down</string>
-    <string name="home">Home</string>
-    <string name="volume_down">Volume down</string>
-    <string name="volume_up">Volume up</string>
+    <string name="app_name">Home Controller</string>
 </resources>
