@@ -2,42 +2,100 @@ package de.moyapro.homecontroller
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.moyapro.homecontroller.communication.tv.SettingsKeys
 import de.moyapro.homecontroller.communication.tv.model.ConnectionProperties
+import de.moyapro.homecontroller.communication.tv.model.PowerStatus
 import de.moyapro.homecontroller.ui.ControllerViewModel
 import de.moyapro.homecontroller.ui.ViewActions
+import de.moyapro.homecontroller.ui.ViewModelFactory
 import de.moyapro.homecontroller.ui.buildViewActions
 import de.moyapro.homecontroller.ui.theme.HomeControllerTheme
+import kotlinx.coroutines.*
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
 
 class MainActivity : ComponentActivity() {
-
+    val TAG = "main"
     private val PREFERENCES_FILE_NAME = "homeControllerSettingsFilename"
+    private val viewModel: ControllerViewModel by viewModels { ViewModelFactory }
+    private val connectionProperties by lazy {
+        buildConnectionPropertiesFrom(
+            getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE))
+    }
+    private val actions: ViewActions by lazy {
+        buildViewActions(connectionProperties, viewModel)
+    }
+    private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val preferences = getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE)
-        val connectionProperties = buildConnectionPropertiesFrom(preferences)
-        val actions: ViewActions = buildViewActions(connectionProperties)
-        val viewModel = ControllerViewModel()
+        startBackgroundRefresh(actions.updatePowerStatus)
+
         setContent {
+            val powerStatus = viewModel.powerStatus.collectAsState()
             HomeControllerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
-                    if (viewModel.connected) ControllerContent(viewModel, actions)
-                    else StartView(actions)
+                    Column() {
+
+                    Text("xxx" + powerStatus.value.status)
+                    Button(onClick = { viewModel.setPowerStatus("active") }) {
+                        Text("activate")
+                    }
+                    Button(onClick = { viewModel.setPowerStatus("standby") }) {
+                        Text("Go to sleep")
+                    }
+//                    if (viewModel.hasPower()) ControllerContent(viewModel, actions)
+//                    else StartView(actions)
+                    }
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        startBackgroundRefresh(actions.updatePowerStatus)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopBackgroundRefresh()
+    }
+
+    @OptIn(ExperimentalTime::class)
+    fun startBackgroundRefresh(
+        updatePowerStatus: () -> Unit,
+    ) {
+        if (true == job?.isActive) return
+
+        stopBackgroundRefresh()
+        Log.d(TAG, "start background refresh")
+        job = GlobalScope.launch(Dispatchers.IO) {
+            while (this.isActive) {
+                updatePowerStatus()
+                delay(1.5.seconds)
+            }
+        }
+    }
+
+    fun stopBackgroundRefresh() {
+        Log.d(TAG, "stop background refresh")
+        job?.cancel()
+        job = null
     }
 
     @Composable
@@ -58,7 +116,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun buildConnectionPropertiesFrom(preferences: SharedPreferences?): ConnectionProperties? {
-        if (null == preferences) return null;
+        if (null == preferences) return null
 
         val ip = preferences.getString(SettingsKeys.IP, "127.0.0.1")!!
         val password = preferences.getString(SettingsKeys.PASSWORD, "invalid")!!
@@ -159,11 +217,12 @@ private fun HdmiSelect() {
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    val viewModel = ControllerViewModel(connected = true)
-    val actions = buildViewActions(ConnectionProperties("", ""))
+    val viewModel = ControllerViewModel()
+    val actions = buildViewActions(ConnectionProperties("", ""), viewModel)
     HomeControllerTheme {
         ControllerContent(viewModel, actions)
     }

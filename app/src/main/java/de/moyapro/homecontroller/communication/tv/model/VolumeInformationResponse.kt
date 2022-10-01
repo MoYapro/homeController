@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 data class VolumeInformationResponse(
     val result: List<List<VolumeInformation>> = listOf(),
     val error: List<String> = listOf(),
-    val id: Int
+    val id: Int,
 ) {
     fun getVolume(): Int {
         if (result.isNotEmpty()) {
-            return result[0][0].volume
+            return result.firstOrNull()?.firstOrNull()?.volume ?: 0
         }
         return 0
     }
