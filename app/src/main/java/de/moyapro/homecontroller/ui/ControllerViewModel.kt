@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class ControllerViewModel(
     var volume: String = "10",
-    private val _powerStatus: MutableStateFlow<PowerStatus> = MutableStateFlow(PowerStatus("standby")),
+    private val _powerStatus: MutableStateFlow<PowerStatus> = MutableStateFlow(PowerStatus("active")),
     val powerStatus: StateFlow<PowerStatus> = _powerStatus,
 ) : ViewModel() {
     fun hasPower(): Boolean {

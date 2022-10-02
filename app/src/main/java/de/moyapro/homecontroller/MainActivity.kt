@@ -6,17 +6,20 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import de.moyapro.homecontroller.communication.tv.SettingsKeys
 import de.moyapro.homecontroller.communication.tv.model.ConnectionProperties
-import de.moyapro.homecontroller.communication.tv.model.PowerStatus
 import de.moyapro.homecontroller.ui.ControllerViewModel
 import de.moyapro.homecontroller.ui.ViewActions
 import de.moyapro.homecontroller.ui.ViewModelFactory
@@ -47,19 +50,16 @@ class MainActivity : ComponentActivity() {
             val powerStatus = viewModel.powerStatus.collectAsState()
             HomeControllerTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background) {
-                    Column() {
-
-                    Text("xxx" + powerStatus.value.status)
-                    Button(onClick = { viewModel.setPowerStatus("active") }) {
-                        Text("activate")
-                    }
-                    Button(onClick = { viewModel.setPowerStatus("standby") }) {
-                        Text("Go to sleep")
-                    }
-//                    if (viewModel.hasPower()) ControllerContent(viewModel, actions)
-//                    else StartView(actions)
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        Row() {
+                            debugMenu(viewModel)
+                        }
+                        if (powerStatus.value.status == "active") {
+                            ControllerContent(viewModel, actions)
+                        } else StartView(actions)
                     }
                 }
             }
@@ -80,6 +80,7 @@ class MainActivity : ComponentActivity() {
     fun startBackgroundRefresh(
         updatePowerStatus: () -> Unit,
     ) {
+        return
         if (true == job?.isActive) return
 
         stopBackgroundRefresh()
@@ -124,20 +125,35 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+private val defaultButtonModifier: Modifier = Modifier
+    .height(50.dp)
+
+
+@Composable
+private fun debugMenu(viewModel: ControllerViewModel) {
+    Button(modifier = defaultButtonModifier, onClick = { viewModel.setPowerStatus("active") }) {
+        Text("activate")
+    }
+    Button(modifier = defaultButtonModifier, onClick = { viewModel.setPowerStatus("standby") }) {
+        Text("Go to sleep")
+    }
+}
+
 @Composable
 fun ControllerContent(viewModel: ControllerViewModel, actions: ViewActions) {
-    Column() {
-        TopRow(actions)
-        CenterDiamond()
-        BackHomeRow()
-        VolumeControls(viewModel)
+    Column(modifier = Modifier.fillMaxSize(), Arrangement.Top) {
+        TopRow(modifier = Modifier.fillMaxHeight(.17F), actions)
+        CenterDiamond(modifier = Modifier.fillMaxHeight(.5F))
+        BackHomeRow(modifier = Modifier.fillMaxHeight(.2F))
+        VolumeControls(modifier = Modifier.fillMaxHeight(.4F), viewModel)
         SettingsRow()
     }
 }
 
 @Composable
-private fun TopRow(actions: ViewActions) {
-    Row() {
+private fun TopRow(modifier: Modifier, actions: ViewActions) {
+    Row(modifier = modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.SpaceBetween) {
         OffButton(actions.onAction)
         HdmiSelect()
     }
@@ -150,69 +166,86 @@ private fun OffButton(offAction: () -> Unit) {
 
 @Composable
 private fun SettingsRow() {
-    Row() {
+    Row(modifier = Modifier.fillMaxWidth()) {
         SettingsButton()
     }
 }
 
 @Composable
 private fun SettingsButton() {
-    Button(onClick = { /*TODO*/ }) {
+    Button(modifier = defaultButtonModifier, onClick = { /*TODO*/ }) {
         Text("settings")
     }
 }
 
 @Composable
-private fun BackHomeRow() {
-    Row() {
-        Button(onClick = { /*TODO*/ }) { Text("back") }
-        Button(onClick = { /*TODO*/ }) { Text("home") }
+private fun BackHomeRow(modifier: Modifier) {
+    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+        Button(modifier = defaultButtonModifier.fillMaxWidth(.5F),
+            onClick = { /*TODO*/ }) { Text("back") }
+        Button(modifier = defaultButtonModifier.fillMaxWidth(),
+            onClick = { /*TODO*/ }) { Text("home") }
     }
 }
 
 @Composable
-private fun VolumeControls(viewModel: ControllerViewModel) {
-    Row() {
-        Button(onClick = { /*TODO*/ }) { Text("volumn down") }
-        Button(onClick = { /*TODO*/ }) { Text("volume up") }
+private fun VolumeControls(modifier: Modifier, viewModel: ControllerViewModel) {
+    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+        Button(modifier = defaultButtonModifier.fillMaxWidth(.5F),
+            onClick = { /*TODO*/ }) { Text("volumn down") }
+        Button(modifier = defaultButtonModifier.fillMaxWidth(),
+            onClick = { /*TODO*/ }) { Text("volume up") }
     }
 }
 
 @Composable
-private fun CenterDiamond() {
-    Row() {
-        Button(onClick = { /*TODO*/ }) {
-            Text("up")
+private fun CenterDiamond(modifier: Modifier) {
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .fillMaxHeight(),
+        verticalArrangement = Arrangement.SpaceEvenly) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Button(modifier = defaultButtonModifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
+                Text("up")
+            }
         }
-    }
-    Row() {
-        Button(onClick = { /*TODO*/ }) {
-            Text("left")
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+            Button(modifier = defaultButtonModifier.fillMaxWidth(.33F), onClick = { /*TODO*/ }) {
+                Text("left")
+            }
+            Button(modifier = defaultButtonModifier.fillMaxWidth(.5F), onClick = { /*TODO*/ }) {
+                Text("ok")
+            }
+            Button(modifier = defaultButtonModifier.fillMaxWidth(1F), onClick = { /*TODO*/ }) {
+                Text("right")
+            }
         }
-        Button(onClick = { /*TODO*/ }) {
-            Text("ok")
-        }
-        Button(onClick = { /*TODO*/ }) {
-            Text("right")
-        }
-    }
-    Row() {
-        Button(onClick = { /*TODO*/ }) {
-            Text("down")
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Button(modifier = defaultButtonModifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
+                Text("down")
+            }
         }
     }
 }
 
 @Composable
 private fun HdmiSelect() {
-    Column() {
-        Row() {
-            Button(onClick = { /*TODO*/ }) { Text("1") }
-            Button(onClick = { /*TODO*/ }) { Text("2") }
+    Column(modifier = Modifier
+        .fillMaxWidth(.5F)
+        .fillMaxHeight(),
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceEvenly) {
+            Button(modifier = defaultButtonModifier
+                .fillMaxWidth(.5F), onClick = { /*TODO*/ }) { Text("1") }
+            Button(modifier = defaultButtonModifier.fillMaxWidth(),
+                onClick = { /*TODO*/ }) { Text("2") }
         }
-        Row() {
-            Button(onClick = { /*TODO*/ }) { Text("3") }
-            Button(onClick = { /*TODO*/ }) { Text("4") }
+        Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceEvenly) {
+            Button(modifier = defaultButtonModifier.fillMaxWidth(.5F),
+                onClick = { /*TODO*/ }) { Text("3") }
+            Button(modifier = defaultButtonModifier.fillMaxWidth(),
+                onClick = { /*TODO*/ }) { Text("4") }
         }
     }
 }
