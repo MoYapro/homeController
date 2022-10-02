@@ -6,15 +6,18 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.SettingsInputHdmi
+import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material.icons.outlined.TvOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.moyapro.homecontroller.communication.tv.SettingsKeys
@@ -108,8 +111,10 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun OnButton(onAction: () -> Unit) {
-        Button(onClick = onAction) {
-            Text("on")
+        Button(
+            modifier = Modifier.fillMaxSize(),
+            onClick = onAction) {
+            Icon(Icons.Outlined.Tv, contentDescription = "on")
         }
     }
 
@@ -208,24 +213,41 @@ private fun CenterDiamond(modifier: Modifier) {
         .fillMaxWidth()
         .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceEvenly) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Button(modifier = defaultButtonModifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(.33333F),
+            horizontalArrangement = Arrangement.Center) {
+            Button(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Cyan),
+                onClick = { /*TODO*/ }) {
                 Icon(Icons.Filled.KeyboardArrowUp, contentDescription = "Up")
             }
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Button(modifier = defaultButtonModifier.fillMaxWidth(.33F), onClick = { /*TODO*/ }) {
+            Button(modifier = Modifier
+                .fillMaxWidth(.33F)
+                .fillMaxHeight(.5F),
+                onClick = { /*TODO*/ }) {
                 Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Left")
             }
-            Button(modifier = defaultButtonModifier.fillMaxWidth(.5F), onClick = { /*TODO*/ }) {
+            Button(modifier = Modifier
+                .fillMaxWidth(.5F)
+                .fillMaxHeight(.5F),
+                onClick = { /*TODO*/ }) {
                 Text("OK")
             }
-            Button(modifier = defaultButtonModifier.fillMaxWidth(1F), onClick = { /*TODO*/ }) {
+            Button(modifier = Modifier
+                .fillMaxWidth(1F)
+                .fillMaxHeight(.5F),
+                onClick = { /*TODO*/ }) {
                 Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Right")
             }
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Button(modifier = defaultButtonModifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(), onClick = { /*TODO*/ }) {
                 Icon(Icons.Filled.KeyboardArrowDown, contentDescription = "Down")
             }
         }
