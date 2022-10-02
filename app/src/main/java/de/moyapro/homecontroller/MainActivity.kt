@@ -6,16 +6,15 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.SettingsInputHdmi
+import androidx.compose.material.icons.outlined.TvOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.moyapro.homecontroller.communication.tv.SettingsKeys
@@ -34,8 +33,7 @@ class MainActivity : ComponentActivity() {
     private val PREFERENCES_FILE_NAME = "homeControllerSettingsFilename"
     private val viewModel: ControllerViewModel by viewModels { ViewModelFactory }
     private val connectionProperties by lazy {
-        buildConnectionPropertiesFrom(
-            getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE))
+        buildConnectionPropertiesFrom(getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE))
     }
     private val actions: ViewActions by lazy {
         buildViewActions(connectionProperties, viewModel)
@@ -103,8 +101,7 @@ class MainActivity : ComponentActivity() {
     private fun StartView(actions: ViewActions) {
         Scaffold(modifier = Modifier.fillMaxSize(),
             topBar = { OffButton(actions.offAction) },
-            bottomBar = { SettingsButton() }
-        ) {
+            bottomBar = { SettingsButton() }) {
             OnButton(actions.onAction)
         }
     }
@@ -125,8 +122,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private val defaultButtonModifier: Modifier = Modifier
-    .height(50.dp)
+private val defaultButtonModifier: Modifier = Modifier.height(50.dp)
 
 
 @Composable
@@ -152,8 +148,7 @@ fun ControllerContent(viewModel: ControllerViewModel, actions: ViewActions) {
 
 @Composable
 private fun TopRow(modifier: Modifier, actions: ViewActions) {
-    Row(modifier = modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(modifier = modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween) {
         OffButton(actions.onAction)
         HdmiSelect()
     }
@@ -161,7 +156,9 @@ private fun TopRow(modifier: Modifier, actions: ViewActions) {
 
 @Composable
 private fun OffButton(offAction: () -> Unit) {
-    Button(onClick = offAction) { Text(text = "off") }
+    Button(onClick = offAction) {
+        Icon(Icons.Outlined.TvOff, contentDescription = "off")
+    }
 }
 
 @Composable
@@ -174,17 +171,20 @@ private fun SettingsRow() {
 @Composable
 private fun SettingsButton() {
     Button(modifier = defaultButtonModifier, onClick = { /*TODO*/ }) {
-        Text("settings")
+        Icon(Icons.Filled.Settings, contentDescription = "settings")
     }
 }
 
 @Composable
 private fun BackHomeRow(modifier: Modifier) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-        Button(modifier = defaultButtonModifier.fillMaxWidth(.5F),
-            onClick = { /*TODO*/ }) { Text("back") }
+        Button(modifier = defaultButtonModifier.fillMaxWidth(.5F), onClick = { /*TODO*/ }) {
+            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+        }
         Button(modifier = defaultButtonModifier.fillMaxWidth(),
-            onClick = { /*TODO*/ }) { Text("home") }
+            onClick = { /*TODO*/ }) {
+            Icon(Icons.Filled.Home, contentDescription = "Home")
+        }
     }
 }
 
@@ -192,9 +192,13 @@ private fun BackHomeRow(modifier: Modifier) {
 private fun VolumeControls(modifier: Modifier, viewModel: ControllerViewModel) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
         Button(modifier = defaultButtonModifier.fillMaxWidth(.5F),
-            onClick = { /*TODO*/ }) { Text("volumn down") }
+            onClick = { /*TODO*/ }) {
+            Icon(Icons.Filled.VolumeDown, contentDescription = "volume down")
+        }
         Button(modifier = defaultButtonModifier.fillMaxWidth(),
-            onClick = { /*TODO*/ }) { Text("volume up") }
+            onClick = { /*TODO*/ }) {
+            Icon(Icons.Filled.VolumeUp, contentDescription = "volume up")
+        }
     }
 }
 
@@ -206,23 +210,23 @@ private fun CenterDiamond(modifier: Modifier) {
         verticalArrangement = Arrangement.SpaceEvenly) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(modifier = defaultButtonModifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
-                Text("up")
+                Icon(Icons.Filled.KeyboardArrowUp, contentDescription = "Up")
             }
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             Button(modifier = defaultButtonModifier.fillMaxWidth(.33F), onClick = { /*TODO*/ }) {
-                Text("left")
+                Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Left")
             }
             Button(modifier = defaultButtonModifier.fillMaxWidth(.5F), onClick = { /*TODO*/ }) {
-                Text("ok")
+                Text("OK")
             }
             Button(modifier = defaultButtonModifier.fillMaxWidth(1F), onClick = { /*TODO*/ }) {
-                Text("right")
+                Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Right")
             }
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(modifier = defaultButtonModifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
-                Text("down")
+                Icon(Icons.Filled.KeyboardArrowDown, contentDescription = "Down")
             }
         }
     }
@@ -233,19 +237,30 @@ private fun HdmiSelect() {
     Column(modifier = Modifier
         .fillMaxWidth(.5F)
         .fillMaxHeight(),
-        verticalArrangement = Arrangement.SpaceEvenly
-    ) {
+        verticalArrangement = Arrangement.SpaceEvenly) {
         Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceEvenly) {
-            Button(modifier = defaultButtonModifier
-                .fillMaxWidth(.5F), onClick = { /*TODO*/ }) { Text("1") }
+            Button(modifier = defaultButtonModifier.fillMaxWidth(.5F),
+                onClick = { /*TODO*/ }) {
+                Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 1")
+                Text("1")
+            }
             Button(modifier = defaultButtonModifier.fillMaxWidth(),
-                onClick = { /*TODO*/ }) { Text("2") }
+                onClick = { /*TODO*/ }) {
+                Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 2")
+                Text("2")
+            }
         }
         Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceEvenly) {
             Button(modifier = defaultButtonModifier.fillMaxWidth(.5F),
-                onClick = { /*TODO*/ }) { Text("3") }
+                onClick = { /*TODO*/ }) {
+                Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 3")
+                Text("3")
+            }
             Button(modifier = defaultButtonModifier.fillMaxWidth(),
-                onClick = { /*TODO*/ }) { Text("4") }
+                onClick = { /*TODO*/ }) {
+                Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 4")
+                Text("4")
+            }
         }
     }
 }
