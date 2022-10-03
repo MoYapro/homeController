@@ -6,17 +6,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import de.moyapro.homecontroller.communication.tv.model.ConnectionProperties
+import androidx.compose.runtime.collectAsState
 import de.moyapro.homecontroller.factory.ViewModelFactory
 import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.tv.TvState
 import de.moyapro.homecontroller.tv.buildTvActions
-import de.moyapro.homecontroller.ui.main.MainController
+import de.moyapro.homecontroller.ui.main.MainPresenter
+import de.moyapro.homecontroller.ui.main.MainView
 import de.moyapro.homecontroller.ui.main.MainViewModel
 import de.moyapro.homecontroller.ui.settings.PREFERENCES_FILE_NAME
 import de.moyapro.homecontroller.ui.settings.buildConnectionPropertiesFrom
 import de.moyapro.homecontroller.ui.theme.HomeControllerTheme
+import de.moyapro.homecontroller.util.combineState
 import kotlinx.coroutines.*
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
@@ -37,12 +38,22 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startBackgroundRefresh(actions.updatePowerStatus)
-        val mainController = MainController(tvState, mainViewModel)
         setContent {
             HomeControllerTheme {
-                mainController.render()
+                render()
             }
         }
+    }
+
+    @Composable
+    fun render() {
+        Log.i(tag, "render")
+        val presentationModel = combineState(
+            flow1 = tvState.powerStatus,
+            flow2 = mainViewModel.currentView,
+            transform = MainPresenter::present
+        ).collectAsState()
+        MainView(presentationModel)
     }
 
     override fun onStart() {
@@ -75,18 +86,5 @@ class MainActivity : ComponentActivity() {
         Log.d(tag, "stop background refresh")
         job?.cancel()
         job = null
-    }
-
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    val viewModel = MainViewModel()
-    val tvState = TvState()
-    val actions = buildTvActions(ConnectionProperties("", ""), TvState())
-    HomeControllerTheme {
-        MainController(TvState(), viewModel).render()
     }
 }

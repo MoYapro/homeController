@@ -9,7 +9,7 @@ import de.moyapro.homecontroller.ui.settings.SettingsRow
 
 
 @Composable
-fun ControllerContent(viewModel: ControllerViewModel, actions: TvActions) {
+fun ControllerView(viewModel: ControllerViewModel, actions: TvActions) {
     Column(modifier = Modifier.fillMaxSize(), Arrangement.Top) {
         TopRow(modifier = Modifier.fillMaxHeight(.17F), actions)
         CenterDiamond(modifier = Modifier.fillMaxHeight(.5F))
