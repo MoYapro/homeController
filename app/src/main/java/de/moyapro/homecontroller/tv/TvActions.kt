@@ -1,8 +1,7 @@
-package de.moyapro.homecontroller.ui
+package de.moyapro.homecontroller.tv
 
-data class ViewActions(
+data class TvActions (
     val onAction: () -> Unit,
     val offAction: () -> Unit,
     val updatePowerStatus: () -> Unit,
-) {
-}
+)

@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller.ui
+package de.moyapro.homecontroller.factory
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

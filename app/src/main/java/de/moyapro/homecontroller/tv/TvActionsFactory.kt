@@ -1,4 +1,4 @@
-package de.moyapro.homecontroller.ui
+package de.moyapro.homecontroller.tv
 
 import android.util.Log
 import de.moyapro.homecontroller.communication.tv.TVCommand
@@ -10,22 +10,22 @@ import de.moyapro.homecontroller.communication.tv.request
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-const val TAG = "ACTIONS"
-fun buildViewActions(
+const val TAG = "TV_ACTIONS_FACTORY"
+fun buildTvActions(
     connectionProperties: ConnectionProperties?,
-    viewModel: ControllerViewModel,
-): ViewActions {
+    tvState: TvState,
+): TvActions {
     if (null == connectionProperties) throw IllegalStateException("must have connection properties")
-    return ViewActions(
+    return TvActions(
         onAction = buildOnAction(connectionProperties),
         offAction = buildOffAction(connectionProperties),
-        updatePowerStatus = buildUpdatePowerStatusAction(connectionProperties, viewModel)
+        updatePowerStatus = buildUpdatePowerStatusAction(connectionProperties, tvState)
     )
 }
 
 fun buildUpdatePowerStatusAction(
     connectionProperties: ConnectionProperties,
-    viewModel: ControllerViewModel,
+    tvState: TvState,
 ): () -> Unit = {
     request(
         TVCommand(
@@ -34,9 +34,16 @@ fun buildUpdatePowerStatusAction(
         )
     ) { tvResponseString ->
         val newValue = Json.decodeFromString<PowerStatusResponse>(tvResponseString)
-        val x = if (newValue.result.firstOrNull()?.status == "active") "active" else "standby"
-        Log.d(TAG, "new power status: $newValue from $x")
-        viewModel.setPowerStatus(x)
+        val newPowerStatus =
+            if (Math.random() > .5) {
+                if (newValue.result.firstOrNull()?.status == "active") "active" else "standby"
+            } else {
+                "active"
+            }
+
+
+        Log.d(TAG, "new power status: $newValue from $newPowerStatus")
+        tvState.setPowerStatus(newPowerStatus)
     }
 }
 
