@@ -17,27 +17,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun OffButton(offAction: () -> Unit) {
-    Button(onClick = offAction) {
+fun OffButton(offAction: () -> Unit, modifier: Modifier = Modifier) {
+    Button(modifier = modifier, onClick = offAction) {
         Icon(Icons.Outlined.TvOff, contentDescription = "off")
     }
 }
 
 @Composable
-fun OnButton(onAction: () -> Unit) {
+fun OnButton(onAction: () -> Unit, modifier: Modifier = Modifier) {
     Button(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         onClick = onAction) {
         Icon(Icons.Outlined.Tv, contentDescription = "on")
     }
 }
 
 @Composable
-fun SettingsButton() {
-    Button(modifier = Modifier,
-        onClick = { /*TODO*/ }
+fun SettingsButton(modifier: Modifier, openSettings: () -> Unit) {
+    Button(modifier = modifier,
+        onClick = openSettings
     ) {
         Icon(Icons.Filled.Settings, contentDescription = "settings")
+    }
+}
+
+@Composable
+fun MainButton(modifier: Modifier, openMain: () -> Unit) {
+    Button(modifier = modifier,
+        onClick = openMain
+    ) {
+        Icon(Icons.Filled.Domain, contentDescription = "main")
     }
 }
 
@@ -109,26 +118,18 @@ fun UpButton() {
 
 
 @Composable
-fun Hdmi4Button() {
-    Button(modifier = Modifier.fillMaxWidth(),
+fun Hdmi1Button(modifier: Modifier) {
+    Button(modifier = modifier,
         onClick = { /*TODO*/ }) {
-        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 4")
-        Text("4")
+        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 1")
+        Text("1")
     }
 }
 
-@Composable
-fun Hdmi3Button() {
-    Button(modifier = Modifier.fillMaxWidth(.5F),
-        onClick = { /*TODO*/ }) {
-        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 3")
-        Text("3")
-    }
-}
 
 @Composable
-fun Hdmi2Button() {
-    Button(modifier = Modifier.fillMaxWidth(),
+fun Hdmi2Button(modifier: Modifier) {
+    Button(modifier = modifier,
         onClick = { /*TODO*/ }) {
         Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 2")
         Text("2")
@@ -136,11 +137,20 @@ fun Hdmi2Button() {
 }
 
 @Composable
-fun Hdmi1Button() {
-    Button(modifier = Modifier.fillMaxWidth(.5F),
+fun Hdmi3Button(modifier: Modifier) {
+    Button(modifier = modifier,
         onClick = { /*TODO*/ }) {
-        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 1")
-        Text("1")
+        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 3")
+        Text("3")
+    }
+}
+
+@Composable
+fun Hdmi4Button(modifier: Modifier) {
+    Button(modifier = modifier,
+        onClick = { /*TODO*/ }) {
+        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 4")
+        Text("4")
     }
 }
 

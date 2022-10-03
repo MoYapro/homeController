@@ -7,13 +7,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.lifecycleScope
 import de.moyapro.homecontroller.factory.ViewModelFactory
 import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.tv.TvState
 import de.moyapro.homecontroller.tv.buildTvActions
-import de.moyapro.homecontroller.ui.main.MainPresenter
-import de.moyapro.homecontroller.ui.main.MainView
-import de.moyapro.homecontroller.ui.main.MainViewModel
+import de.moyapro.homecontroller.ui.main.*
 import de.moyapro.homecontroller.ui.settings.PREFERENCES_FILE_NAME
 import de.moyapro.homecontroller.ui.settings.buildConnectionPropertiesFrom
 import de.moyapro.homecontroller.ui.theme.HomeControllerTheme
@@ -24,41 +23,52 @@ import kotlin.time.ExperimentalTime
 
 class MainActivity : ComponentActivity() {
     private val tag = MainActivity::class.simpleName
-
     private val mainViewModel: MainViewModel by viewModels { ViewModelFactory }
     private val tvState: TvState by viewModels { ViewModelFactory }
     private val connectionProperties by lazy {
         buildConnectionPropertiesFrom(getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE))
     }
-    private val actions: TvActions by lazy {
+    private val tvActions: TvActions by lazy {
         buildTvActions(connectionProperties, tvState)
     }
+
+    private val mainActions: MainActions by lazy {
+        buildMainActions(mainViewModel)
+    }
+
+    private fun buildMainActions(mainViewModel: MainViewModel): MainActions {
+        return MainActions(
+            openSettings = { mainViewModel.selectView(View.SETTINGS) },
+            openStart = { mainViewModel.selectView(View.START) }
+        )
+    }
+
     private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startBackgroundRefresh(actions.updatePowerStatus)
+        startBackgroundRefresh(tvActions.updatePowerStatus)
         setContent {
             HomeControllerTheme {
-                render()
+                Render(tvActions, mainActions)
             }
         }
     }
 
     @Composable
-    fun render() {
+    fun Render(tvActions: TvActions, mainActions: MainActions) {
         Log.i(tag, "render")
         val presentationModel = combineState(
             flow1 = tvState.powerStatus,
-            flow2 = mainViewModel.currentView,
+            flow2 = mainViewModel.selectedView,
             transform = MainPresenter::present
         ).collectAsState()
-        MainView(presentationModel)
+        MainView(presentationModel, tvActions, mainActions)
     }
 
     override fun onStart() {
         super.onStart()
-        startBackgroundRefresh(actions.updatePowerStatus)
+        startBackgroundRefresh(tvActions.updatePowerStatus)
     }
 
     override fun onStop() {
@@ -74,7 +84,7 @@ class MainActivity : ComponentActivity() {
 
         stopBackgroundRefresh()
         Log.d(tag, "start background refresh")
-        job = GlobalScope.launch(Dispatchers.IO) {
+        job = lifecycleScope.launch(Dispatchers.IO) {
             while (this.isActive) {
                 updatePowerStatus()
                 delay(1.5.seconds)
@@ -82,7 +92,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    fun stopBackgroundRefresh() {
+    private fun stopBackgroundRefresh() {
         Log.d(tag, "stop background refresh")
         job?.cancel()
         job = null

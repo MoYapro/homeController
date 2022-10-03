@@ -3,6 +3,7 @@ package de.moyapro.homecontroller.ui.controller
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.ui.*
 import de.moyapro.homecontroller.ui.settings.SettingsRow
@@ -15,7 +16,6 @@ fun ControllerView(viewModel: ControllerViewModel, actions: TvActions) {
         CenterDiamond(modifier = Modifier.fillMaxHeight(.5F))
         BackHomeRow(modifier = Modifier.fillMaxHeight(.2F))
         VolumeControls(modifier = Modifier.fillMaxHeight(.4F), viewModel)
-        SettingsRow()
     }
 }
 
@@ -71,18 +71,9 @@ private fun CenterDiamond(modifier: Modifier) {
 
 
 @Composable
-private fun HdmiSelect() {
-    Column(modifier = Modifier
-        .fillMaxWidth(.5F)
-        .fillMaxHeight(),
-        verticalArrangement = Arrangement.SpaceEvenly) {
-        Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceEvenly) {
-            Hdmi1Button()
-            Hdmi2Button()
-        }
-        Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceEvenly) {
-            Hdmi3Button()
-            Hdmi4Button()
-        }
-    }
+fun HdmiSelect() {
+    Hdmi1Button(Modifier.padding(horizontal = 1.dp).fillMaxWidth(.25F))
+    Hdmi2Button(Modifier.padding(horizontal = 1.dp).fillMaxWidth(.33333F))
+    Hdmi3Button(Modifier.padding(horizontal = 1.dp).fillMaxWidth(.5F))
+    Hdmi4Button(Modifier.padding(horizontal = 1.dp).fillMaxWidth())
 }

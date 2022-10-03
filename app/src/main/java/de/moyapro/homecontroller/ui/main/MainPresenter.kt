@@ -1,18 +1,18 @@
 package de.moyapro.homecontroller.ui.main
 
-import android.util.Log
 import de.moyapro.homecontroller.communication.tv.model.PowerStatus
 
 object MainPresenter {
 
     private val tag = MainPresenter::class.simpleName
 
-    fun present(powerStatus: PowerStatus, currentView: View): MainViewState {
-        Log.i(tag, "present main")
-        return MainViewState(when {
-            powerStatus.status != "active" -> View.START
-            powerStatus.status == "active" -> View.CONTROLLER
-            else -> currentView
+    fun present(powerStatus: PowerStatus, selectedView: View): MainViewState {
+        val isPowerOn = powerStatus.status == "active"
+        return MainViewState(
+            view = when {
+            selectedView == View.SETTINGS -> View.SETTINGS
+            isPowerOn -> View.CONTROLLER
+            else -> View.START
         }
         )
     }

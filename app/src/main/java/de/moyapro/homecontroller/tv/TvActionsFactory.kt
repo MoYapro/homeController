@@ -38,7 +38,7 @@ fun buildUpdatePowerStatusAction(
             if (Math.random() > .5) {
                 if (newValue.result.firstOrNull()?.status == "active") "active" else "standby"
             } else {
-                "active"
+                "standby"
             }
 
 

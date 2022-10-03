@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 class MainViewModel : ViewModel() {
 
-    private var _currentView: MutableStateFlow<View> = MutableStateFlow(START)
-    val currentView: StateFlow<View> = _currentView
+    private var _selectedView: MutableStateFlow<View> = MutableStateFlow(START)
+    val selectedView: StateFlow<View> = _selectedView
 
-    fun setPowerStatus(newValue: View) {
-        _currentView.value = newValue
+    fun selectView(newValue: View) {
+        _selectedView.value = newValue
     }
 }

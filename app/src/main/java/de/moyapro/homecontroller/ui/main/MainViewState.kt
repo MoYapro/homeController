@@ -1,3 +1,5 @@
 package de.moyapro.homecontroller.ui.main
 
-data class MainViewState(val view: View)
+data class MainViewState(
+    val view: View,
+)
