@@ -156,17 +156,17 @@ fun Hdmi4Button(modifier: Modifier) {
 
 
 @Composable
-fun VolumeDownButton() {
+fun VolumeDownButton(volumeDown: () -> Unit) {
     Button(modifier = Modifier.fillMaxWidth(.5F),
-        onClick = { /*TODO*/ }) {
+        onClick = volumeDown) {
         Icon(Icons.Filled.VolumeDown, contentDescription = "volume down")
     }
 }
 
 @Composable
-fun VolumeUpButton() {
+fun VolumeUpButton(volumeUp: () -> Unit) {
     Button(modifier = Modifier.fillMaxWidth(),
-        onClick = { /*TODO*/ }) {
+        onClick = volumeUp) {
         Icon(Icons.Filled.VolumeUp, contentDescription = "volume up")
     }
 }

@@ -1,6 +1,7 @@
 package de.moyapro.homecontroller.ui.controller
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
@@ -43,9 +44,15 @@ private fun VolumeControls(
     mainPresentationModel: State<MainPresentationModel>,
     tvActions: TvActions,
 ) {
-    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-        VolumeDownButton()
-        VolumeUpButton()
+    Column(modifier = modifier.fillMaxWidth()) {
+        Text("Current ${mainPresentationModel.value.volume}")
+        Row(modifier = Modifier
+            .fillMaxHeight(1F)
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly) {
+            VolumeDownButton(tvActions.volumeDown)
+            VolumeUpButton(tvActions.volumeUp)
+        }
     }
 }
 

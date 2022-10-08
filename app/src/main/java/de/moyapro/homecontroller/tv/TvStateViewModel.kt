@@ -19,7 +19,11 @@ class TvStateViewModel : ViewModel() {
     val tvState: StateFlow<TvState> = _tvState
 
     fun setPowerStatus(newValue: PowerStatusEnum) {
-        _tvState.value = _tvState.value.copy(powerStatus = newValue)
+        _tvState.value = tvState.value.copy(powerStatus = newValue)
+    }
+
+    fun setVolume(newVolume: Volume) {
+        _tvState.value = tvState.value.copy(volume = newVolume)
     }
 }
 
@@ -38,4 +42,8 @@ class HdmiChannelId {
 
 }
 
-inline class Volume(val value: Int)
+inline class Volume(val value: Int) {
+    operator fun plus(volume: Volume) = Volume(value + volume.value)
+
+    operator fun minus(volume: Volume) = Volume(value - volume.value)
+}

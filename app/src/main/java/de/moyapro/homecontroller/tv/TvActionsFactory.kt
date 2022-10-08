@@ -19,7 +19,9 @@ fun buildTvActions(
     return TvActions(
         onAction = buildOnAction(connectionProperties),
         offAction = buildOffAction(connectionProperties),
-        updatePowerStatus = buildUpdatePowerStatusAction(connectionProperties, tvStateViewModel)
+        updatePowerStatus = buildUpdatePowerStatusAction(connectionProperties, tvStateViewModel),
+        volumeDown = {},
+        volumeUp = {}
     )
 }
 
