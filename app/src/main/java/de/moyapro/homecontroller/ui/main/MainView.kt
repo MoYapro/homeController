@@ -12,34 +12,36 @@ import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.ui.MainButton
 import de.moyapro.homecontroller.ui.OffButton
 import de.moyapro.homecontroller.ui.SettingsButton
+import de.moyapro.homecontroller.ui.controller.ControllerView
 import de.moyapro.homecontroller.ui.controller.HdmiSelect
 import de.moyapro.homecontroller.ui.start.StartView
 
 @Composable
-fun MainView(mainViewState: State<MainViewState>, tvActions: TvActions, mainActions: MainActions) {
+fun MainView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions, mainActions: MainActions) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { topbar(mainViewState, tvActions) },
-        bottomBar = { bottomBar(mainViewState, mainActions) },
-        content = { innerPadding -> mainContent(innerPadding, mainViewState, tvActions) },
+        topBar = { topbar(mainPresentationModel, tvActions) },
+        bottomBar = { bottomBar(mainPresentationModel, mainActions) },
+        content = { innerPadding -> mainContent(innerPadding, mainPresentationModel, tvActions) },
     )
 }
 
 @Composable
 fun mainContent(
     innerPadding: PaddingValues,
-    mainViewState: State<MainViewState>,
+    mainPresentationModel: State<MainPresentationModel>,
     tvActions: TvActions,
 ) {
-    when (mainViewState.value.view) {
+    when (mainPresentationModel.value.view) {
         View.START -> StartView(tvActions = tvActions, Modifier.padding(innerPadding))
-        else -> Text(text = "no view selected ${mainViewState.value.view}")
+        View.CONTROLLER -> ControllerView(mainPresentationModel, tvActions )
+        else -> Text(text = "no view selected ${mainPresentationModel.value.view}")
     }
 }
 
 @Composable
-fun topbar(mainViewState: State<MainViewState>, tvActions: TvActions) {
-    val isController = mainViewState.value.view == View.CONTROLLER
+fun topbar(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
+    val isController = mainPresentationModel.value.view == View.CONTROLLER
     Row(Modifier.fillMaxWidth(),
         horizontalArrangement = if (isController) Arrangement.SpaceEvenly else Arrangement.Start
     ) {
@@ -53,8 +55,8 @@ fun topbar(mainViewState: State<MainViewState>, tvActions: TvActions) {
 }
 
 @Composable
-fun bottomBar(mainViewState: State<MainViewState>, mainActions: MainActions) {
-    if (mainViewState.value.view == View.SETTINGS) {
+fun bottomBar(mainPresentationModel: State<MainPresentationModel>, mainActions: MainActions) {
+    if (mainPresentationModel.value.view == View.SETTINGS) {
         MainButton(Modifier.fillMaxWidth(), mainActions.openStart)
     } else {
         SettingsButton(Modifier.fillMaxWidth(), mainActions.openSettings)

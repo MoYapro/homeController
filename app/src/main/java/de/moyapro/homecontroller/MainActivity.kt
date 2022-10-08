@@ -6,16 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
 import de.moyapro.homecontroller.factory.ViewModelFactory
 import de.moyapro.homecontroller.tv.TvActions
-import de.moyapro.homecontroller.tv.TvState
+import de.moyapro.homecontroller.tv.TvStateViewModel
+import de.moyapro.homecontroller.tv.buildMockTvActions
 import de.moyapro.homecontroller.tv.buildTvActions
 import de.moyapro.homecontroller.ui.main.*
 import de.moyapro.homecontroller.ui.settings.PREFERENCES_FILE_NAME
 import de.moyapro.homecontroller.ui.settings.buildConnectionPropertiesFrom
 import de.moyapro.homecontroller.ui.theme.HomeControllerTheme
+import de.moyapro.homecontroller.util.Switches
 import de.moyapro.homecontroller.util.combineState
 import kotlinx.coroutines.*
 import kotlin.time.Duration.Companion.seconds
@@ -24,12 +27,13 @@ import kotlin.time.ExperimentalTime
 class MainActivity : ComponentActivity() {
     private val tag = MainActivity::class.simpleName
     private val mainViewModel: MainViewModel by viewModels { ViewModelFactory }
-    private val tvState: TvState by viewModels { ViewModelFactory }
+    private val tvStateViewModel: TvStateViewModel by viewModels { ViewModelFactory }
     private val connectionProperties by lazy {
         buildConnectionPropertiesFrom(getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE))
     }
     private val tvActions: TvActions by lazy {
-        buildTvActions(connectionProperties, tvState)
+        if (Switches.DEBUG) buildMockTvActions(tvStateViewModel)
+        else buildTvActions(connectionProperties, tvStateViewModel)
     }
 
     private val mainActions: MainActions by lazy {
@@ -50,16 +54,16 @@ class MainActivity : ComponentActivity() {
         startBackgroundRefresh(tvActions.updatePowerStatus)
         setContent {
             HomeControllerTheme {
-                Render(tvActions, mainActions)
+                MainContent(tvActions, mainActions)
             }
         }
     }
 
     @Composable
-    fun Render(tvActions: TvActions, mainActions: MainActions) {
+    fun MainContent(tvActions: TvActions, mainActions: MainActions) {
         Log.i(tag, "render")
-        val presentationModel = combineState(
-            flow1 = tvState.powerStatus,
+        val presentationModel: State<MainPresentationModel> = combineState(
+            flow1 = tvStateViewModel.tvState,
             flow2 = mainViewModel.selectedView,
             transform = MainPresenter::present
         ).collectAsState()

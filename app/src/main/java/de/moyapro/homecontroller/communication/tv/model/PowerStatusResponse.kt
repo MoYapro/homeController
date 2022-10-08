@@ -4,10 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PowerStatusResponse(
-    val result: List<PowerStatus>,
-    val id: Int
+    val result: List<PowerStatusResponseValue>,
+    val id: Int,
 ) {
     fun hasPower(): Boolean {
-        return "active" == result[0].status
+        return "active" == result.firstOrNull()?.status
     }
 }
+
+@Serializable
+data class PowerStatusResponseValue(val status: String)

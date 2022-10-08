@@ -12,5 +12,5 @@ fun buildConnectionPropertiesFrom(preferences: SharedPreferences?): ConnectionPr
 
     val ip = preferences.getString(SettingsKeys.IP, "127.0.0.1")!!
     val password = preferences.getString(SettingsKeys.PASSWORD, "invalid")!!
-    return ConnectionProperties("192.168.1.111", "Superteam17")
+    return ConnectionProperties("192.168.1.111", "xxx")
 }

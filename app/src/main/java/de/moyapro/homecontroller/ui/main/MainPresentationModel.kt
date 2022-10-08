@@ -1,5 +1,5 @@
 package de.moyapro.homecontroller.ui.main
 
-data class MainViewState(
+data class MainPresentationModel(
     val view: View,
 )

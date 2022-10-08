@@ -1,11 +1,11 @@
 package de.moyapro.homecontroller.tv
 
-import android.util.Log
 import de.moyapro.homecontroller.communication.tv.TVCommand
 import de.moyapro.homecontroller.communication.tv.TVCommandEnum
 import de.moyapro.homecontroller.communication.tv.TvStatusEnum
 import de.moyapro.homecontroller.communication.tv.model.ConnectionProperties
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
+import de.moyapro.homecontroller.communication.tv.model.getPowerStatusValueFor
 import de.moyapro.homecontroller.communication.tv.request
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -13,19 +13,19 @@ import kotlinx.serialization.json.Json
 const val TAG = "TV_ACTIONS_FACTORY"
 fun buildTvActions(
     connectionProperties: ConnectionProperties?,
-    tvState: TvState,
+    tvStateViewModel: TvStateViewModel,
 ): TvActions {
     if (null == connectionProperties) throw IllegalStateException("must have connection properties")
     return TvActions(
         onAction = buildOnAction(connectionProperties),
         offAction = buildOffAction(connectionProperties),
-        updatePowerStatus = buildUpdatePowerStatusAction(connectionProperties, tvState)
+        updatePowerStatus = buildUpdatePowerStatusAction(connectionProperties, tvStateViewModel)
     )
 }
 
 fun buildUpdatePowerStatusAction(
     connectionProperties: ConnectionProperties,
-    tvState: TvState,
+    tvStateViewModel: TvStateViewModel,
 ): () -> Unit = {
     request(
         TVCommand(
@@ -33,17 +33,9 @@ fun buildUpdatePowerStatusAction(
             connectionProperties
         )
     ) { tvResponseString ->
-        val newValue = Json.decodeFromString<PowerStatusResponse>(tvResponseString)
-        val newPowerStatus =
-            if (Math.random() > .5) {
-                if (newValue.result.firstOrNull()?.status == "active") "active" else "standby"
-            } else {
-                "standby"
-            }
-
-
-        Log.d(TAG, "new power status: $newValue from $newPowerStatus")
-        tvState.setPowerStatus(newPowerStatus)
+        val responseValue = Json.decodeFromString<PowerStatusResponse>(tvResponseString)
+        val newPowerStatus = getPowerStatusValueFor(responseValue.result.first().status)
+        tvStateViewModel.setPowerStatus(newPowerStatus)
     }
 }
 

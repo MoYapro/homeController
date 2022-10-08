@@ -2,20 +2,20 @@ package de.moyapro.homecontroller.ui.controller
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.ui.*
-import de.moyapro.homecontroller.ui.settings.SettingsRow
+import de.moyapro.homecontroller.ui.main.MainPresentationModel
 
 
 @Composable
-fun ControllerView(viewModel: ControllerViewModel, actions: TvActions) {
+fun ControllerView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
     Column(modifier = Modifier.fillMaxSize(), Arrangement.Top) {
-        TopRow(modifier = Modifier.fillMaxHeight(.17F), actions)
-        CenterDiamond(modifier = Modifier.fillMaxHeight(.5F))
-        BackHomeRow(modifier = Modifier.fillMaxHeight(.2F))
-        VolumeControls(modifier = Modifier.fillMaxHeight(.4F), viewModel)
+        VolumeControls(modifier = Modifier.fillMaxHeight(.2F), mainPresentationModel, tvActions)
+        BackHomeRow(modifier = Modifier.fillMaxHeight(.2F), tvActions)
+        CenterDiamond(modifier = Modifier.fillMaxHeight(.8F), tvActions)
     }
 }
 
@@ -29,7 +29,7 @@ private fun TopRow(modifier: Modifier, actions: TvActions) {
 
 
 @Composable
-private fun BackHomeRow(modifier: Modifier) {
+private fun BackHomeRow(modifier: Modifier, tvActions: TvActions) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
         BackButton()
         HomeButton()
@@ -38,7 +38,11 @@ private fun BackHomeRow(modifier: Modifier) {
 
 
 @Composable
-private fun VolumeControls(modifier: Modifier, viewModel: ControllerViewModel) {
+private fun VolumeControls(
+    modifier: Modifier,
+    mainPresentationModel: State<MainPresentationModel>,
+    tvActions: TvActions,
+) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
         VolumeDownButton()
         VolumeUpButton()
@@ -47,7 +51,7 @@ private fun VolumeControls(modifier: Modifier, viewModel: ControllerViewModel) {
 
 
 @Composable
-private fun CenterDiamond(modifier: Modifier) {
+private fun CenterDiamond(modifier: Modifier, tvActions: TvActions) {
     Column(modifier = modifier
         .fillMaxWidth()
         .fillMaxHeight(),
@@ -72,8 +76,16 @@ private fun CenterDiamond(modifier: Modifier) {
 
 @Composable
 fun HdmiSelect() {
-    Hdmi1Button(Modifier.padding(horizontal = 1.dp).fillMaxWidth(.25F))
-    Hdmi2Button(Modifier.padding(horizontal = 1.dp).fillMaxWidth(.33333F))
-    Hdmi3Button(Modifier.padding(horizontal = 1.dp).fillMaxWidth(.5F))
-    Hdmi4Button(Modifier.padding(horizontal = 1.dp).fillMaxWidth())
+    Hdmi1Button(Modifier
+        .padding(horizontal = 1.dp)
+        .fillMaxWidth(.25F))
+    Hdmi2Button(Modifier
+        .padding(horizontal = 1.dp)
+        .fillMaxWidth(.33333F))
+    Hdmi3Button(Modifier
+        .padding(horizontal = 1.dp)
+        .fillMaxWidth(.5F))
+    Hdmi4Button(Modifier
+        .padding(horizontal = 1.dp)
+        .fillMaxWidth())
 }
