@@ -1,6 +1,6 @@
 package de.moyapro.homecontroller.ui.main
 
-enum class View {
+enum class ViewEnum {
     START,
     SETTINGS,
     CONTROLLER

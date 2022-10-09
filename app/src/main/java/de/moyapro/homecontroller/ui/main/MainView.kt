@@ -12,8 +12,8 @@ import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.ui.MainButton
 import de.moyapro.homecontroller.ui.OffButton
 import de.moyapro.homecontroller.ui.SettingsButton
-import de.moyapro.homecontroller.ui.controller.ControllerView
-import de.moyapro.homecontroller.ui.controller.HdmiSelect
+import de.moyapro.homecontroller.ui.controlls.ControllerView
+import de.moyapro.homecontroller.ui.controlls.HdmiSelect
 import de.moyapro.homecontroller.ui.start.StartView
 
 @Composable
@@ -33,15 +33,15 @@ fun mainContent(
     tvActions: TvActions,
 ) {
     when (mainPresentationModel.value.view) {
-        View.START -> StartView(tvActions = tvActions, Modifier.padding(innerPadding))
-        View.CONTROLLER -> ControllerView(mainPresentationModel, tvActions )
+        ViewEnum.START -> StartView(tvActions = tvActions, Modifier.padding(innerPadding))
+        ViewEnum.CONTROLLER -> ControllerView(mainPresentationModel, tvActions )
         else -> Text(text = "no view selected ${mainPresentationModel.value.view}")
     }
 }
 
 @Composable
 fun topbar(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
-    val isController = mainPresentationModel.value.view == View.CONTROLLER
+    val isController = mainPresentationModel.value.view == ViewEnum.CONTROLLER
     Row(Modifier.fillMaxWidth(),
         horizontalArrangement = if (isController) Arrangement.SpaceEvenly else Arrangement.Start
     ) {
@@ -56,7 +56,7 @@ fun topbar(mainPresentationModel: State<MainPresentationModel>, tvActions: TvAct
 
 @Composable
 fun bottomBar(mainPresentationModel: State<MainPresentationModel>, mainActions: MainActions) {
-    if (mainPresentationModel.value.view == View.SETTINGS) {
+    if (mainPresentationModel.value.view == ViewEnum.SETTINGS) {
         MainButton(Modifier.fillMaxWidth(), mainActions.openStart)
     } else {
         SettingsButton(Modifier.fillMaxWidth(), mainActions.openSettings)

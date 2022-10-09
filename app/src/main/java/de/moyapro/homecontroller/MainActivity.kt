@@ -19,7 +19,7 @@ import de.moyapro.homecontroller.ui.settings.PREFERENCES_FILE_NAME
 import de.moyapro.homecontroller.ui.settings.buildConnectionPropertiesFrom
 import de.moyapro.homecontroller.ui.theme.HomeControllerTheme
 import de.moyapro.homecontroller.util.Switches
-import de.moyapro.homecontroller.util.combineState
+import de.moyapro.homecontroller.util.combineFlows
 import kotlinx.coroutines.*
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
@@ -42,8 +42,8 @@ class MainActivity : ComponentActivity() {
 
     private fun buildMainActions(mainViewModel: MainViewModel): MainActions {
         return MainActions(
-            openSettings = { mainViewModel.selectView(View.SETTINGS) },
-            openStart = { mainViewModel.selectView(View.START) }
+            openSettings = { mainViewModel.selectView(ViewEnum.SETTINGS) },
+            openStart = { mainViewModel.selectView(ViewEnum.START) }
         )
     }
 
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainContent(tvActions: TvActions, mainActions: MainActions) {
         Log.i(tag, "render")
-        val presentationModel: State<MainPresentationModel> = combineState(
+        val presentationModel: State<MainPresentationModel> = combineFlows(
             flow1 = tvStateViewModel.tvState,
             flow2 = mainViewModel.selectedView,
             transform = MainPresenter::present

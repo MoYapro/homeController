@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusEnum
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.math.roundToInt
 
 class TvStateViewModel : ViewModel() {
 
@@ -42,8 +43,17 @@ class HdmiChannelId {
 
 }
 
-inline class Volume(val value: Int) {
+@JvmInline
+value class Volume(val value: Int) {
     operator fun plus(volume: Volume) = Volume(value + volume.value)
 
     operator fun minus(volume: Volume) = Volume(value - volume.value)
+    operator fun compareTo(volume: Volume): Int = value.compareTo(volume.value)
+    operator fun rangeTo(upperRangeEnd: Volume): ClosedFloatingPointRange<Float> {
+        require(upperRangeEnd.value >= value) { "Cannot create volume range from $value to $upperRangeEnd" }
+        return this.value.toFloat()..upperRangeEnd.value.toFloat()
+    }
+
+    constructor(floatValue: Float) : this(floatValue.roundToInt())
+
 }

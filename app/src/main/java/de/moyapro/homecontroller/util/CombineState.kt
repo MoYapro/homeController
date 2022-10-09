@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
 
-fun <T1, T2, R> combineState(
+fun <T1, T2, R> combineFlows(
     flow1: StateFlow<T1>,
     flow2: StateFlow<T2>,
     scope: CoroutineScope = GlobalScope,

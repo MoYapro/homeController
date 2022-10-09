@@ -7,7 +7,7 @@ object MainPresenter {
 
     private val tag = MainPresenter::class.simpleName
 
-    fun present(tvState: TvState, selectedView: View): MainPresentationModel {
+    fun present(tvState: TvState, selectedView: ViewEnum): MainPresentationModel {
         val isPowerOn = PowerStatusEnum.ON == tvState.powerStatus
         return MainPresentationModel(
             view = presentView(selectedView, isPowerOn),
@@ -16,12 +16,12 @@ object MainPresenter {
     }
 
     private fun presentView(
-        selectedView: View,
+        selectedView: ViewEnum,
         isPowerOn: Boolean,
     ) = when {
-        selectedView == View.SETTINGS -> View.SETTINGS
-        isPowerOn -> View.CONTROLLER
-        else -> View.START
+        selectedView == ViewEnum.SETTINGS -> ViewEnum.SETTINGS
+        isPowerOn -> ViewEnum.CONTROLLER
+        else -> ViewEnum.START
     }
 
 }

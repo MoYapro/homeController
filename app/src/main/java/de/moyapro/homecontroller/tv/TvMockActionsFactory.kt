@@ -11,9 +11,20 @@ fun buildMockTvActions(
         offAction = buildOffAction(tvStateViewModel),
         updatePowerStatus = buildUpdatePowerStatusAction(tvStateViewModel),
         volumeDown = buildVolumeDownAction(tvStateViewModel),
-    volumeUp = buildVolumeUpAction(tvStateViewModel)
+        volumeUp = buildVolumeUpAction(tvStateViewModel),
+        setVolume = buildSetVolumeAction(tvStateViewModel),
+        backAction = {},
+        downAction = {},
+        okAction = {},
+        leftAction = {},
+        rightAction = {},
+        upAction = {},
+        homeAction = {},
     )
 }
+
+fun buildSetVolumeAction(tvStateViewModel: TvStateViewModel): (volume: Volume) -> Unit =
+    { newVolume -> tvStateViewModel.setVolume(newVolume) }
 
 fun buildVolumeUpAction(tvStateViewModel: TvStateViewModel): () -> Unit = {
     tvStateViewModel.setVolume(tvStateViewModel.tvState.value.volume + Volume(1))

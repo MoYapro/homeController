@@ -52,66 +52,66 @@ fun MainButton(modifier: Modifier, openMain: () -> Unit) {
 
 
 @Composable
-fun BackButton() {
-    Button(modifier = Modifier.fillMaxWidth(.5F), onClick = { /*TODO*/ }) {
+fun BackButton(backAction: () -> Unit) {
+    Button(modifier = Modifier.fillMaxWidth(.5F), onClick = backAction) {
         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
     }
 }
 
 @Composable
-fun HomeButton() {
+fun HomeButton(homeAction: () -> Unit) {
     Button(modifier = Modifier.fillMaxWidth(),
-        onClick = { /*TODO*/ }) {
+        onClick = homeAction) {
         Icon(Icons.Filled.Home, contentDescription = "Home")
     }
 }
 
 
 @Composable
-fun DownButton() {
+fun DownButton(downAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxWidth()
-        .fillMaxHeight(), onClick = { /*TODO*/ }) {
+        .fillMaxHeight(), onClick = downAction) {
         Icon(Icons.Filled.KeyboardArrowDown, contentDescription = "Down")
     }
 }
 
 @Composable
-fun RightButton() {
+fun RightButton(rightAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxWidth(1F)
         .fillMaxHeight(.5F),
-        onClick = { /*TODO*/ }) {
+        onClick = rightAction) {
         Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Right")
     }
 }
 
 @Composable
-fun OkButton() {
+fun OkButton(okAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxWidth(.5F)
         .fillMaxHeight(.5F),
-        onClick = { /*TODO*/ }) {
+        onClick = okAction) {
         Text("OK")
     }
 }
 
 @Composable
-fun LeftButton() {
+fun LeftButton(leftAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxWidth(.33F)
         .fillMaxHeight(.5F),
-        onClick = { /*TODO*/ }) {
+        onClick = leftAction) {
         Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Left")
     }
 }
 
 @Composable
-fun UpButton() {
+fun UpButton(upAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxSize()
         .background(Color.Cyan),
-        onClick = { /*TODO*/ }) {
+        onClick = upAction) {
         Icon(Icons.Filled.KeyboardArrowUp, contentDescription = "Up")
     }
 }
@@ -156,17 +156,24 @@ fun Hdmi4Button(modifier: Modifier) {
 
 
 @Composable
-fun VolumeDownButton(volumeDown: () -> Unit) {
-    Button(modifier = Modifier.fillMaxWidth(.5F),
-        onClick = volumeDown) {
+fun VolumeDownButton(volumeDown: () -> Unit, disabled: Boolean = false) {
+    val modifier = Modifier.fillMaxWidth(.5F)
+    Button(
+        modifier = modifier,
+        onClick = volumeDown,
+        enabled = !disabled
+    ) {
         Icon(Icons.Filled.VolumeDown, contentDescription = "volume down")
     }
 }
 
 @Composable
-fun VolumeUpButton(volumeUp: () -> Unit) {
-    Button(modifier = Modifier.fillMaxWidth(),
-        onClick = volumeUp) {
+fun VolumeUpButton(volumeUp: () -> Unit, disabled: Boolean = false) {
+    Button(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = volumeUp,
+        enabled = !disabled
+    ) {
         Icon(Icons.Filled.VolumeUp, contentDescription = "volume up")
     }
 }

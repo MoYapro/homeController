@@ -1,16 +1,16 @@
 package de.moyapro.homecontroller.ui.main
 
 import androidx.lifecycle.ViewModel
-import de.moyapro.homecontroller.ui.main.View.START
+import de.moyapro.homecontroller.ui.main.ViewEnum.START
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class MainViewModel : ViewModel() {
 
-    private var _selectedView: MutableStateFlow<View> = MutableStateFlow(START)
-    val selectedView: StateFlow<View> = _selectedView
+    private var _selectedView: MutableStateFlow<ViewEnum> = MutableStateFlow(START)
+    val selectedView: StateFlow<ViewEnum> = _selectedView
 
-    fun selectView(newValue: View) {
+    fun selectView(newValue: ViewEnum) {
         _selectedView.value = newValue
     }
 }
