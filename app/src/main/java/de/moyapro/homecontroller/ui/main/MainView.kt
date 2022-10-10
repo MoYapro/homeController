@@ -43,12 +43,12 @@ fun mainContent(
 fun topbar(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
     val isController = mainPresentationModel.value.view == ViewEnum.CONTROLLER
     Row(Modifier.fillMaxWidth(),
-        horizontalArrangement = if (isController) Arrangement.SpaceEvenly else Arrangement.Start
+        horizontalArrangement = if (isController) Arrangement.SpaceBetween else Arrangement.Start,
     ) {
         OffButton(offAction = tvActions.offAction, Modifier.padding(horizontal = 1.dp))
         Row(Modifier.animateContentSize()) {
             if (isController) {
-                HdmiSelect()
+                HdmiSelect(mainPresentationModel.value.hdmiStatus)
             }
         }
     }

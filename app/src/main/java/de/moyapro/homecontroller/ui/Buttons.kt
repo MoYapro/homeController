@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.outlined.TvOff
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
 
 @Composable
 fun OffButton(offAction: () -> Unit, modifier: Modifier = Modifier) {
@@ -118,39 +120,11 @@ fun UpButton(upAction: () -> Unit) {
 
 
 @Composable
-fun Hdmi1Button(modifier: Modifier) {
-    Button(modifier = modifier,
-        onClick = { /*TODO*/ }) {
-        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 1")
-        Text("1")
-    }
-}
-
-
-@Composable
-fun Hdmi2Button(modifier: Modifier) {
-    Button(modifier = modifier,
-        onClick = { /*TODO*/ }) {
-        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 2")
-        Text("2")
-    }
-}
-
-@Composable
-fun Hdmi3Button(modifier: Modifier) {
-    Button(modifier = modifier,
-        onClick = { /*TODO*/ }) {
-        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 3")
-        Text("3")
-    }
-}
-
-@Composable
-fun Hdmi4Button(modifier: Modifier) {
-    Button(modifier = modifier,
-        onClick = { /*TODO*/ }) {
-        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = "H D M I 4")
-        Text("4")
+fun HdmiButton(modifier: Modifier, status: HdmiStatus, hdmiAction: (uri: String) -> Unit) {
+    Button(modifier = modifier, enabled = status.connection ,
+        onClick = { hdmiAction(status.uri) }) {
+        Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = status.title)
+        Text(status.uri.takeLast(1))
     }
 }
 

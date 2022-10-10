@@ -1,19 +1,17 @@
-package de.moyapro.homecontroller.ui.main
+package de.moyapro.homecontroller
 
 import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
 import de.moyapro.homecontroller.communication.tv.model.HdmiStatusResponse
 import de.moyapro.homecontroller.config.getConfiguredJson
-import de.moyapro.homecontroller.tv.Volume
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import org.junit.Test
 
-data class MainPresentationModel(
-    val view: ViewEnum,
-    val volume: Volume,
-    val hdmiStatus: List<HdmiStatus> = mockHdmiData(),
-)
+class SerializeHdmiText {
 
-fun mockHdmiData(): List<HdmiStatus> {
-    val hdmiStatusResponse: HdmiStatusResponse = getConfiguredJson().decodeFromString("""{
+    val hdmiStatusResponseExample = """{
     "result": [
         [
             {
@@ -67,6 +65,24 @@ fun mockHdmiData(): List<HdmiStatus> {
         ]
     ],
     "id": 105
-}""")
-    return hdmiStatusResponse.result.first()
+}"""
+
+
+    @Test
+    fun parseHdmiJson() {
+        val result: HdmiStatusResponse =
+            getConfiguredJson().decodeFromString(hdmiStatusResponseExample)
+        result.result.first() shouldHaveSize 6
+        result.result.first().filter { it.uri.contains("hdmi") } shouldHaveSize 4
+        result.result.first().filter { it.uri.contains("composite") } shouldHaveSize 1
+        result.result.first().filter { it.uri.contains("widi") } shouldHaveSize 1
+        result.result.first().filter { it.uri.contains("extInput:hdmi?port=2") }
+            .single() shouldBe HdmiStatus(uri = "extInput:hdmi?port=2",
+            title = "HDMI 2",
+            connection = false,
+            label = "",
+            icon = "meta:hdmi",
+            status = "false")
+    }
+
 }
