@@ -1,10 +1,7 @@
 package de.moyapro.homecontroller.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -17,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
 import de.moyapro.homecontroller.tv.Volume
 import de.moyapro.homecontroller.ui.controlls.volume.VolumePresentationModel
@@ -77,7 +75,7 @@ fun DownButton(downAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(), onClick = downAction) {
-        Icon(Icons.Filled.KeyboardArrowDown, contentDescription = "Down")
+        Icon(Icons.Filled.KeyboardArrowDown, contentDescription = "Down", Modifier.size(75.dp))
     }
 }
 
@@ -88,7 +86,7 @@ fun RightButton(rightAction: () -> Unit) {
         .fillMaxHeight(.5F)
         .padding(start = 5.dp),
         onClick = rightAction) {
-        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Right")
+        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Right", Modifier.size(75.dp))
     }
 }
 
@@ -99,7 +97,7 @@ fun OkButton(okAction: () -> Unit) {
         .fillMaxHeight(.5F)
         .padding(horizontal = 5.dp),
         onClick = okAction) {
-        Text("OK")
+        Text("OK", fontSize = 20.sp)
     }
 }
 
@@ -110,7 +108,7 @@ fun LeftButton(leftAction: () -> Unit) {
         .fillMaxHeight(.5F)
         .padding(end = 5.dp),
         onClick = leftAction) {
-        Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Left")
+        Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Left", Modifier.size(75.dp))
     }
 }
 
@@ -120,7 +118,7 @@ fun UpButton(upAction: () -> Unit) {
         .fillMaxSize()
         .background(Color.Cyan),
         onClick = upAction) {
-        Icon(Icons.Filled.KeyboardArrowUp, contentDescription = "Up")
+        Icon(Icons.Filled.KeyboardArrowUp, contentDescription = "Up", Modifier.size(75.dp))
     }
 }
 
