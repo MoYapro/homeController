@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -17,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
+import de.moyapro.homecontroller.tv.Volume
+import de.moyapro.homecontroller.ui.controlls.volume.VolumePresentationModel
 
 @Composable
 fun OffButton(offAction: () -> Unit, modifier: Modifier = Modifier) {
@@ -121,13 +122,39 @@ fun UpButton(upAction: () -> Unit) {
 
 @Composable
 fun HdmiButton(modifier: Modifier, status: HdmiStatus, hdmiAction: (uri: String) -> Unit) {
-    Button(modifier = modifier, enabled = true ,
+    Button(modifier = modifier, enabled = true,
         onClick = { hdmiAction(status.uri) }) {
         Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = status.title)
         Text(status.uri.takeLast(1))
     }
 }
 
+
+@Composable
+fun VolumeMuteButton(
+    volumePresentationModel: VolumePresentationModel,
+    muteAction: () -> Unit,
+    restoreAction: () -> Unit,
+) {
+    val modifier = Modifier.fillMaxWidth(.20F)
+    return if (null == volumePresentationModel.restoreVolume)
+        Button(
+            modifier = modifier,
+            onClick = muteAction,
+            enabled = Volume(0) < volumePresentationModel.targetVolume
+        ) {
+            Icon(Icons.Filled.VolumeOff, contentDescription = "mute button")
+        }
+    else
+        Button(
+            modifier = modifier,
+            onClick = restoreAction,
+        ) {
+            Icon(Icons.Filled.VolumeMute, contentDescription = "restore volume button")
+            Text(volumePresentationModel.restoreVolume.value.toString())
+        }
+
+}
 
 @Composable
 fun VolumeDownButton(volumeDown: () -> Unit, disabled: Boolean = false) {

@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import de.moyapro.homecontroller.tv.Volume
 import de.moyapro.homecontroller.ui.VolumeDownButton
+import de.moyapro.homecontroller.ui.VolumeMuteButton
 import de.moyapro.homecontroller.ui.VolumeUpButton
 
 @Composable
@@ -22,10 +23,13 @@ fun VolumeView(
     setTargetVolumeAction: (newVolume: Volume) -> Unit,
     volumeUpAction: () -> Unit,
     volumeDownAction: () -> Unit,
+    muteAction: () -> Unit,
+    restoreAction: () -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Row(modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
+            VolumeMuteButton(volumePresentationModel, muteAction, restoreAction)
             VolumeDownButton(volumeDownAction, volumePresentationModel.downDisabled)
             VolumeUpButton(volumeUpAction, volumePresentationModel.upDisabled)
         }
