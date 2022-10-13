@@ -7,4 +7,5 @@ data class VolumePresentationModel(
     val targetVolume: Volume,
     val downDisabled: Boolean,
     val upDisabled: Boolean,
+    val volumeChangeText: String?,
 )

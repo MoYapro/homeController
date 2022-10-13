@@ -13,8 +13,9 @@ import de.moyapro.homecontroller.ui.MainButton
 import de.moyapro.homecontroller.ui.OffButton
 import de.moyapro.homecontroller.ui.SettingsButton
 import de.moyapro.homecontroller.ui.controlls.ControllerView
-import de.moyapro.homecontroller.ui.controlls.HdmiSelect
+import de.moyapro.homecontroller.ui.controlls.hdmi.HdmiSelect
 import de.moyapro.homecontroller.ui.start.StartView
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun MainView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions, mainActions: MainActions) {
@@ -43,12 +44,13 @@ fun mainContent(
 fun topbar(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
     val isController = mainPresentationModel.value.view == ViewEnum.CONTROLLER
     Row(Modifier.fillMaxWidth(),
-        horizontalArrangement = if (isController) Arrangement.SpaceBetween else Arrangement.Start,
+        horizontalArrangement = if (isController) Arrangement.SpaceBetween else Arrangement.SpaceBetween,
     ) {
+        Row(modifier = Modifier.fillMaxWidth(.01F)) {}
         OffButton(offAction = tvActions.offAction, Modifier.padding(horizontal = 1.dp))
         Row(Modifier.animateContentSize()) {
             if (isController) {
-                HdmiSelect(mainPresentationModel.value.hdmiStatus)
+                HdmiSelect(mainPresentationModel.value.hdmiStatus, tvActions.setHdmiAction)
             }
         }
     }

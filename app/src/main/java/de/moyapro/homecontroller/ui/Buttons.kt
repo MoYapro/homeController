@@ -121,7 +121,7 @@ fun UpButton(upAction: () -> Unit) {
 
 @Composable
 fun HdmiButton(modifier: Modifier, status: HdmiStatus, hdmiAction: (uri: String) -> Unit) {
-    Button(modifier = modifier, enabled = status.connection ,
+    Button(modifier = modifier, enabled = true ,
         onClick = { hdmiAction(status.uri) }) {
         Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = status.title)
         Text(status.uri.takeLast(1))
@@ -131,7 +131,7 @@ fun HdmiButton(modifier: Modifier, status: HdmiStatus, hdmiAction: (uri: String)
 
 @Composable
 fun VolumeDownButton(volumeDown: () -> Unit, disabled: Boolean = false) {
-    val modifier = Modifier.fillMaxWidth(.5F)
+    val modifier = Modifier.fillMaxWidth(.48F)
     Button(
         modifier = modifier,
         onClick = volumeDown,
@@ -144,7 +144,7 @@ fun VolumeDownButton(volumeDown: () -> Unit, disabled: Boolean = false) {
 @Composable
 fun VolumeUpButton(volumeUp: () -> Unit, disabled: Boolean = false) {
     Button(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(.95F),
         onClick = volumeUp,
         enabled = !disabled
     ) {

@@ -14,4 +14,5 @@ data class TvActions(
     val downAction: () -> Unit,
     val upAction: () -> Unit,
     val homeAction: () -> Unit,
+    val setHdmiAction: (String) -> Unit,
 )

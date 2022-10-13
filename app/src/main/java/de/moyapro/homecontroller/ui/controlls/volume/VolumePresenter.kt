@@ -7,9 +7,15 @@ object VolumePresenter {
         return VolumePresentationModel(
             tvVolume = tvVolume,
             targetVolume = volumeState.targetVolume,
+            downDisabled = volumeState.targetVolume <= VolumeConstants.MIN_VOLUME,
             upDisabled = volumeState.targetVolume >= VolumeConstants.MAX_VOLUME,
-            downDisabled = volumeState.targetVolume <= VolumeConstants.MIN_VOLUME
+            volumeChangeText = buildVolumeChangeText(tvVolume, volumeState.targetVolume)
         )
+    }
+
+    private fun buildVolumeChangeText(tvVolume: Volume, targetVolume: Volume): String? {
+        if (tvVolume == targetVolume) return null
+        return "${tvVolume.value} -> ${targetVolume.value}"
     }
 
 }

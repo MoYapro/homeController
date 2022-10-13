@@ -10,16 +10,17 @@ fun buildMockTvActions(
         onAction = buildOnAction(tvStateViewModel),
         offAction = buildOffAction(tvStateViewModel),
         updatePowerStatus = buildUpdatePowerStatusAction(tvStateViewModel),
-        volumeDown = buildVolumeDownAction(tvStateViewModel),
-        volumeUp = buildVolumeUpAction(tvStateViewModel),
         setVolume = buildSetVolumeAction(tvStateViewModel),
+        volumeUp = buildVolumeUpAction(tvStateViewModel),
+        volumeDown = buildVolumeDownAction(tvStateViewModel),
         backAction = {},
-        downAction = {},
-        okAction = {},
         leftAction = {},
+        okAction = {},
         rightAction = {},
+        downAction = {},
         upAction = {},
         homeAction = {},
+        setHdmiAction = {},
     )
 }
 

@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
 import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.ui.*
 import de.moyapro.homecontroller.ui.controlls.volume.VolumeControls
@@ -15,7 +14,9 @@ import de.moyapro.homecontroller.ui.main.MainPresentationModel
 @Composable
 fun ControllerView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
     Column(modifier = Modifier.fillMaxSize(), Arrangement.Top) {
-        VolumeControls(modifier = Modifier.fillMaxHeight(.4F),
+        VolumeControls(modifier = Modifier
+            .fillMaxHeight(.4F)
+            .padding(5.dp),
             mainPresentationModel.value.volume,
             tvActions)
         BackHomeRow(modifier = Modifier.fillMaxHeight(.2F), tvActions)
@@ -52,26 +53,5 @@ private fun CenterDiamond(modifier: Modifier, tvActions: TvActions) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             DownButton(tvActions.downAction)
         }
-    }
-}
-
-
-@Composable
-fun HdmiSelect(hdmiStatus: List<HdmiStatus>) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        hdmiStatus
-            .filter { it.uri.contains("extInput:hdmi") }
-            .forEachIndexed { index, status ->
-                val relativeSize: Float = (1.1F / (hdmiStatus.size - index))
-                HdmiButton(Modifier
-                    .padding(horizontal = 1.dp)
-                    .fillMaxWidth(relativeSize),
-                    status,
-                    {}
-                )
-            }
     }
 }
