@@ -37,20 +37,31 @@ private fun BackHomeRow(modifier: Modifier, tvActions: TvActions) {
 private fun CenterDiamond(modifier: Modifier, tvActions: TvActions) {
     Column(modifier = modifier
         .fillMaxWidth()
-        .fillMaxHeight(),
+        .fillMaxHeight()
+        .padding(horizontal = 5.dp
+        ),
         verticalArrangement = Arrangement.SpaceEvenly) {
         Row(modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(.33333F),
+            .fillMaxHeight(.33333F)
+            .padding(vertical = 5.dp),
             horizontalArrangement = Arrangement.Center) {
             UpButton(tvActions.upAction)
         }
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 5.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
             LeftButton(tvActions.leftAction)
             OkButton(tvActions.okAction)
             RightButton(tvActions.rightAction)
         }
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 5.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
             DownButton(tvActions.downAction)
         }
     }

@@ -85,7 +85,8 @@ fun DownButton(downAction: () -> Unit) {
 fun RightButton(rightAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxWidth(1F)
-        .fillMaxHeight(.5F),
+        .fillMaxHeight(.5F)
+        .padding(start = 5.dp),
         onClick = rightAction) {
         Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Right")
     }
@@ -95,7 +96,8 @@ fun RightButton(rightAction: () -> Unit) {
 fun OkButton(okAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxWidth(.5F)
-        .fillMaxHeight(.5F),
+        .fillMaxHeight(.5F)
+        .padding(horizontal = 5.dp),
         onClick = okAction) {
         Text("OK")
     }
@@ -105,7 +107,8 @@ fun OkButton(okAction: () -> Unit) {
 fun LeftButton(leftAction: () -> Unit) {
     Button(modifier = Modifier
         .fillMaxWidth(.33F)
-        .fillMaxHeight(.5F),
+        .fillMaxHeight(.5F)
+        .padding(end = 5.dp),
         onClick = leftAction) {
         Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Left")
     }
