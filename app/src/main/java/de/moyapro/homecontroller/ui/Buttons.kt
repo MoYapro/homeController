@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.outlined.TvOff
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
 import de.moyapro.homecontroller.tv.Volume
 import de.moyapro.homecontroller.ui.controlls.volume.VolumePresentationModel
@@ -56,14 +58,14 @@ fun MainButton(modifier: Modifier, openMain: () -> Unit) {
 
 @Composable
 fun BackButton(backAction: () -> Unit) {
-    Button(modifier = Modifier.fillMaxWidth(.5F), onClick = backAction) {
+    Button(modifier = Modifier.fillMaxWidth(.48F), onClick = backAction) {
         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
     }
 }
 
 @Composable
 fun HomeButton(homeAction: () -> Unit) {
-    Button(modifier = Modifier.fillMaxWidth(),
+    Button(modifier = Modifier.fillMaxWidth(.95F),
         onClick = homeAction) {
         Icon(Icons.Filled.Home, contentDescription = "Home")
     }
