@@ -25,7 +25,7 @@ fun RepeatingButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     elevation: ButtonElevation? = ButtonDefaults.elevation(),
-    shape: Shape = MaterialTheme.shapes.small,
+    shape: Shape = MaterialTheme.shapes.medium,
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
@@ -34,22 +34,21 @@ fun RepeatingButton(
     delayDecayFactor: Double = .15,
     content: @Composable RowScope.() -> Unit,
 ) {
-
     val currentClickListener by rememberUpdatedState(onClick)
     var pressed by remember { mutableStateOf(false) }
 
     Button(
-        modifier = modifier.pointerInteropFilter {
-            pressed = when (it.action) {
-                MotionEvent.ACTION_DOWN -> true
-                else -> {
-                    onRelease()
-                    false
+        modifier = modifier
+            .pointerInteropFilter { event ->
+                pressed = when (event.action) {
+                    MotionEvent.ACTION_DOWN -> true
+                    else -> {
+                        onRelease()
+                        false
+                    }
                 }
-            }
-
-            true
-        },
+                true
+            },
         onClick = {},
         enabled = enabled,
         interactionSource = interactionSource,

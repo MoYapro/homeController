@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.sp
 import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
 import de.moyapro.homecontroller.tv.Volume
 import de.moyapro.homecontroller.ui.controlls.volume.VolumePresentationModel
+import kotlin.time.Duration.Companion.milliseconds
+
+val FAST_BUTTON_DELAY = 10.milliseconds
 
 @Composable
 fun OffButton(offAction: () -> Unit, modifier: Modifier = Modifier) {
@@ -72,52 +75,68 @@ fun HomeButton(homeAction: () -> Unit) {
 
 @Composable
 fun DownButton(downAction: () -> Unit) {
-    Button(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight(), onClick = downAction) {
+    RepeatingButton(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        onClick = downAction,
+        maxDelay = FAST_BUTTON_DELAY,
+    ) {
         Icon(Icons.Filled.KeyboardArrowDown, contentDescription = "Down", Modifier.size(75.dp))
     }
 }
 
 @Composable
 fun RightButton(rightAction: () -> Unit) {
-    Button(modifier = Modifier
-        .fillMaxWidth(1F)
-        .fillMaxHeight(.5F)
-        .padding(start = 5.dp),
-        onClick = rightAction) {
+    RepeatingButton(
+        modifier = Modifier
+            .fillMaxWidth(1F)
+            .fillMaxHeight(.5F)
+            .padding(start = 5.dp),
+        onClick = rightAction,
+        maxDelay = FAST_BUTTON_DELAY,
+    ) {
         Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Right", Modifier.size(75.dp))
     }
 }
 
 @Composable
 fun OkButton(okAction: () -> Unit) {
-    Button(modifier = Modifier
-        .fillMaxWidth(.5F)
-        .fillMaxHeight(.5F)
-        .padding(horizontal = 5.dp),
-        onClick = okAction) {
+    RepeatingButton(
+        modifier = Modifier
+            .fillMaxWidth(.5F)
+            .fillMaxHeight(.5F)
+            .padding(horizontal = 5.dp),
+        onClick = okAction,
+        maxDelay = FAST_BUTTON_DELAY,
+    ) {
         Text("OK", fontSize = 20.sp)
     }
 }
 
 @Composable
 fun LeftButton(leftAction: () -> Unit) {
-    Button(modifier = Modifier
-        .fillMaxWidth(.33F)
-        .fillMaxHeight(.5F)
-        .padding(end = 5.dp),
-        onClick = leftAction) {
+    RepeatingButton(
+        modifier = Modifier
+            .fillMaxWidth(.33F)
+            .fillMaxHeight(.5F)
+            .padding(end = 5.dp),
+        onClick = leftAction,
+        maxDelay = FAST_BUTTON_DELAY,
+    ) {
         Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Left", Modifier.size(75.dp))
     }
 }
 
 @Composable
 fun UpButton(upAction: () -> Unit) {
-    Button(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Cyan),
-        onClick = upAction) {
+    RepeatingButton(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Cyan),
+        onClick = upAction,
+        maxDelay = FAST_BUTTON_DELAY,
+    ) {
         Icon(Icons.Filled.KeyboardArrowUp, contentDescription = "Up", Modifier.size(75.dp))
     }
 }
