@@ -12,8 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import kotlinx.coroutines.delay
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalTime::class)
 @Composable
 fun RepeatingButton(
     modifier: Modifier = Modifier,
@@ -26,9 +29,9 @@ fun RepeatingButton(
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    maxDelayMillis: Long = 1000,
-    minDelayMillis: Long = 5,
-    delayDecayFactor: Float = .15f,
+    maxDelay: Duration = 500.milliseconds,
+    minDelay: Duration = 5.milliseconds,
+    delayDecayFactor: Double = .15,
     content: @Composable RowScope.() -> Unit,
 ) {
 
@@ -59,14 +62,13 @@ fun RepeatingButton(
     )
 
     LaunchedEffect(pressed, enabled) {
-        var currentDelayMillis = maxDelayMillis
+        var currentDelay = maxDelay
 
         while (enabled && pressed) {
             currentClickListener()
-            delay(currentDelayMillis)
-            currentDelayMillis =
-                (currentDelayMillis - (currentDelayMillis * delayDecayFactor))
-                    .toLong().coerceAtLeast(minDelayMillis)
+            delay(currentDelay)
+            currentDelay =
+                (currentDelay - (currentDelay * delayDecayFactor)).coerceAtLeast(minDelay)
         }
     }
 }
