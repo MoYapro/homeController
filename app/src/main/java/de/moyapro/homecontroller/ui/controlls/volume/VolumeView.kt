@@ -41,7 +41,7 @@ fun VolumeView(
         Slider(value = volumePresentationModel.targetVolume.value.toFloat(),
             onValueChange = { setTargetVolumeAction(Volume(it)) },
             onValueChangeFinished = applyTargetVolumeToTv,
-            valueRange = VolumeConstants.MIN_VOLUME..VolumeConstants.MAX_VOLUME
+            valueRange = VolumeConstants.MIN_VOLUME..VolumeConstants.MAX_VOLUME,
         )
     }
 }
