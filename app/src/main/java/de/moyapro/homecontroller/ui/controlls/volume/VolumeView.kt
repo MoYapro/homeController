@@ -30,8 +30,12 @@ fun VolumeView(
         Row(modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
             VolumeMuteButton(volumePresentationModel, muteAction, restoreAction)
-            VolumeDownButton(volumeDownAction, volumePresentationModel.downDisabled)
-            VolumeUpButton(volumePresentationModel, volumeUpAction, applyTargetVolumeToTv)
+            VolumeDownButton(volumeDownAction,
+                applyTargetVolumeToTv,
+                volumePresentationModel.downDisabled)
+            VolumeUpButton(volumeUpAction,
+                applyTargetVolumeToTv,
+                volumePresentationModel.upDisabled)
         }
         VolumeChangeText(volumePresentationModel.volumeChangeText)
         Slider(value = volumePresentationModel.targetVolume.value.toFloat(),

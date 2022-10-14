@@ -1,6 +1,5 @@
 package de.moyapro.homecontroller.ui.controlls.volume
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import de.moyapro.homecontroller.tv.TvActions
@@ -27,8 +26,8 @@ fun VolumeControls(
         volumePresentationModel = volumePresentationModel,
         applyTargetVolumeToTv = buildApplyTargetVolumeToTvAction(volumeState, tvActions),
         setTargetVolumeAction = buildSetTargetVolumeAction(setVolumeState),
-        volumeUpAction = buildVolumeUpAction(volumeState, setVolumeState, tvActions),
-        volumeDownAction = buildVolumeDownAction(volumeState, setVolumeState, tvActions),
+        volumeUpAction = buildVolumeUpAction(volumeState, setVolumeState),
+        volumeDownAction = buildVolumeDownAction(volumeState, setVolumeState),
         muteAction = buildMuteAction(volumeState, setVolumeState, setRestoreVolume, tvActions),
         restoreAction = buildRestoreAction(volumeState, setVolumeState, setRestoreVolume, tvActions)
     )

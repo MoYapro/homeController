@@ -1,6 +1,5 @@
 package de.moyapro.homecontroller.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -18,9 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
 import de.moyapro.homecontroller.tv.Volume
-import de.moyapro.homecontroller.ui.controlls.volume.TAG
 import de.moyapro.homecontroller.ui.controlls.volume.VolumePresentationModel
-import java.time.LocalDateTime
 
 @Composable
 fun OffButton(offAction: () -> Unit, modifier: Modifier = Modifier) {
@@ -163,11 +160,16 @@ fun VolumeMuteButton(
 }
 
 @Composable
-fun VolumeDownButton(volumeDown: () -> Unit, disabled: Boolean = false) {
+fun VolumeDownButton(
+    volumeDown: () -> Unit,
+    applyTargetVolumeToTv: () -> Unit,
+    disabled: Boolean = false,
+) {
     val modifier = Modifier.fillMaxWidth(.48F)
-    Button(
+    RepeatingButton(
         modifier = modifier,
         onClick = volumeDown,
+        onRelease = applyTargetVolumeToTv,
         enabled = !disabled
     ) {
         Icon(Icons.Filled.VolumeDown, contentDescription = "volume down")
@@ -176,16 +178,16 @@ fun VolumeDownButton(volumeDown: () -> Unit, disabled: Boolean = false) {
 
 @Composable
 fun VolumeUpButton(
-    volumePresentationModel: VolumePresentationModel,
     volumeUpAction: () -> Unit,
-    applyTargetVolumeToTv: () -> Unit
+    applyTargetVolumeToTv: () -> Unit,
+    disabled: Boolean = false,
 ) {
 
     RepeatingButton(
         modifier = Modifier.fillMaxWidth(.95F),
         onClick = volumeUpAction,
         onRelease = applyTargetVolumeToTv,
-        enabled = !volumePresentationModel.upDisabled
+        enabled = !disabled
     ) {
         Icon(Icons.Filled.VolumeUp, contentDescription = "volume up")
     }
