@@ -2,6 +2,7 @@ package de.moyapro.homecontroller
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -56,6 +57,20 @@ class MainActivity : ComponentActivity() {
             HomeControllerTheme {
                 MainContent(tvActions, mainActions)
             }
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                tvActions.volumeDown()
+                true
+            }
+            KeyEvent.KEYCODE_VOLUME_UP -> {
+                tvActions.volumeUp()
+                true
+            }
+            else -> false
         }
     }
 

@@ -1,6 +1,8 @@
 package de.moyapro.homecontroller.tv
 
+import android.util.Log
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusEnum
+import de.moyapro.homecontroller.ui.controlls.volume.VolumeConstants
 
 const val MOCK_TAG = "TV_MOCK_ACTIONS_FACTORY"
 fun buildMockTvActions(
@@ -28,11 +30,17 @@ fun buildSetVolumeAction(tvStateViewModel: TvStateViewModel): (volume: Volume) -
     { newVolume -> tvStateViewModel.setVolume(newVolume) }
 
 fun buildVolumeUpAction(tvStateViewModel: TvStateViewModel): () -> Unit = {
-    tvStateViewModel.setVolume(tvStateViewModel.tvState.value.volume + Volume(1))
+    Log.i(TAG, "up")
+    if (tvStateViewModel.tvState.value.volume < VolumeConstants.MAX_VOLUME) {
+        tvStateViewModel.setVolume(tvStateViewModel.tvState.value.volume + Volume(1))
+    }
 }
 
 fun buildVolumeDownAction(tvStateViewModel: TvStateViewModel): () -> Unit = {
-    tvStateViewModel.setVolume(tvStateViewModel.tvState.value.volume - Volume(1))
+    Log.i(TAG, "down")
+    if (tvStateViewModel.tvState.value.volume > VolumeConstants.MIN_VOLUME) {
+        tvStateViewModel.setVolume(tvStateViewModel.tvState.value.volume - Volume(1))
+    }
 }
 
 fun buildUpdatePowerStatusAction(unused: TvStateViewModel): () -> Unit =
