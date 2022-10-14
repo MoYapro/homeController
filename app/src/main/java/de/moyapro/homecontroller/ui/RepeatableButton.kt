@@ -21,7 +21,7 @@ import kotlin.time.ExperimentalTime
 fun RepeatingButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    onRelease: () -> Unit,
+    onRelease: () -> Unit = {},
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     elevation: ButtonElevation? = ButtonDefaults.elevation(),
