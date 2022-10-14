@@ -7,7 +7,6 @@ object VolumePresenter {
     const val TAG = "VolumePresenter"
 
     fun present(tvVolume: Volume, volumeState: VolumeState): VolumePresentationModel {
-        Log.i(TAG, "present state $volumeState")
         return VolumePresentationModel(
             tvVolume = tvVolume,
             targetVolume = volumeState.targetVolume,

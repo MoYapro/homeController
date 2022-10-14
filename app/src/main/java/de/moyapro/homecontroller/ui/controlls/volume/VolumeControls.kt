@@ -20,13 +20,12 @@ fun VolumeControls(
     val setRestoreVolume: (Volume?) -> Unit = { restoreValue: Volume? ->
         volumeState = volumeState.copy(restoreVolume = restoreValue)
     }
-    Log.i(TAG, "state before present $volumeState")
     val volumePresentationModel: VolumePresentationModel =
         VolumePresenter.present(tvVolume, volumeState)
     VolumeView(
         modifier = modifier,
         volumePresentationModel = volumePresentationModel,
-        setVolumeAction = buildSetVolumeAction(setVolumeState, tvActions),
+        applyTargetVolumeToTv = buildApplyTargetVolumeToTvAction(volumeState, tvActions),
         setTargetVolumeAction = buildSetTargetVolumeAction(setVolumeState),
         volumeUpAction = buildVolumeUpAction(volumeState, setVolumeState, tvActions),
         volumeDownAction = buildVolumeDownAction(volumeState, setVolumeState, tvActions),

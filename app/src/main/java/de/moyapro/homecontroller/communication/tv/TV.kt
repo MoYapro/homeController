@@ -10,7 +10,6 @@ fun request(
     command: TVCommand,
     successAction: (String) -> Unit = {},
 ) {
-    Log.i(TAG, "request")
     command.url
         .httpPost()
         .header(command.headers)

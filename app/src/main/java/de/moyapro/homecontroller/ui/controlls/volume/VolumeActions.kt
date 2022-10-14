@@ -1,6 +1,5 @@
 package de.moyapro.homecontroller.ui.controlls.volume
 
-import android.util.Log
 import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.tv.Volume
 
@@ -12,7 +11,7 @@ fun buildVolumeUpAction(
     tvActions: TvActions,
 ): () -> Unit = {
     setVolumeState(volumeState.targetVolume + Volume(1))
-    tvActions.volumeUp()
+//    tvActions.volumeUp()
 }
 
 fun buildVolumeDownAction(
@@ -24,20 +23,14 @@ fun buildVolumeDownAction(
     tvActions.volumeDown()
 }
 
-fun buildSetVolumeAction(
-    setVolumeState: (Volume) -> Unit,
+fun buildApplyTargetVolumeToTvAction(
+    volumeState: VolumeState,
     tvActions: TvActions,
-): (Volume) -> Unit =
-    { newVolume ->
-        setVolumeState(newVolume)
-        tvActions.setVolume(newVolume)
-    }
+): () -> Unit = { tvActions.setVolume(volumeState.targetVolume) }
 
 fun buildSetTargetVolumeAction(
     setVolumeState: (Volume) -> Unit,
-): (Volume) -> Unit = { newVolume ->
-    setVolumeState(newVolume)
-}
+): (Volume) -> Unit = { newVolume -> setVolumeState(newVolume) }
 
 fun buildRestoreAction(
     volumeState: VolumeState,

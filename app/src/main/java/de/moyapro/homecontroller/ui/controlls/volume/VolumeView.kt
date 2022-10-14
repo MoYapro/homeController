@@ -19,7 +19,7 @@ import de.moyapro.homecontroller.ui.VolumeUpButton
 fun VolumeView(
     modifier: Modifier,
     volumePresentationModel: VolumePresentationModel,
-    setVolumeAction: (newVolume: Volume) -> Unit,
+    applyTargetVolumeToTv: () -> Unit,
     setTargetVolumeAction: (newVolume: Volume) -> Unit,
     volumeUpAction: () -> Unit,
     volumeDownAction: () -> Unit,
@@ -31,12 +31,12 @@ fun VolumeView(
             horizontalArrangement = Arrangement.SpaceBetween) {
             VolumeMuteButton(volumePresentationModel, muteAction, restoreAction)
             VolumeDownButton(volumeDownAction, volumePresentationModel.downDisabled)
-            VolumeUpButton(volumeUpAction, volumePresentationModel.upDisabled)
+            VolumeUpButton(volumePresentationModel, volumeUpAction, applyTargetVolumeToTv)
         }
         VolumeChangeText(volumePresentationModel.volumeChangeText)
         Slider(value = volumePresentationModel.targetVolume.value.toFloat(),
             onValueChange = { setTargetVolumeAction(Volume(it)) },
-            onValueChangeFinished = { setVolumeAction(volumePresentationModel.targetVolume) },
+            onValueChangeFinished = applyTargetVolumeToTv,
             valueRange = VolumeConstants.MIN_VOLUME..VolumeConstants.MAX_VOLUME
         )
     }

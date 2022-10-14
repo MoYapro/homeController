@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun MainContent(tvActions: TvActions, mainActions: MainActions) {
-        Log.i(tag, "render")
         val presentationModel: State<MainPresentationModel> = combineFlows(
             flow1 = tvStateViewModel.tvState,
             flow2 = mainViewModel.selectedView,
