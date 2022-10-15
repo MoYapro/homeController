@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val mainActions: MainActions by lazy {
-        buildMainActions(mainViewModel)
+        buildMainActions(mainViewModel, ::recreate)
     }
 
     private var job: Job? = null

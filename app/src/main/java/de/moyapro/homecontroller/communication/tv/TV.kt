@@ -18,7 +18,7 @@ fun request(
             when (result) {
                 is Result.Failure -> {
                     val ex = result.getException()
-                    Log.e(TAG, "error when sending request", ex)
+//                    Log.e(TAG, "error when sending request", ex)
                 }
                 is Result.Success -> {
                     Log.d(TAG, "got ${String(result.get())}")

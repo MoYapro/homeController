@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class MainViewModel : ViewModel() {
 
-    private var _selectedView: MutableStateFlow<ViewEnum> = MutableStateFlow(SETTINGS)
+    private var _selectedView: MutableStateFlow<ViewEnum> = MutableStateFlow(START)
     val selectedView: StateFlow<ViewEnum> = _selectedView
 
     fun selectView(newValue: ViewEnum) {

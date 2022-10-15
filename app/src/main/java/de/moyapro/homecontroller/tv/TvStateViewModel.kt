@@ -11,8 +11,8 @@ class TvStateViewModel : ViewModel() {
     private val _tvState: MutableStateFlow<TvState> =
         MutableStateFlow(
             TvState(
-                powerStatus = PowerStatusEnum.ON,
-                volume = Volume(0),
+                powerStatus = PowerStatusEnum.STANDBY,
+                volume = Volume(1),
                 selectedHdmiChannel = HdmiChannelId(),
                 availableHdmiChannels = listOf(HdmiChannel())
             )
