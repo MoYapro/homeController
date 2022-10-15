@@ -17,7 +17,9 @@ import de.moyapro.homecontroller.tv.buildMockTvActions
 import de.moyapro.homecontroller.tv.buildTvActions
 import de.moyapro.homecontroller.ui.main.*
 import de.moyapro.homecontroller.ui.settings.PREFERENCES_FILE_NAME
+import de.moyapro.homecontroller.ui.settings.SettingsActions
 import de.moyapro.homecontroller.ui.settings.buildConnectionPropertiesFrom
+import de.moyapro.homecontroller.ui.settings.buildSettingsActions
 import de.moyapro.homecontroller.ui.theme.HomeControllerTheme
 import de.moyapro.homecontroller.util.Switches
 import de.moyapro.homecontroller.util.combineFlows
@@ -27,11 +29,11 @@ import kotlin.time.ExperimentalTime
 
 class MainActivity : ComponentActivity() {
     private val tag = MainActivity::class.simpleName
+    private val preferences by lazy { getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE) }
     private val mainViewModel: MainViewModel by viewModels { ViewModelFactory }
     private val tvStateViewModel: TvStateViewModel by viewModels { ViewModelFactory }
-    private val connectionProperties by lazy {
-        buildConnectionPropertiesFrom(getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE))
-    }
+    private val connectionProperties by lazy { buildConnectionPropertiesFrom(preferences) }
+    private val settingsActions by lazy { buildSettingsActions(preferences) }
     private val tvActions: TvActions by lazy {
         if (Switches.DEBUG) buildMockTvActions(tvStateViewModel)
         else buildTvActions(connectionProperties, tvStateViewModel)
@@ -39,13 +41,6 @@ class MainActivity : ComponentActivity() {
 
     private val mainActions: MainActions by lazy {
         buildMainActions(mainViewModel)
-    }
-
-    private fun buildMainActions(mainViewModel: MainViewModel): MainActions {
-        return MainActions(
-            openSettings = { mainViewModel.selectView(ViewEnum.SETTINGS) },
-            openStart = { mainViewModel.selectView(ViewEnum.START) }
-        )
     }
 
     private var job: Job? = null
@@ -56,7 +51,7 @@ class MainActivity : ComponentActivity() {
         startBackgroundRefresh(tvActions.updatePowerStatus, tvActions.updateVolumeStatus)
         setContent {
             HomeControllerTheme {
-                MainContent(tvActions, mainActions)
+                MainContent(tvActions, mainActions, settingsActions)
             }
         }
     }
@@ -76,13 +71,17 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun MainContent(tvActions: TvActions, mainActions: MainActions) {
+    fun MainContent(
+        tvActions: TvActions,
+        mainActions: MainActions,
+        settingsActions: SettingsActions,
+    ) {
         val presentationModel: State<MainPresentationModel> = combineFlows(
             flow1 = tvStateViewModel.tvState,
             flow2 = mainViewModel.selectedView,
             transform = MainPresenter::present
         ).collectAsState()
-        MainView(presentationModel, tvActions, mainActions)
+        MainView(presentationModel, tvActions, mainActions, settingsActions)
     }
 
     override fun onStart() {

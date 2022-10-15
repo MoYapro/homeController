@@ -14,16 +14,18 @@ import de.moyapro.homecontroller.ui.OffButton
 import de.moyapro.homecontroller.ui.SettingsButton
 import de.moyapro.homecontroller.ui.controlls.ControllerView
 import de.moyapro.homecontroller.ui.controlls.hdmi.HdmiSelect
+import de.moyapro.homecontroller.ui.settings.SettingsActions
+import de.moyapro.homecontroller.ui.settings.SettingsController
 import de.moyapro.homecontroller.ui.start.StartView
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
-fun MainView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions, mainActions: MainActions) {
+fun MainView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions, mainActions: MainActions, settingsActions: SettingsActions) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { topbar(mainPresentationModel, tvActions) },
         bottomBar = { bottomBar(mainPresentationModel, mainActions) },
-        content = { innerPadding -> mainContent(innerPadding, mainPresentationModel, tvActions) },
+        content = { innerPadding -> mainContent(innerPadding, mainPresentationModel, tvActions, settingsActions) },
     )
 }
 
@@ -32,11 +34,12 @@ fun mainContent(
     innerPadding: PaddingValues,
     mainPresentationModel: State<MainPresentationModel>,
     tvActions: TvActions,
+    settingsActions: SettingsActions,
 ) {
     when (mainPresentationModel.value.view) {
         ViewEnum.START -> StartView(tvActions = tvActions, Modifier.padding(innerPadding))
         ViewEnum.CONTROLLER -> ControllerView(mainPresentationModel, tvActions )
-        else -> Text(text = "no view selected ${mainPresentationModel.value.view}")
+        ViewEnum.SETTINGS -> SettingsController(settingsActions)
     }
 }
 

@@ -1,13 +1,12 @@
 package de.moyapro.homecontroller.ui.settings
 
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 
-class SettingsController {
+@Composable
+fun SettingsController(settingsActions: SettingsActions) {
 
-    @Composable
-    fun render() {
-        Text(text = "Settings")
-    }
+SettingsView(settingsActions)
 
 }
