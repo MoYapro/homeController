@@ -1,6 +1,6 @@
 package de.moyapro.homecontroller.communication.tv.model
 
-import kotlinx.serialization.Serializable
+import de.moyapro.homecontroller.tv.Volume
 
 data class PowerStatus(val status: PowerStatusEnum)
 
@@ -13,4 +13,9 @@ fun getPowerStatusValueFor(value: String) = when (value) {
     "active" -> PowerStatusEnum.ON
     "standby" -> PowerStatusEnum.STANDBY
     else -> throw IllegalArgumentException("Cannot determin powerstatus for value $value")
+}
+
+fun getVolumeValueFor(value: String): Volume? {
+    val intValue = value.toIntOrNull() ?: return null
+    return Volume(intValue)
 }

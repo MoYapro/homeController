@@ -23,6 +23,7 @@ fun buildMockTvActions(
         upAction = {},
         homeAction = {},
         setHdmiAction = {},
+        updateVolumeStatus = {},
     )
 }
 

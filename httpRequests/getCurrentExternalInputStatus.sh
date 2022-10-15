@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 curl -v -H "Content-Type: application/json" \
-  -H "X-Auth-PSK: Superteam1" \
+  -H "X-Auth-PSK: $1" \
   -X POST \
   -d '{
           "method": "getCurrentExternalInputsStatus",

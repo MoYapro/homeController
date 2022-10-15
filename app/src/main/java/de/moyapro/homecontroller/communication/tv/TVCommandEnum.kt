@@ -10,7 +10,7 @@ enum class TVCommandEnum(val contentGenerator: (String) -> String, val urlGenera
         { ip: String -> "http://${ip}/sony/audio" }
     ),
     HDMI(
-        { value: String -> "{\"method\":\"setPlayContent\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"uri\":\"extInput:hdmi?port=$value\"}]}" },
+        { value: String -> "{\"method\":\"setPlayContent\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"uri\":\"$value\"}]}" },
         { ip: String -> "http://${ip}/sony/avContent" }
     ),
     IRCC(
@@ -24,5 +24,8 @@ enum class TVCommandEnum(val contentGenerator: (String) -> String, val urlGenera
                |</s:Envelope>""".trimMargin()
         },
         { ip: String -> "http://${ip}/sony/IRCC" }
-    )
+    );
+
+    operator fun invoke() {}
+
 }
