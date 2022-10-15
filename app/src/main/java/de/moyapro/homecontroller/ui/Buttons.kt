@@ -48,7 +48,7 @@ fun SettingsButton(modifier: Modifier, openSettings: () -> Unit) {
 }
 
 @Composable
-fun MainButton(modifier: Modifier, openMain: () -> Unit) {
+fun MainButton(modifier: Modifier = Modifier, openMain: () -> Unit) {
     Button(modifier = modifier,
         onClick = openMain
     ) {

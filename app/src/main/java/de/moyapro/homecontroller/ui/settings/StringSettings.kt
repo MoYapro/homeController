@@ -1,5 +1,6 @@
 package de.moyapro.homecontroller.ui.settings
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -19,22 +20,23 @@ fun StringSettings(
     }
     var isFocused: Boolean by remember { mutableStateOf(false) }
 
-    Surface() {
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp),
-            horizontalArrangement = Arrangement.Absolute.SpaceBetween) {
-            Column(Modifier.fillMaxWidth()) {
-                EditTextField(initialValue = currentValue,
-                    label = setting.label,
-                    onValueChange = { newValue: String ->
-                        currentValue = newValue
-                        settingsActions.updateSetting(setting, newValue)
-                    },
-                    onFocusChanged = { focusState -> isFocused = focusState.isFocused }
-                )
-                if (isFocused) {
-                    Text(text = setting.description, modifier = Modifier.alpha(MUTED_ALPHA))
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .animateContentSize()
+        .padding(4.dp),
+        horizontalArrangement = Arrangement.Absolute.SpaceBetween) {
+        Column(Modifier.fillMaxWidth()) {
+            EditTextField(initialValue = currentValue,
+                label = setting.label,
+                onValueChange = { newValue: String ->
+                    currentValue = newValue
+                    settingsActions.updateSetting(setting, newValue)
+                },
+                onFocusChanged = { focusState -> isFocused = focusState.isFocused }
+            )
+            if (isFocused) {
+                Surface(modifier = Modifier.padding(5.dp)) {
+                Text(text = setting.description, modifier = Modifier.alpha(MUTED_ALPHA))
                 }
             }
         }
