@@ -14,8 +14,3 @@ fun getPowerStatusValueFor(value: String) = when (value) {
     "standby" -> PowerStatusEnum.STANDBY
     else -> throw IllegalArgumentException("Cannot determin powerstatus for value $value")
 }
-
-fun getVolumeValueFor(value: String): Volume? {
-    val intValue = value.toIntOrNull() ?: return null
-    return Volume(intValue)
-}

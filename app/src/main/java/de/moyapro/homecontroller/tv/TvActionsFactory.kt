@@ -4,8 +4,8 @@ import android.util.Log
 import de.moyapro.homecontroller.communication.tv.*
 import de.moyapro.homecontroller.communication.tv.model.ConnectionProperties
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
+import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
 import de.moyapro.homecontroller.communication.tv.model.getPowerStatusValueFor
-import de.moyapro.homecontroller.communication.tv.model.getVolumeValueFor
 import de.moyapro.homecontroller.config.getConfiguredJson
 import de.moyapro.homecontroller.ui.controlls.volume.VolumeConstants
 import kotlinx.serialization.decodeFromString
@@ -112,9 +112,15 @@ fun buildUpdatePowerStatusAction(
             connectionProperties
         )
     ) { tvResponseString ->
-        val responseValue = getConfiguredJson().decodeFromString<PowerStatusResponse>(tvResponseString)
-        val newPowerStatus = getPowerStatusValueFor(responseValue.result.first().first().status)
-        tvStateViewModel.setPowerStatus(newPowerStatus)
+        try {
+
+            val responseValue =
+                getConfiguredJson().decodeFromString<PowerStatusResponse>(tvResponseString)
+            val newPowerStatus = getPowerStatusValueFor(responseValue.result.first().first().status)
+            tvStateViewModel.setPowerStatus(newPowerStatus)
+        } catch (ex: java.lang.Exception) {
+            Log.e(TAG, "could not parse power status. response was $tvResponseString")
+        }
     }
 }
 
@@ -128,10 +134,11 @@ fun buildUpdateVolumeStatusAction(
             connectionProperties
         )
     ) { tvResponseString ->
+        if (tvResponseString.contains("Display Is Turned off")) return@request
         val responseValue =
-            getConfiguredJson().decodeFromString<PowerStatusResponse>(tvResponseString)
+            getConfiguredJson().decodeFromString<VolumeInformationResponse>(tvResponseString)
         val newVolume =
-            getVolumeValueFor(responseValue.result.first().first().status)
+            Volume(responseValue.result.first().first().volume)
         if (null != newVolume) {
             tvStateViewModel.setVolume(newVolume)
         } else {

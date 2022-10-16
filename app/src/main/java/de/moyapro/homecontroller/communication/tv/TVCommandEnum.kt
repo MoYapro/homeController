@@ -2,11 +2,11 @@ package de.moyapro.homecontroller.communication.tv
 
 enum class TVCommandEnum(val contentGenerator: (String) -> String, val urlGenerator: (String) -> String) {
     POWER(
-        { value: String -> "{\"method\":\"setPowerStatus\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"status\":${value}}]}" },
+        { value: String -> """{"method":"setPowerStatus","version":"1.0","id":1,"params":[{"status":${value}}]}""" },
         { ip: String -> "http://${ip}/sony/system" }
     ),
     VOLUME(
-        { value: String -> "{\"method\":\"setAudioVolume\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"target\":\"speaker\",\"volume\":\"$value\"}]}" },
+        { value: String -> """{"method":"setAudioVolume","version":"1.0","id":1,"params":[{"target":"speaker","volume":"$value"}]}""" },
         { ip: String -> "http://${ip}/sony/audio" }
     ),
     HDMI(
