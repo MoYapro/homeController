@@ -56,8 +56,8 @@ app.post('/sony/IRCC', (req, res) => {
 
 
 function getPowerStatus() {
-    if (tvState.power) return {"result": [[{"status": "active"}]], "id": 50}
-    else return {"result": [[{"status": "standby"}]], "id": 50}
+    if (tvState.power) return {"result": [{"status": "active"}], "id": 50}
+    else return {"result": [{"status": "standby"}], "id": 50}
 
 }
 

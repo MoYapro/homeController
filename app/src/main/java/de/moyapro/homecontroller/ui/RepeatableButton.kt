@@ -1,15 +1,16 @@
 package de.moyapro.homecontroller.ui
 
+import android.util.Log
 import android.view.MotionEvent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import kotlinx.coroutines.delay
@@ -33,7 +34,7 @@ fun RepeatingButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     maxDelay: Duration = 500.milliseconds,
     minDelay: Duration = 10.milliseconds,
-    delayDecayFactor: Double = .15,
+    delayDecayFactor: Double = .1,
     content: @Composable RowScope.() -> Unit,
 ) {
     val currentClickListener by rememberUpdatedState(onClick)
@@ -44,10 +45,16 @@ fun RepeatingButton(
             .pointerInteropFilter { event ->
                 pressed = when (event.action) {
                     MotionEvent.ACTION_DOWN -> true
-                    else -> {
+                    MotionEvent.ACTION_MOVE -> pressed
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                         onRelease()
                         false
                     }
+                    else -> {
+                        Log.i(TAG, "MotionEvent $event")
+                        pressed// ignore other events an don't change pressed status
+                    }
+
                 }
                 true
             },
@@ -57,7 +64,7 @@ fun RepeatingButton(
         elevation = elevation,
         shape = shape,
         border = border,
-        colors = colors,
+        colors = ButtonDefaults.buttonColors(contentColor = if (pressed) Color.Green else Color.Red),
         contentPadding = contentPadding,
         content = content
     )
@@ -73,3 +80,5 @@ fun RepeatingButton(
         }
     }
 }
+
+const val TAG: String = "Repeatable button"

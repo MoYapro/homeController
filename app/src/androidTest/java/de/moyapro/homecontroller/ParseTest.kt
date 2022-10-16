@@ -50,7 +50,7 @@ class ParseTest {
         val expectedPowerStatus = "active"
         val result =
             getConfiguredJson().decodeFromString<PowerStatusResponse>("""{"result":[{"status":"active"}],"id":20}""")
-        val actualPowerStatus = result.result.first().first().status
+        val actualPowerStatus = result.result.first().status
         assertEquals("Should have got the correct power status",
             expectedPowerStatus,
             actualPowerStatus)

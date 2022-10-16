@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PowerStatusResponse(
-    val result: List<List<PowerStatusResponseValue>>,
+    val result: List<PowerStatusResponseValue>,
     val id: Int,
 )
 

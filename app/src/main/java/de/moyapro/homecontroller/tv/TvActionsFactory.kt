@@ -15,7 +15,7 @@ fun buildTvActions(
     connectionProperties: ConnectionProperties?,
     tvStateViewModel: TvStateViewModel,
 ): TvActions {
-    if (null == connectionProperties) throw IllegalStateException("must have connection properties")
+    if (null == connectionProperties) return buildMockTvActions(tvStateViewModel)
     return TvActions(
         onAction = buildOnAction(connectionProperties),
         offAction = buildOffAction(connectionProperties),
@@ -116,7 +116,7 @@ fun buildUpdatePowerStatusAction(
 
             val responseValue =
                 getConfiguredJson().decodeFromString<PowerStatusResponse>(tvResponseString)
-            val newPowerStatus = getPowerStatusValueFor(responseValue.result.first().first().status)
+            val newPowerStatus = getPowerStatusValueFor(responseValue.result.first().status)
             tvStateViewModel.setPowerStatus(newPowerStatus)
         } catch (ex: java.lang.Exception) {
             Log.e(TAG, "could not parse power status. response was $tvResponseString")

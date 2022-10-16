@@ -4,6 +4,7 @@ import android.util.Log
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
 import de.moyapro.homecontroller.communication.tv.model.ConnectionProperties
+import de.moyapro.homecontroller.util.Switches
 
 const val TAG = "request"
 fun request(
