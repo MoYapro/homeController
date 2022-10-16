@@ -20,7 +20,7 @@ import de.moyapro.homecontroller.tv.Volume
 import de.moyapro.homecontroller.ui.controlls.volume.VolumePresentationModel
 import kotlin.time.Duration.Companion.milliseconds
 
-val FAST_BUTTON_DELAY = 10.milliseconds
+val FAST_BUTTON_DELAY = 250.milliseconds
 
 @Composable
 fun OffButton(offAction: () -> Unit, modifier: Modifier = Modifier) {

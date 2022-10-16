@@ -6,12 +6,14 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import kotlinx.coroutines.delay
+import kotlinx.serialization.json.JsonNull.content
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
@@ -30,7 +32,7 @@ fun RepeatingButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     maxDelay: Duration = 500.milliseconds,
-    minDelay: Duration = 5.milliseconds,
+    minDelay: Duration = 10.milliseconds,
     delayDecayFactor: Double = .15,
     content: @Composable RowScope.() -> Unit,
 ) {

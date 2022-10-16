@@ -1,10 +1,21 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-
+require('body-parser-xml')(bodyParser);
 const app = express()
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
+app.use(bodyParser.xml());
 const port = 3000
+
+const IRCC_CODES = []
+IRCC_CODES["AAAAAgAAAJcAAABPAw=="] = 'UP'
+IRCC_CODES["AAAAAgAAAJcAAABQAw=="] = 'DOWN'
+IRCC_CODES["AAAAAgAAAJcAAABNAw=="] = 'LEFT'
+IRCC_CODES["AAAAAgAAAJcAAABOAw=="] = 'RIGHT'
+IRCC_CODES["AAAAAgAAAJcAAABKAw=="] = 'CENTER'
+IRCC_CODES["AAAAAQAAAAEAAABgAw=="] = 'HOME'
+IRCC_CODES["AAAAAgAAAJcAAAAjAw=="] = 'RETURN'
+
 
 let tvState = {
     volume: 0,
@@ -17,16 +28,6 @@ app.get('/', (req, res) => {
 })
 
 
-app.post('/sony/audio', (req, res) => {
-    const body = req.body
-    const method = body.method
-    // {"id": 20, "method": "getVolumeInformation", "version": "1.0", "params": [] }
-    if (method == 'getVolumeInformation') res.send(getVolumeInformation())
-    else if (method == 'setAudioVolume') res.send(setAudioVolume(body.params[0]))
-
-    logState()
-})
-
 app.post('/sony/system', (req, res) => {
     const body = req.body
     const method = body.method
@@ -37,8 +38,20 @@ app.post('/sony/system', (req, res) => {
     logState()
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+app.post('/sony/audio', (req, res) => {
+    const body = req.body
+    const method = body.method
+    // {"id": 20, "method": "getVolumeInformation", "version": "1.0", "params": [] }
+    if (method == 'getVolumeInformation') res.send(getVolumeInformation())
+    else if (method == 'setAudioVolume') res.send(setAudioVolume(body.params[0]))
+
+    logState()
+})
+
+app.post('/sony/IRCC', (req, res) => {
+    const code = req.body['s:Envelope']['s:Body'][0]['u:X_SendIRCC'][0]['IRCCCode'][0]
+    console.count('got code', code, '->', IRCC_CODES[code])
+    res.sendStatus(200)
 })
 
 
@@ -78,3 +91,8 @@ function getVolumeInformation() {
 function logState() {
     console.log("tvState", tvState)
 }
+
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
