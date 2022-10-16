@@ -9,7 +9,6 @@ import de.moyapro.homecontroller.communication.tv.model.getVolumeValueFor
 import de.moyapro.homecontroller.config.getConfiguredJson
 import de.moyapro.homecontroller.ui.controlls.volume.VolumeConstants
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 const val TAG = "TV_ACTIONS_FACTORY"
 fun buildTvActions(
@@ -113,7 +112,7 @@ fun buildUpdatePowerStatusAction(
             connectionProperties
         )
     ) { tvResponseString ->
-        val responseValue = Json.decodeFromString<PowerStatusResponse>(tvResponseString)
+        val responseValue = getConfiguredJson().decodeFromString<PowerStatusResponse>(tvResponseString)
         val newPowerStatus = getPowerStatusValueFor(responseValue.result.first().first().status)
         tvStateViewModel.setPowerStatus(newPowerStatus)
     }
@@ -131,7 +130,6 @@ fun buildUpdateVolumeStatusAction(
     ) { tvResponseString ->
         val responseValue =
             getConfiguredJson().decodeFromString<PowerStatusResponse>(tvResponseString)
-        // {"result":[[{"target":"speaker","volume":7,"mute":false,"maxVolume":100,"minVolume":0}]],"id":20}
         val newVolume =
             getVolumeValueFor(responseValue.result.first().first().status)
         if (null != newVolume) {

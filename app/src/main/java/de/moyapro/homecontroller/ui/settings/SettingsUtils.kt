@@ -11,8 +11,8 @@ const val PREFERENCES_FILE_NAME = "homeControllerSettingsFilename"
 fun buildConnectionPropertiesFrom(preferences: SharedPreferences?): ConnectionProperties? {
     if (null == preferences) return null
 
-    val ip = preferences.getString(SETTING.TV_PSK_STRING.name, null)
-    val password = preferences.getString(SETTING.TV_IP_ADDRESS.name, null)
+    val ip = preferences.getString(SETTING.TV_IP_ADDRESS.name, null)
+    val password = preferences.getString(SETTING.TV_PSK_STRING.name, null)
 
     if (null == ip || null == password) return null
 
