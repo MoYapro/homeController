@@ -3,7 +3,6 @@ package de.moyapro.homecontroller.ui.main
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
@@ -17,7 +16,6 @@ import de.moyapro.homecontroller.ui.controlls.hdmi.HdmiSelect
 import de.moyapro.homecontroller.ui.settings.SettingsActions
 import de.moyapro.homecontroller.ui.settings.SettingsController
 import de.moyapro.homecontroller.ui.start.StartView
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun MainView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions, mainActions: MainActions, settingsActions: SettingsActions) {
@@ -45,14 +43,14 @@ fun mainContent(
 
 @Composable
 fun topbar(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
-    val isController = mainPresentationModel.value.view == ViewEnum.CONTROLLER
+    val showController = mainPresentationModel.value.view == ViewEnum.CONTROLLER
     Row(Modifier.fillMaxWidth(),
-        horizontalArrangement = if (isController) Arrangement.SpaceBetween else Arrangement.SpaceBetween,
+        horizontalArrangement = if (showController) Arrangement.SpaceBetween else Arrangement.SpaceBetween,
     ) {
         Row(modifier = Modifier.fillMaxWidth(.01F)) {}
         OffButton(offAction = tvActions.offAction, Modifier.padding(horizontal = 1.dp))
         Row(Modifier.animateContentSize()) {
-            if (isController) {
+            if (showController) {
                 HdmiSelect(mainPresentationModel.value.hdmiStatus, tvActions.setHdmiAction)
             }
         }

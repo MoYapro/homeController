@@ -47,8 +47,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startBackgroundRefresh(tvActions.updatePowerStatus, tvActions.updateVolumeStatus)
-        startBackgroundRefresh(tvActions.updatePowerStatus, tvActions.updateVolumeStatus)
+        startBackgroundRefresh(tvActions.updatePowerStatus,
+            tvActions.updateVolumeStatus,
+            tvActions.updateHdmiStatus)
         setContent {
             HomeControllerTheme {
                 MainContent(tvActions, mainActions, settingsActions)
@@ -86,7 +87,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        startBackgroundRefresh(tvActions.updatePowerStatus, tvActions.updateVolumeStatus)
+        startBackgroundRefresh(
+            tvActions.updatePowerStatus,
+            tvActions.updateVolumeStatus,
+            tvActions.updateHdmiStatus
+        )
     }
 
     override fun onStop() {
@@ -98,6 +103,7 @@ class MainActivity : ComponentActivity() {
     fun startBackgroundRefresh(
         updatePowerStatus: () -> Unit,
         updateVolumeStatus: () -> Unit,
+        udpateHdmiStatus: () -> Unit,
     ) {
         if (true == job?.isActive) return
 
@@ -106,8 +112,11 @@ class MainActivity : ComponentActivity() {
         job = lifecycleScope.launch(Dispatchers.IO) {
             while (this.isActive) {
                 updatePowerStatus()
+                delay(.5.seconds)
                 updateVolumeStatus()
-                delay(1.5.seconds)
+                delay(.5.seconds)
+                udpateHdmiStatus()
+                delay(.5.seconds)
             }
         }
     }

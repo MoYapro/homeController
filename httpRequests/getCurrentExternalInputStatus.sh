@@ -9,4 +9,4 @@ curl -v -H "Content-Type: application/json" \
           "params": [],
           "version": "1.1"
       }' \
-  http://192.168.1.111/sony/avContent
+  http://192.168.1.241:3000/sony/avContent

@@ -1,8 +1,12 @@
 package de.moyapro.homecontroller.tv
 
 import android.util.Log
+import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
+import de.moyapro.homecontroller.communication.tv.model.HdmiStatusResponse
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusEnum
+import de.moyapro.homecontroller.config.getConfiguredJson
 import de.moyapro.homecontroller.ui.controlls.volume.VolumeConstants
+import kotlinx.serialization.decodeFromString
 
 const val MOCK_TAG = "TV_MOCK_ACTIONS_FACTORY"
 fun buildMockTvActions(
@@ -12,6 +16,8 @@ fun buildMockTvActions(
         onAction = buildOnAction(tvStateViewModel),
         offAction = buildOffAction(tvStateViewModel),
         updatePowerStatus = buildUpdatePowerStatusAction(tvStateViewModel),
+        updateVolumeStatus = {},
+        updateHdmiStatus = buildUpdateHdmiStatusAction(tvStateViewModel),
         setVolume = buildSetVolumeAction(tvStateViewModel),
         volumeUp = buildVolumeUpAction(tvStateViewModel),
         volumeDown = buildVolumeDownAction(tvStateViewModel),
@@ -23,7 +29,6 @@ fun buildMockTvActions(
         upAction = {},
         homeAction = {},
         setHdmiAction = {},
-        updateVolumeStatus = {},
     )
 }
 
@@ -47,6 +52,10 @@ fun buildVolumeDownAction(tvStateViewModel: TvStateViewModel): () -> Unit = {
 fun buildUpdatePowerStatusAction(unused: TvStateViewModel): () -> Unit =
     { /* nothing to do because status is already in state */ }
 
+fun buildUpdateHdmiStatusAction(unused: TvStateViewModel): () -> Unit = {
+    unused.setHdmiStatus(mockHdmiData())
+}
+
 fun buildOnAction(tvStateViewModel: TvStateViewModel): () -> Unit =
     { tvStateViewModel.setPowerStatus(PowerStatusEnum.ON) }
 
@@ -54,3 +63,61 @@ fun buildOnAction(tvStateViewModel: TvStateViewModel): () -> Unit =
 fun buildOffAction(tvStateViewModel: TvStateViewModel): () -> Unit =
     { tvStateViewModel.setPowerStatus(PowerStatusEnum.STANDBY) }
 
+fun mockHdmiData(): List<HdmiStatus> {
+    val hdmiStatusResponse: HdmiStatusResponse = getConfiguredJson().decodeFromString("""{
+    "result": [
+        [
+            {
+                "uri": "extInput:hdmi?port=1",
+                "title": "HDMI 1",
+                "connection": false,
+                "label": "",
+                "icon": "meta:hdmi",
+                "status": "false"
+            },
+            {
+                "uri": "extInput:hdmi?port=2",
+                "title": "HDMI 2",
+                "connection": false,
+                "label": "",
+                "icon": "meta:hdmi",
+                "status": "false"
+            },
+            {
+                "uri": "extInput:hdmi?port=3",
+                "title": "HDMI 3/ARC",
+                "connection": false,
+                "label": "",
+                "icon": "meta:hdmi",
+                "status": "false"
+            },
+            {
+                "uri": "extInput:hdmi?port=4",
+                "title": "HDMI 4",
+                "connection": false,
+                "label": "",
+                "icon": "meta:hdmi",
+                "status": "false"
+            },
+            {
+                "uri": "extInput:composite?port=1",
+                "title": "AV",
+                "connection": false,
+                "label": "",
+                "icon": "meta:composite",
+                "status": ""
+            },
+            {
+                "uri": "extInput:widi?port=1",
+                "title": "Bildschirm spiegeln",
+                "connection": true,
+                "label": "",
+                "icon": "meta:wifidisplay",
+                "status": ""
+            }
+        ]
+    ],
+    "id": 105
+}""")
+    return hdmiStatusResponse.result.first()
+}

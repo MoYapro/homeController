@@ -108,22 +108,6 @@ return {
                        "status": "true"
                    },
                    {
-                       "uri": "extInput:hdmi?port=2",
-                       "title": "HDMI 2",
-                       "connection": false,
-                       "label": "",
-                       "icon": "meta:hdmi",
-                       "status": "false"
-                   },
-                   {
-                       "uri": "extInput:hdmi?port=3",
-                       "title": "HDMI 3/ARC",
-                       "connection": false,
-                       "label": "",
-                       "icon": "meta:hdmi",
-                       "status": "false"
-                   },
-                   {
                        "uri": "extInput:hdmi?port=4",
                        "title": "HDMI 4",
                        "connection": false,

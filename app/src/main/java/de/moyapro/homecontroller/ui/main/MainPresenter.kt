@@ -11,7 +11,8 @@ object MainPresenter {
         val isPowerOn = PowerStatusEnum.ON == tvState.powerStatus
         return MainPresentationModel(
             view = presentView(selectedView, isPowerOn),
-            volume = tvState.volume
+            volume = tvState.volume,
+            hdmiStatus = tvState.hdmiStatus
         )
     }
 

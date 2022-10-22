@@ -16,4 +16,5 @@ data class TvActions(
     val homeAction: () -> Unit,
     val setHdmiAction: (String) -> Unit,
     val updateVolumeStatus: () -> Unit,
+    val updateHdmiStatus: () -> Unit,
 )

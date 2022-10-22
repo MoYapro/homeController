@@ -1,6 +1,7 @@
 package de.moyapro.homecontroller.tv
 
 import androidx.lifecycle.ViewModel
+import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
 import de.moyapro.homecontroller.communication.tv.model.PowerStatusEnum
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,8 +14,7 @@ class TvStateViewModel : ViewModel() {
             TvState(
                 powerStatus = PowerStatusEnum.STANDBY,
                 volume = Volume(1),
-                selectedHdmiChannel = HdmiChannelId(),
-                availableHdmiChannels = listOf(HdmiChannel())
+                hdmiStatus = emptyList()
             )
         )
     val tvState: StateFlow<TvState> = _tvState
@@ -26,22 +26,17 @@ class TvStateViewModel : ViewModel() {
     fun setVolume(newVolume: Volume) {
         _tvState.value = tvState.value.copy(volume = newVolume)
     }
+
+    fun setHdmiStatus(newHdmiStatus: List<HdmiStatus>){
+        _tvState.value = tvState.value.copy(hdmiStatus = newHdmiStatus)
+    }
 }
 
 data class TvState(
     val powerStatus: PowerStatusEnum,
     val volume: Volume,
-    val selectedHdmiChannel: HdmiChannelId,
-    val availableHdmiChannels: List<HdmiChannel>,
+    val hdmiStatus: List<HdmiStatus>,
 )
-
-class HdmiChannel {
-
-}
-
-class HdmiChannelId {
-
-}
 
 @JvmInline
 value class Volume(val value: Int) {

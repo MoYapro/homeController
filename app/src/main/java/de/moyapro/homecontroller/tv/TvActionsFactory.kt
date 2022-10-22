@@ -18,6 +18,7 @@ fun buildTvActions(
         offAction = buildOffAction(connectionProperties),
         updatePowerStatus = buildUpdatePowerStatusAction(connectionProperties, tvStateViewModel),
         updateVolumeStatus = buildUpdateVolumeStatusAction(connectionProperties, tvStateViewModel),
+        updateHdmiStatus = buildUpdateHdmiStatusAction(connectionProperties, tvStateViewModel),
         setVolume = buildSetVolumeAction(connectionProperties),
         volumeUp = buildVolumeUpAction(connectionProperties, tvStateViewModel),
         volumeDown = buildVolumeDownAction(connectionProperties, tvStateViewModel),
@@ -123,6 +124,23 @@ fun buildUpdatePowerStatusAction(
         } catch (ex: java.lang.Exception) {
             Log.e(TAG, "could not parse power status. response was $tvResponseString")
         }
+    }
+}
+
+fun buildUpdateHdmiStatusAction(
+    connectionProperties: ConnectionProperties,
+    tvStateViewModel: TvStateViewModel,
+): () -> Unit = {
+    request(
+        TVCommand(
+            TvStatusEnum.HDMI_STATUS,
+            connectionProperties
+        )
+    ) { hdmiStatusResponseString ->
+        Log.i("hdmistatus", hdmiStatusResponseString)
+        val responseValue: HdmiStatusResponse =
+            getConfiguredJson().decodeFromString(hdmiStatusResponseString)
+        tvStateViewModel.setHdmiStatus(responseValue.result.firstOrNull() ?: emptyList())
     }
 }
 
