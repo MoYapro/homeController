@@ -2,10 +2,7 @@ package de.moyapro.homecontroller.tv
 
 import android.util.Log
 import de.moyapro.homecontroller.communication.tv.*
-import de.moyapro.homecontroller.communication.tv.model.ConnectionProperties
-import de.moyapro.homecontroller.communication.tv.model.PowerStatusResponse
-import de.moyapro.homecontroller.communication.tv.model.VolumeInformationResponse
-import de.moyapro.homecontroller.communication.tv.model.getPowerStatusValueFor
+import de.moyapro.homecontroller.communication.tv.model.*
 import de.moyapro.homecontroller.config.getConfiguredJson
 import de.moyapro.homecontroller.ui.controlls.volume.VolumeConstants
 import kotlinx.serialization.decodeFromString
@@ -110,7 +107,12 @@ fun buildUpdatePowerStatusAction(
         TVCommand(
             TvStatusEnum.POWER_STATUS,
             connectionProperties
-        )
+        ),
+        failAction = { error ->
+            Log.i(de.moyapro.homecontroller.communication.tv.TAG,
+                "Could not connect to tv with ip ${connectionProperties.ip}")
+            tvStateViewModel.setPowerStatus(PowerStatusEnum.OFF)
+        }
     ) { tvResponseString ->
         try {
 

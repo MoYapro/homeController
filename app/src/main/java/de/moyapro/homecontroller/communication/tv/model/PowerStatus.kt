@@ -5,6 +5,7 @@ import de.moyapro.homecontroller.tv.Volume
 data class PowerStatus(val status: PowerStatusEnum)
 
 enum class PowerStatusEnum(val stringValue: String) {
+    OFF("disconnected"),
     STANDBY("standby"),
     ON("active")
 }
