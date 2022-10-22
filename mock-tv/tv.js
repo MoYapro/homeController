@@ -50,7 +50,7 @@ app.post('/sony/audio', (req, res) => {
 
 app.post('/sony/IRCC', (req, res) => {
     const code = req.body['s:Envelope']['s:Body'][0]['u:X_SendIRCC'][0]['IRCCCode'][0]
-    console.count('got code', code, '->', IRCC_CODES[code])
+    console.log('got code', code, '->', IRCC_CODES[code])
     res.sendStatus(200)
 })
 

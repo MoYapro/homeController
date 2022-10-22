@@ -3,6 +3,7 @@ package de.moyapro.homecontroller.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -16,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.moyapro.homecontroller.communication.tv.model.HdmiStatus
-import de.moyapro.homecontroller.tv.Volume
 import de.moyapro.homecontroller.ui.controlls.volume.VolumePresentationModel
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -144,8 +144,14 @@ fun UpButton(upAction: () -> Unit) {
 
 @Composable
 fun HdmiButton(modifier: Modifier, status: HdmiStatus, hdmiAction: (uri: String) -> Unit) {
-    Button(modifier = modifier, enabled = true,
-        onClick = { hdmiAction(status.uri) }) {
+    Button(
+        modifier = modifier,
+        enabled = true,
+        onClick = { hdmiAction(status.uri) },
+        colors = ButtonDefaults.buttonColors(
+            contentColor = if (status.connection) Color.Green
+            else ButtonDefaults.buttonColors().contentColor(enabled = true).value),
+    ) {
         Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = status.title)
         Text(status.uri.takeLast(1))
     }
