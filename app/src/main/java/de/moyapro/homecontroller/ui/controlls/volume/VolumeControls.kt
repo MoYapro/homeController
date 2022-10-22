@@ -1,5 +1,6 @@
 package de.moyapro.homecontroller.ui.controlls.volume
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import de.moyapro.homecontroller.tv.TvActions
@@ -12,15 +13,24 @@ fun VolumeControls(
     tvVolume: Volume,
     tvActions: TvActions,
 ) {
-    var volumeState by remember { mutableStateOf(defaultVolumeState) }
-    val setVolumeState: (Volume) -> Unit = { newValue: Volume ->
+    var volumeState by remember { mutableStateOf(VolumeState()) }
+    val setVolumeState: (Volume?) -> Unit = { newValue: Volume? ->
         volumeState = volumeState.copy(targetVolume = newValue, restoreVolume = null)
     }
     val setRestoreVolume: (Volume?) -> Unit = { restoreValue: Volume? ->
+        Log.i(TAG, "set restorevolume to $restoreValue")
         volumeState = volumeState.copy(restoreVolume = restoreValue)
     }
-    val volumePresentationModel: VolumePresentationModel =
+
+    var volumePresentationModel: VolumePresentationModel by remember {
+        mutableStateOf(VolumePresentationModel())
+    }
+    if (tvVolume != volumePresentationModel.tvVolume) {
+        setVolumeState(tvVolume)
+    }
+    volumePresentationModel =
         VolumePresenter.present(tvVolume, volumeState)
+
     VolumeView(
         modifier = modifier,
         volumePresentationModel = volumePresentationModel,
@@ -32,11 +42,3 @@ fun VolumeControls(
         restoreAction = buildRestoreAction(volumeState, setVolumeState, setRestoreVolume, tvActions)
     )
 }
-
-
-val defaultVolumeState =
-    VolumeState(
-        targetVolume = Volume(0),
-        restoreVolume = null
-    )
-

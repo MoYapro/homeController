@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import kotlinx.coroutines.delay
-import kotlinx.serialization.json.JsonNull.content
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
@@ -64,7 +63,9 @@ fun RepeatingButton(
         elevation = elevation,
         shape = shape,
         border = border,
-        colors = ButtonDefaults.buttonColors(contentColor = if (pressed) Color.Green else Color.Red),
+        colors = ButtonDefaults.buttonColors(
+            contentColor = if (pressed) Color.Green
+            else colors.contentColor(enabled = enabled).value),
         contentPadding = contentPadding,
         content = content
     )

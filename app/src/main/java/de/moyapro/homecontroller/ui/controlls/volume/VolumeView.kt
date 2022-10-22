@@ -27,22 +27,43 @@ fun VolumeView(
     restoreAction: () -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        Row(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween) {
-            VolumeMuteButton(volumePresentationModel, muteAction, restoreAction)
-            VolumeDownButton(volumeDownAction,
-                applyTargetVolumeToTv,
-                volumePresentationModel.downDisabled)
-            VolumeUpButton(volumeUpAction,
-                applyTargetVolumeToTv,
-                volumePresentationModel.upDisabled)
-        }
+        ButtonRow(
+            volumePresentationModel,
+            muteAction,
+            restoreAction,
+            volumeDownAction,
+            applyTargetVolumeToTv,
+            volumeUpAction)
         VolumeChangeText(volumePresentationModel.volumeChangeText)
-        Slider(value = volumePresentationModel.targetVolume.value.toFloat(),
+        Slider(
+            value = volumePresentationModel.targetVolume.value.toFloat(),
             onValueChange = { setTargetVolumeAction(Volume(it)) },
             onValueChangeFinished = applyTargetVolumeToTv,
             valueRange = VolumeConstants.MIN_VOLUME..VolumeConstants.MAX_VOLUME,
         )
+    }
+}
+
+@Composable
+private fun ButtonRow(
+    volumePresentationModel: VolumePresentationModel,
+    muteAction: () -> Unit,
+    restoreAction: () -> Unit,
+    volumeDownAction: () -> Unit,
+    applyTargetVolumeToTv: () -> Unit,
+    volumeUpAction: () -> Unit,
+) {
+    Row(modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween) {
+        VolumeMuteButton(volumePresentationModel, muteAction, restoreAction)
+        VolumeDownButton(
+            volumeDownAction,
+            applyTargetVolumeToTv,
+            volumePresentationModel.downDisabled)
+        VolumeUpButton(
+            volumeUpAction,
+            applyTargetVolumeToTv,
+            volumePresentationModel.upDisabled)
     }
 }
 

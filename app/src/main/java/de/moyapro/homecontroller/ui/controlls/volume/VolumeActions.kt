@@ -7,22 +7,22 @@ const val TAG = "volume action"
 
 fun buildVolumeUpAction(
     volumeState: VolumeState,
-    setVolumeState: (Volume) -> Unit,
+    setVolumeState: (Volume?) -> Unit,
 ): () -> Unit = {
-    setVolumeState(volumeState.targetVolume + Volume(1))
+    setVolumeState(volumeState.targetVolume?.plus(Volume(1)) ?: null)
 }
 
 fun buildVolumeDownAction(
     volumeState: VolumeState,
-    setVolumeState: (Volume) -> Unit,
+    setVolumeState: (Volume?) -> Unit,
 ): () -> Unit = {
-    setVolumeState(volumeState.targetVolume - Volume(1))
+    setVolumeState(volumeState.targetVolume?.minus(Volume(1)) ?: null)
 }
 
 fun buildApplyTargetVolumeToTvAction(
     volumeState: VolumeState,
     tvActions: TvActions,
-): () -> Unit = { tvActions.setVolume(volumeState.targetVolume) }
+): () -> Unit = { tvActions.setVolume(volumeState.targetVolume ?: Volume(0)) }
 
 fun buildSetTargetVolumeAction(
     setVolumeState: (Volume) -> Unit,
@@ -42,8 +42,8 @@ fun buildRestoreAction(
 
 fun buildMuteAction(
     volumeState: VolumeState,
-    setVolumeState: (Volume) -> Unit,
-    setRestoreVolume: (Volume) -> Unit,
+    setVolumeState: (Volume?) -> Unit,
+    setRestoreVolume: (Volume?) -> Unit,
     tvActions: TvActions,
 ): () -> Unit = {
     val newVolume = Volume(0)

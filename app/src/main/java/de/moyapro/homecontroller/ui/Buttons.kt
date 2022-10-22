@@ -163,7 +163,7 @@ fun VolumeMuteButton(
         Button(
             modifier = modifier,
             onClick = muteAction,
-            enabled = Volume(0) < volumePresentationModel.targetVolume
+            enabled = !volumePresentationModel.muteDisabled
         ) {
             Icon(Icons.Filled.VolumeOff, contentDescription = "mute button")
         }
@@ -171,6 +171,7 @@ fun VolumeMuteButton(
         Button(
             modifier = modifier,
             onClick = restoreAction,
+            enabled = !volumePresentationModel.muteDisabled
         ) {
             Icon(Icons.Filled.VolumeMute, contentDescription = "restore volume button")
             Text(volumePresentationModel.restoreVolume.value.toString())
