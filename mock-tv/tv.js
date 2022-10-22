@@ -19,7 +19,7 @@ IRCC_CODES["AAAAAgAAAJcAAAAjAw=="] = 'RETURN'
 
 let tvState = {
     volume: 0,
-    power: false
+    power: true
 }
 
 
