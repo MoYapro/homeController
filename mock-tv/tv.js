@@ -54,6 +54,14 @@ app.post('/sony/IRCC', (req, res) => {
     res.sendStatus(200)
 })
 
+app.post('/sony/avContent', (req, res) => {
+     const body = req.body
+     const method = body.method
+        // {"method": "getCurrentExternalInputsStatus", "id": 105, "params": [], "version": "1.1"}
+        if (method == 'getCurrentExternalInputsStatus') res.send(getHdmiStatus())
+        else res.sendStatus(400)
+})
+
 
 function getPowerStatus() {
     if (tvState.power) return {"result": [{"status": "active"}], "id": 50}
@@ -85,6 +93,64 @@ function getVolumeInformation() {
         }]], "id": 20
     }
     else return {"error": [40005, "Display Is Turned off"], "id": 20}
+}
+
+function getHdmiStatus() {
+return {
+           "result": [
+               [
+                   {
+                       "uri": "extInput:hdmi?port=1",
+                       "title": "HDMI 1",
+                       "connection": true,
+                       "label": "",
+                       "icon": "meta:hdmi",
+                       "status": "true"
+                   },
+                   {
+                       "uri": "extInput:hdmi?port=2",
+                       "title": "HDMI 2",
+                       "connection": false,
+                       "label": "",
+                       "icon": "meta:hdmi",
+                       "status": "false"
+                   },
+                   {
+                       "uri": "extInput:hdmi?port=3",
+                       "title": "HDMI 3/ARC",
+                       "connection": false,
+                       "label": "",
+                       "icon": "meta:hdmi",
+                       "status": "false"
+                   },
+                   {
+                       "uri": "extInput:hdmi?port=4",
+                       "title": "HDMI 4",
+                       "connection": false,
+                       "label": "",
+                       "icon": "meta:hdmi",
+                       "status": "false"
+                   },
+                   {
+                       "uri": "extInput:composite?port=1",
+                       "title": "AV",
+                       "connection": false,
+                       "label": "",
+                       "icon": "meta:composite",
+                       "status": ""
+                   },
+                   {
+                       "uri": "extInput:widi?port=1",
+                       "title": "Bildschirm spiegeln",
+                       "connection": true,
+                       "label": "",
+                       "icon": "meta:wifidisplay",
+                       "status": ""
+                   }
+               ]
+           ],
+           "id": 105
+       }
 }
 
 
