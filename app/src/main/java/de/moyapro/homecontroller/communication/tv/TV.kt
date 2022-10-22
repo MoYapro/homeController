@@ -25,9 +25,6 @@ fun request(
                     Log.e(TAG, "error when sending request", ex)
                 }
                 is Result.Success -> {
-                    Log.d(TAG, request.toString())
-                    Log.d(TAG, response.toString())
-                    Log.d(TAG, "got ${String(result.get())}")
                     val data = result.get()
                     successAction.invoke(String(data))
                 }
