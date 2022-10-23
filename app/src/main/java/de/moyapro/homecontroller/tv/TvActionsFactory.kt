@@ -1,6 +1,7 @@
 package de.moyapro.homecontroller.tv
 
 import android.util.Log
+import com.github.kittinunf.fuel.core.FuelError
 import de.moyapro.homecontroller.communication.tv.*
 import de.moyapro.homecontroller.communication.tv.model.*
 import de.moyapro.homecontroller.config.getConfiguredJson
@@ -172,6 +173,12 @@ fun buildOnAction(connectionProperties: ConnectionProperties): () -> Unit =
     { request(TVCommand(TVCommandEnum.POWER, "true", connectionProperties)) }
 
 
-fun buildOffAction(connectionProperties: ConnectionProperties): () -> Unit =
-    { request(TVCommand(TVCommandEnum.POWER, "false", connectionProperties)) }
+fun buildOffAction(
+    connectionProperties: ConnectionProperties,
+    failAction: (FuelError) -> Unit = {},
+): () -> Unit =
+    {
+        request(TVCommand(TVCommandEnum.POWER, "false", connectionProperties),
+            failAction = failAction)
+    }
 

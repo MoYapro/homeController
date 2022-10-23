@@ -29,9 +29,9 @@ import kotlin.time.ExperimentalTime
 
 class MainActivity : ComponentActivity() {
     private val tag = MainActivity::class.simpleName
-    private val preferences by lazy { getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE) }
     private val mainViewModel: MainViewModel by viewModels { ViewModelFactory }
     private val tvStateViewModel: TvStateViewModel by viewModels { ViewModelFactory }
+    private val preferences by lazy { getSharedPreferences(PREFERENCES_FILE_NAME, MODE_PRIVATE) }
     private val connectionProperties by lazy { buildConnectionPropertiesFrom(preferences) }
     private val settingsActions by lazy { buildSettingsActions(preferences) }
     private val tvActions: TvActions by lazy {

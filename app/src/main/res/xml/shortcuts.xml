@@ -1,0 +1,20 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+  <shortcut
+    android:shortcutId="compose"
+    android:enabled="true"
+    android:icon="@drawable/ic_launcher_background"
+    android:shortcutShortLabel="@string/off"
+    android:shortcutLongLabel="@string/off"
+    android:shortcutDisabledMessage="@string/off">
+    <intent
+      android:action="android.intent.action.VIEW"
+      android:targetPackage="de.moyapro.homecontroller"
+      android:targetClass="de.moyapro.homecontroller.QuickOffActivity" />
+    <!-- If your shortcut is associated with multiple intents, include them
+         here. The last intent in the list determines what the user sees when
+         they launch this shortcut. -->
+    <categories android:name="android.shortcut.conversation" />
+    <capability-binding android:key="actions.intent.CREATE_MESSAGE" />
+  </shortcut>
+  <!-- Specify more shortcuts here. -->
+</shortcuts>
