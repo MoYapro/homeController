@@ -10,7 +10,7 @@ enum class TVCommandEnum(val contentGenerator: (String) -> String, val urlGenera
         { ip: String -> "http://${ip}/sony/audio" }
     ),
     HDMI(
-        { value: String -> "{\"method\":\"setPlayContent\",\"version\":\"1.0\",\"id\":1,\"params\":[{\"uri\":\"$value\"}]}" },
+        { value: String -> """{"method":"setPlayContent","version":"1.0","id":1,"params":[{"uri":"$value"}]}""" },
         { ip: String -> "http://${ip}/sony/avContent" }
     ),
     IRCC(

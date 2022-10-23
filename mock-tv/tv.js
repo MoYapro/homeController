@@ -19,8 +19,11 @@ IRCC_CODES["AAAAAgAAAJcAAAAjAw=="] = 'RETURN'
 
 let tvState = {
     volume: 0,
-    power: true
+    power: true,
+    selectedHdmi: undefined
 }
+
+const numberOfHdmiPorts = 4
 
 
 app.get('/', (req, res) => {
@@ -59,9 +62,15 @@ app.post('/sony/avContent', (req, res) => {
      const method = body.method
         // {"method": "getCurrentExternalInputsStatus", "id": 105, "params": [], "version": "1.1"}
         if (method == 'getCurrentExternalInputsStatus') res.send(getHdmiStatus())
+        // {"method":"setPlayContent","version":"1.0","id":1,"params":[{"uri":"$value"}]}
+        else if(method == 'setPlayContent') res.send(setHdmiInput(body.params[0]))
         else res.sendStatus(400)
 })
 
+function setHdmiInput(json) {
+    tvState.selectedHdmi = json.uri
+    return ""
+}
 
 function getPowerStatus() {
     if (tvState.power) return {"result": [{"status": "active"}], "id": 50}
@@ -96,42 +105,21 @@ function getVolumeInformation() {
 }
 
 function getHdmiStatus() {
-return {
-           "result": [
-               [
-                   {
-                       "uri": "extInput:hdmi?port=1",
-                       "title": "HDMI 1",
-                       "connection": true,
-                       "label": "",
-                       "icon": "meta:hdmi",
-                       "status": "true"
-                   },
-                   {
-                       "uri": "extInput:hdmi?port=4",
-                       "title": "HDMI 4",
-                       "connection": false,
-                       "label": "",
-                       "icon": "meta:hdmi",
-                       "status": "false"
-                   },
-                   {
-                       "uri": "extInput:composite?port=1",
-                       "title": "AV",
-                       "connection": false,
-                       "label": "",
-                       "icon": "meta:composite",
-                       "status": ""
-                   },
-                   {
-                       "uri": "extInput:widi?port=1",
-                       "title": "Bildschirm spiegeln",
-                       "connection": true,
-                       "label": "",
-                       "icon": "meta:wifidisplay",
-                       "status": ""
-                   }
-               ]
+    const hdmiPorts = []
+    for(i = 1; i<=numberOfHdmiPorts; i++) {
+        const uri = "extInput:hdmi?port=" + i
+        hdmiPorts.push({
+            "uri": uri,
+            "title": "HDMI " + i,
+            "connection": tvState.selectedHdmi == uri,
+            "label": "",
+            "icon": "meta:hdmi",
+            "status": tvState.selectedHdmi == uri
+        })
+    }
+    return {
+        "result": [
+            hdmiPorts
            ],
            "id": 105
        }
