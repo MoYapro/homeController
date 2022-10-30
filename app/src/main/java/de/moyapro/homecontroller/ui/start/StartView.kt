@@ -15,7 +15,7 @@ fun StartView(tvActions: TvActions, modifier: Modifier = Modifier) {
     ) {
         OnButton(tvActions.onAction,
             modifier
-                .fillMaxHeight()
+                .fillMaxHeight(.9F)
                 .fillMaxWidth())
     }
 }
