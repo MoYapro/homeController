@@ -114,9 +114,25 @@ function getHdmiStatus() {
             "connection": tvState.selectedHdmi == uri,
             "label": "",
             "icon": "meta:hdmi",
-            "status": tvState.selectedHdmi == uri
+            "status": (tvState.selectedHdmi == uri) ? true : false
         })
     }
+    hdmiPorts.push({
+    "uri": "extInput:composite?port=1",
+    "title": "AV",
+    "connection": false,
+    "label": "",
+    "icon": "meta:composite",
+    "status": ""
+})
+    hdmiPorts.push({
+        "uri": "extInput:widi?port=1",
+        "title": "Bildschirm spiegeln",
+        "connection": true,
+        "label": "",
+        "icon": "meta:wifidisplay",
+        "status": ""
+})
     return {
         "result": [
             hdmiPorts

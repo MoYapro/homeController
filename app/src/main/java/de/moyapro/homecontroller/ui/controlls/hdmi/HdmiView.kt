@@ -15,7 +15,6 @@ fun HdmiSelect(hdmiStatus: List<HdmiStatus>, setHdmiAction: (String) -> Unit) {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         hdmiStatus
-            .filter { it.uri.contains("extInput:hdmi") }
             .forEachIndexed { index, status ->
                 val relativeSize: Float = (.88F / (hdmiStatus.size - index))
                 HdmiButton(
