@@ -170,7 +170,7 @@ fun VolumeMuteButton(
     muteAction: () -> Unit,
     restoreAction: () -> Unit,
 ) {
-    val modifier = Modifier.fillMaxWidth(.20F)
+    val modifier = Modifier.fillMaxWidth(.23F)
     return if (null == volumePresentationModel.restoreVolume)
         MyButton(
             modifier = modifier,

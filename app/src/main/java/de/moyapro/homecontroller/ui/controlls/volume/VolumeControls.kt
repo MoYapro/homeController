@@ -15,7 +15,11 @@ fun VolumeControls(
 ) {
     var volumeState by remember { mutableStateOf(VolumeState()) }
     val setVolumeState: (Volume?) -> Unit = { newValue: Volume? ->
-        volumeState = volumeState.copy(targetVolume = newValue, restoreVolume = null)
+        volumeState = when (newValue) {
+            null -> volumeState
+            Volume(0) -> volumeState.copy(targetVolume = newValue)
+            else -> volumeState.copy(targetVolume = newValue, restoreVolume = null)
+        }
     }
     val setRestoreVolume: (Volume?) -> Unit = { restoreValue: Volume? ->
         Log.i(TAG, "set restorevolume to $restoreValue")
