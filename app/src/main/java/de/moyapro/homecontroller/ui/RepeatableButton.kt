@@ -6,11 +6,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import kotlinx.coroutines.delay
@@ -26,7 +25,7 @@ fun RepeatingButton(
     onRelease: () -> Unit = {},
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    elevation: ButtonElevation? = ButtonDefaults.elevation(),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     shape: Shape = MaterialTheme.shapes.medium,
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
@@ -64,8 +63,9 @@ fun RepeatingButton(
         shape = shape,
         border = border,
         colors = ButtonDefaults.buttonColors(
-            contentColor = if (pressed) Color.Green
-            else colors.contentColor(enabled = enabled).value),
+            contentColor = if (pressed) MaterialTheme.colorScheme.secondary
+            else MaterialTheme.colorScheme.inversePrimary
+        ),
         contentPadding = contentPadding,
         content = content
     )

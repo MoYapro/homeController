@@ -1,11 +1,14 @@
 package de.moyapro.homecontroller.ui.main
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.ui.MainButton
@@ -17,26 +20,52 @@ import de.moyapro.homecontroller.ui.settings.SettingsActions
 import de.moyapro.homecontroller.ui.settings.SettingsController
 import de.moyapro.homecontroller.ui.start.StartView
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun MainView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions, mainActions: MainActions, settingsActions: SettingsActions) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = { topbar(mainPresentationModel, tvActions) },
-        bottomBar = { bottomBar(mainPresentationModel, mainActions) },
-        content = { innerPadding -> mainContent(innerPadding, mainPresentationModel, tvActions, settingsActions) },
-    )
+fun MainView(
+    mainPresentationModel: State<MainPresentationModel>,
+    tvActions: TvActions,
+    mainActions: MainActions,
+    settingsActions: SettingsActions,
+) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .background(Color.Red)
+    ) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = { topbar(mainPresentationModel, tvActions) },
+            bottomBar = { bottomBar(mainPresentationModel, mainActions) },
+            content = { innerPadding ->
+                Column() {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(innerPadding.calculateTopPadding())
+                    )
+                    Box {
+                        mainContent(
+                            mainPresentationModel,
+                            tvActions,
+                            settingsActions
+                        )
+                    }
+                }
+            },
+        )
+    }
 }
 
 @Composable
 fun mainContent(
-    innerPadding: PaddingValues,
     mainPresentationModel: State<MainPresentationModel>,
     tvActions: TvActions,
     settingsActions: SettingsActions,
 ) {
     when (mainPresentationModel.value.view) {
-        ViewEnum.START -> StartView(tvActions = tvActions, Modifier.padding(innerPadding))
-        ViewEnum.CONTROLLER -> ControllerView(mainPresentationModel, tvActions )
+        ViewEnum.START -> StartView(tvActions = tvActions)
+        ViewEnum.CONTROLLER -> ControllerView(mainPresentationModel, tvActions)
         ViewEnum.SETTINGS -> SettingsController(settingsActions)
     }
 }
@@ -44,7 +73,8 @@ fun mainContent(
 @Composable
 fun topbar(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
     val showController = mainPresentationModel.value.view == ViewEnum.CONTROLLER
-    Row(Modifier.fillMaxWidth(),
+    Row(
+        Modifier.fillMaxWidth(),
         horizontalArrangement = if (showController) Arrangement.SpaceBetween else Arrangement.SpaceBetween,
     ) {
         Row(modifier = Modifier.fillMaxWidth(.01F)) {}
