@@ -1,11 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser');
+var cors = require('cors')
 require('body-parser-xml')(bodyParser);
 const app = express()
+app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 app.use(bodyParser.xml());
-const port = 3000
+const port = 3001
 
 const IRCC_CODES = []
 IRCC_CODES["AAAAAgAAAJcAAABPAw=="] = 'UP'
