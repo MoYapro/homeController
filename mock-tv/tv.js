@@ -36,9 +36,11 @@ app.get('/', (req, res) => {
 app.post('/sony/system', (req, res) => {
     const body = req.body
     const method = body.method
+    console.log(method, body)
 
     if (method == 'getPowerStatus') res.send(getPowerStatus())
     else if (method == 'setPowerStatus') res.send(setPowerStatus(body.params[0]))
+    else throw "bad request"
 
     logState()
 })
@@ -81,6 +83,7 @@ function getPowerStatus() {
 }
 
 function setPowerStatus(json) {
+    console.log(json)
     const newPowerStatus = json.status
     if (newPowerStatus) tvState.power = true
     else tvState.power = false
