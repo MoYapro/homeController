@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.SettingsInputHdmi
 import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material.icons.outlined.TvOff
+import androidx.compose.material.icons.outlined.Update
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +36,15 @@ fun OnButton(onAction: () -> Unit, modifier: Modifier = Modifier) {
         modifier = modifier,
         onClick = onAction) {
         Icon(Icons.Outlined.Tv, contentDescription = "on")
+    }
+}
+
+@Composable
+fun UpdateAppListButton(onAction: () -> Unit, modifier: Modifier = Modifier) {
+    Button(
+        modifier = modifier,
+        onClick = onAction) {
+        Icon(Icons.Outlined.Update, contentDescription = "on")
     }
 }
 

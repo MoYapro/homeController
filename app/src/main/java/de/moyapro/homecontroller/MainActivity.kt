@@ -10,6 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
+import com.github.kittinunf.fuel.core.FuelManager
+import com.github.kittinunf.fuel.core.interceptors.LogRequestInterceptor
+import com.github.kittinunf.fuel.core.interceptors.LogResponseInterceptor
 import de.moyapro.homecontroller.factory.ViewModelFactory
 import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.tv.TvStateViewModel
@@ -46,6 +49,8 @@ class MainActivity : ComponentActivity() {
     private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        FuelManager.instance.addRequestInterceptor(LogRequestInterceptor)
+        FuelManager.instance.addResponseInterceptor(LogResponseInterceptor)
         super.onCreate(savedInstanceState)
         startBackgroundRefresh(tvActions.updatePowerStatus,
             tvActions.updateVolumeStatus,
@@ -112,11 +117,12 @@ class MainActivity : ComponentActivity() {
         job = lifecycleScope.launch(Dispatchers.IO) {
             while (this.isActive) {
                 updatePowerStatus()
-                delay(.5.seconds)
+                val refreshDelay = 30.seconds
+                delay(refreshDelay)
                 updateVolumeStatus()
-                delay(.5.seconds)
+                delay(refreshDelay)
                 udpateHdmiStatus()
-                delay(.5.seconds)
+                delay(refreshDelay)
             }
         }
     }

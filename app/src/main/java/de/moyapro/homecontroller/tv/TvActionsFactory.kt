@@ -20,6 +20,7 @@ fun buildTvActions(
         updatePowerStatus = buildUpdatePowerStatusAction(connectionProperties, tvStateViewModel),
         updateVolumeStatus = buildUpdateVolumeStatusAction(connectionProperties, tvStateViewModel),
         updateHdmiStatus = buildUpdateHdmiStatusAction(connectionProperties, tvStateViewModel),
+        updateAppList = buildUpdateApplistAction(connectionProperties, tvStateViewModel),
         setVolume = buildSetVolumeAction(connectionProperties),
         volumeUp = buildVolumeUpAction(connectionProperties, tvStateViewModel),
         volumeDown = buildVolumeDownAction(connectionProperties, tvStateViewModel),
@@ -142,6 +143,18 @@ fun buildUpdateHdmiStatusAction(
         val responseValue: HdmiStatusResponse =
             getConfiguredJson().decodeFromString(hdmiStatusResponseString)
         tvStateViewModel.setHdmiStatus(responseValue.result.firstOrNull() ?: emptyList())
+    }
+}
+
+
+fun buildUpdateApplistAction(
+    connectionProperties: ConnectionProperties,
+    tvStateViewModel: TvStateViewModel,
+): () -> Unit = {
+    request(TVCommand(TvStatusEnum.APPLIST, connectionProperties)) { response ->
+        val xxx: AppListResponse = getConfiguredJson().decodeFromString(response)
+        println("applist ${xxx}")
+
     }
 }
 

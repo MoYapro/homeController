@@ -11,11 +11,9 @@ import de.moyapro.homecontroller.tv.TvActions
 import de.moyapro.homecontroller.ui.MainButton
 import de.moyapro.homecontroller.ui.OffButton
 import de.moyapro.homecontroller.ui.SettingsButton
-import de.moyapro.homecontroller.ui.controlls.ControllerView
 import de.moyapro.homecontroller.ui.controlls.hdmi.HdmiSelect
 import de.moyapro.homecontroller.ui.settings.SettingsActions
-import de.moyapro.homecontroller.ui.settings.SettingsController
-import de.moyapro.homecontroller.ui.start.StartView
+import de.moyapro.homecontroller.ui.start.AppView
 
 @Composable
 fun MainView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions, mainActions: MainActions, settingsActions: SettingsActions) {
@@ -34,11 +32,12 @@ fun mainContent(
     tvActions: TvActions,
     settingsActions: SettingsActions,
 ) {
-    when (mainPresentationModel.value.view) {
-        ViewEnum.START -> StartView(tvActions = tvActions, Modifier.padding(innerPadding))
-        ViewEnum.CONTROLLER -> ControllerView(mainPresentationModel, tvActions )
-        ViewEnum.SETTINGS -> SettingsController(settingsActions)
-    }
+   AppView(tvActions, Modifier.padding(innerPadding))
+//    when (mainPresentationModel.value.view) {
+//        ViewEnum.START -> StartView(tvActions = tvActions, Modifier.padding(innerPadding))
+//        ViewEnum.CONTROLLER -> ControllerView(mainPresentationModel, tvActions )
+//        ViewEnum.SETTINGS -> SettingsController(settingsActions)
+//    }
 }
 
 @Composable

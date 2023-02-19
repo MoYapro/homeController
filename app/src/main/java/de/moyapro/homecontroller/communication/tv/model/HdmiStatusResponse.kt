@@ -7,6 +7,15 @@ data class HdmiStatusResponse(
 )
 
 @kotlinx.serialization.Serializable
+data class AppListResponse(
+    val id: Long?,
+    val result: List<List<AppInfo>>
+)
+
+@kotlinx.serialization.Serializable
+data class AppInfo(val title: String, val uri: String, val icon: String)
+
+@kotlinx.serialization.Serializable
 data class HdmiStatus(
     val uri: String,
     val title: String,

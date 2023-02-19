@@ -12,6 +12,10 @@ enum class TvStatusEnum(val content: String, val urlGenerator: (String) -> Strin
     HDMI_STATUS(
         """{"method": "getCurrentExternalInputsStatus", "id": 105, "params": [], "version": "1.1"}""",
         { ip: String -> "http://$ip/sony/avContent" }
-    )
+    ),
+    APPLIST(
+        """{"method":"getApplicationList","params":[],"id":1,"version":"1.0"}""",
+        { ip: String -> "http://${ip}/sony/appControl" }
+    ),
 
 }
