@@ -2,16 +2,16 @@ package de.moyapro.homecontroller.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.SettingsInputHdmi
 import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material.icons.outlined.TvOff
 import androidx.compose.material.icons.outlined.Update
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,16 +25,17 @@ val FAST_BUTTON_DELAY = 250.milliseconds
 
 @Composable
 fun OffButton(offAction: () -> Unit, modifier: Modifier = Modifier) {
-    Button(modifier = modifier, onClick = offAction) {
+    MyButton(modifier = modifier, onClick = offAction) {
         Icon(Icons.Outlined.TvOff, contentDescription = "off")
     }
 }
 
 @Composable
 fun OnButton(onAction: () -> Unit, modifier: Modifier = Modifier) {
-    Button(
+    MyButton(
         modifier = modifier,
-        onClick = onAction) {
+        onClick = onAction
+    ) {
         Icon(Icons.Outlined.Tv, contentDescription = "on")
     }
 }
@@ -50,7 +51,8 @@ fun UpdateAppListButton(onAction: () -> Unit, modifier: Modifier = Modifier) {
 
 @Composable
 fun SettingsButton(modifier: Modifier, openSettings: () -> Unit) {
-    Button(modifier = modifier,
+    MyButton(
+        modifier = modifier,
         onClick = openSettings
     ) {
         Icon(Icons.Filled.Settings, contentDescription = "settings")
@@ -59,7 +61,8 @@ fun SettingsButton(modifier: Modifier, openSettings: () -> Unit) {
 
 @Composable
 fun MainButton(modifier: Modifier = Modifier, openMain: () -> Unit) {
-    Button(modifier = modifier,
+    MyButton(
+        modifier = modifier,
         onClick = openMain
     ) {
         Icon(Icons.Filled.Domain, contentDescription = "main")
@@ -69,15 +72,17 @@ fun MainButton(modifier: Modifier = Modifier, openMain: () -> Unit) {
 
 @Composable
 fun BackButton(backAction: () -> Unit) {
-    Button(modifier = Modifier.fillMaxWidth(.48F), onClick = backAction) {
+    MyButton(modifier = Modifier.fillMaxWidth(.48F), onClick = backAction) {
         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
     }
 }
 
 @Composable
 fun HomeButton(homeAction: () -> Unit) {
-    Button(modifier = Modifier.fillMaxWidth(.95F),
-        onClick = homeAction) {
+    MyButton(
+        modifier = Modifier.fillMaxWidth(.95F),
+        onClick = homeAction
+    ) {
         Icon(Icons.Filled.Home, contentDescription = "Home")
     }
 }
@@ -154,13 +159,14 @@ fun UpButton(upAction: () -> Unit) {
 
 @Composable
 fun HdmiButton(modifier: Modifier, status: HdmiStatus, hdmiAction: (uri: String) -> Unit) {
-    Button(
+    MyButton(
         modifier = modifier,
         enabled = true,
         onClick = { hdmiAction(status.uri) },
         colors = ButtonDefaults.buttonColors(
-            contentColor = if (status.connection) Color.Green
-            else ButtonDefaults.buttonColors().contentColor(enabled = true).value),
+            contentColor = if (status.connection) MaterialTheme.colorScheme.secondary
+            else MaterialTheme.colorScheme.primary
+        ),
     ) {
         Icon(Icons.Outlined.SettingsInputHdmi, contentDescription = status.title)
         Text(status.uri.takeLast(1))
@@ -174,9 +180,9 @@ fun VolumeMuteButton(
     muteAction: () -> Unit,
     restoreAction: () -> Unit,
 ) {
-    val modifier = Modifier.fillMaxWidth(.20F)
+    val modifier = Modifier.fillMaxWidth(.23F)
     return if (null == volumePresentationModel.restoreVolume)
-        Button(
+        MyButton(
             modifier = modifier,
             onClick = muteAction,
             enabled = !volumePresentationModel.muteDisabled
@@ -184,7 +190,7 @@ fun VolumeMuteButton(
             Icon(Icons.Filled.VolumeOff, contentDescription = "mute button")
         }
     else
-        Button(
+        MyButton(
             modifier = modifier,
             onClick = restoreAction,
             enabled = !volumePresentationModel.muteDisabled

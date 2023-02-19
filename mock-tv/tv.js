@@ -1,11 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser');
+var cors = require('cors')
 require('body-parser-xml')(bodyParser);
 const app = express()
+app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 app.use(bodyParser.xml());
-const port = 3000
+const port = 3001
 
 const IRCC_CODES = []
 IRCC_CODES["AAAAAgAAAJcAAABPAw=="] = 'UP'
@@ -34,9 +36,11 @@ app.get('/', (req, res) => {
 app.post('/sony/system', (req, res) => {
     const body = req.body
     const method = body.method
+    console.log(method, body)
 
     if (method == 'getPowerStatus') res.send(getPowerStatus())
     else if (method == 'setPowerStatus') res.send(setPowerStatus(body.params[0]))
+    else throw "bad request"
 
     logState()
 })
@@ -79,6 +83,7 @@ function getPowerStatus() {
 }
 
 function setPowerStatus(json) {
+    console.log(json)
     const newPowerStatus = json.status
     if (newPowerStatus) tvState.power = true
     else tvState.power = false
@@ -114,9 +119,25 @@ function getHdmiStatus() {
             "connection": tvState.selectedHdmi == uri,
             "label": "",
             "icon": "meta:hdmi",
-            "status": tvState.selectedHdmi == uri
+            "status": (tvState.selectedHdmi == uri) ? true : false
         })
     }
+    hdmiPorts.push({
+    "uri": "extInput:composite?port=1",
+    "title": "AV",
+    "connection": false,
+    "label": "",
+    "icon": "meta:composite",
+    "status": ""
+})
+    hdmiPorts.push({
+        "uri": "extInput:widi?port=1",
+        "title": "Bildschirm spiegeln",
+        "connection": true,
+        "label": "",
+        "icon": "meta:wifidisplay",
+        "status": ""
+})
     return {
         "result": [
             hdmiPorts

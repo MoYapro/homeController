@@ -12,7 +12,8 @@ object MainPresenter {
         return MainPresentationModel(
             view = presentView(selectedView, isPowerOn),
             volume = tvState.volume,
-            hdmiStatus = tvState.hdmiStatus
+            hdmiStatus = tvState.hdmiStatus.filter { it.uri.contains("extInput:hdmi") }
+
         )
     }
 

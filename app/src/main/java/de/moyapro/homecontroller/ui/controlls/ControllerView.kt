@@ -13,12 +13,14 @@ import de.moyapro.homecontroller.ui.main.MainPresentationModel
 
 @Composable
 fun ControllerView(mainPresentationModel: State<MainPresentationModel>, tvActions: TvActions) {
-    Column(modifier = Modifier.fillMaxSize(), Arrangement.Top) {
-        VolumeControls(modifier = Modifier
-            .fillMaxHeight(.2F)
-            .padding(5.dp),
+    Column(modifier = Modifier.fillMaxSize()) {
+        VolumeControls(
+            modifier = Modifier
+                .fillMaxHeight(.2F)
+                .padding(5.dp),
             mainPresentationModel.value.volume,
-            tvActions)
+            tvActions
+        )
         BackHomeRow(modifier = Modifier.fillMaxHeight(.15F), tvActions)
         CenterDiamond(modifier = Modifier.fillMaxHeight(.8F), tvActions)
     }
@@ -38,7 +40,8 @@ private fun CenterDiamond(modifier: Modifier, tvActions: TvActions) {
     Column(modifier = modifier
         .fillMaxWidth()
         .fillMaxHeight()
-        .padding(horizontal = 5.dp
+        .padding(
+            horizontal = 5.dp
         ),
         verticalArrangement = Arrangement.SpaceEvenly) {
         Row(modifier = Modifier
