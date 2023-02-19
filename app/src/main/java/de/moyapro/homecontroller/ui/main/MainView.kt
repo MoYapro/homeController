@@ -61,7 +61,7 @@ fun mainContent(
     tvActions: TvActions,
     settingsActions: SettingsActions,
 ) {
-   AppView(tvActions, Modifier.padding(innerPadding))
+   AppView(tvActions, Modifier.fillMaxSize())
 //    when (mainPresentationModel.value.view) {
 //        ViewEnum.START -> StartView(tvActions = tvActions)
 //        ViewEnum.CONTROLLER -> ControllerView(mainPresentationModel, tvActions)

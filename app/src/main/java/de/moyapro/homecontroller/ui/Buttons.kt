@@ -42,7 +42,7 @@ fun OnButton(onAction: () -> Unit, modifier: Modifier = Modifier) {
 
 @Composable
 fun UpdateAppListButton(onAction: () -> Unit, modifier: Modifier = Modifier) {
-    Button(
+    MyButton(
         modifier = modifier,
         onClick = onAction) {
         Icon(Icons.Outlined.Update, contentDescription = "on")
